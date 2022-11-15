@@ -31,6 +31,37 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+# local apps
+    'movies',
+    'accounts',
+    'collects',
+    'community',
+    'games',
+    
+# third-party apps
+    # drf_sepctacular
+    'drf_spectacular',
+
+    # rest_framework
+    'rest_framework',
+    'rest_framework.authtoken',      # token 기반 auth
+    
+    # DRF auth
+    'dj_rest_auth',                  # signup 제외 auth 관련 담당
+    'dj_rest_auth.registration',     # signup 담당
+
+    # signup 담당을 위해 필요 
+    'allauth', 
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.kakao',
+    # 'allauth.socialaccount.providers.gitlab',
+    
+    # CORS 세팅
+    'corsheaders',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +70,39 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+SITE_ID = 1
+
+# DRF 인증 관련 설정
+REST_FRAMEWORK = {
+    # Authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    
+    # permission
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 모두에게 허용
+        'rest_framework.permissions.AllowAny', 
+
+        # 인증된 사용자만 모든일이 가능 / 비인증 사용자는 모두 401 Unauthorized
+        # 'rest_framework.permissions.IsAuthenticated'
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
+    
+    # spectacular Settings
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,3 +186,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
