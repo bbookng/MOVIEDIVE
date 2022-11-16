@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     token: null,
   },
-  getters: {
+  getters: {  
   },
   mutations: {
       // 회원가입 && 로그인
