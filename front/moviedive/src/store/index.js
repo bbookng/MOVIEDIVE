@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import router from '@/router'
 
 Vue.use(Vuex)
+
+const API_URL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
   state: {
