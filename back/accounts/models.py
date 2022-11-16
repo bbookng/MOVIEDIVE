@@ -5,4 +5,6 @@ from django.conf import settings
 # Create your models here.
 
 class User(AbstractUser):
-    pass
+    followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+    nickname = models.CharField(max_length=10)
+    profile_img = models.ImageField(blank=True)
