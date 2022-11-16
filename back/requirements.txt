@@ -14,7 +14,9 @@ drf-spectacular==0.24.2
 idna==3.4
 inflection==0.5.1
 jsonschema==4.17.0
+mysqlclient==2.1.1
 oauthlib==3.2.2
+pilkit==2.0
 Pillow==9.3.0
 pycparser==2.21
 PyJWT==2.6.0
