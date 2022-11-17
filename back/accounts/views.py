@@ -28,7 +28,6 @@ def update_profile(request):
         return Response(status=status.HTTP_200_OK)
     
     
-
 # 특정 사용자의 프로필 정보를 가져옴
 @api_view(['GET'])
 def get_profile(request, username):

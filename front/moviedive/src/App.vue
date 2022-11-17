@@ -1,12 +1,25 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link :to="{ name: 'SignUpView' }">SignUpPage</router-link> | 
-      <router-link :to="{ name: 'LogInView' }">LogInPage</router-link>
-    </nav>
+    <NavVar/>
     <router-view/>
+    <FooterInfo/>
   </div>
 </template>
+
+
+<script>
+import NavVar from '@/components/NavVar.vue'
+import FooterInfo from '@/components/FooterInfo.vue'
+
+export default {
+  name: 'App',
+  components: {
+    NavVar,
+    FooterInfo
+  }
+
+}
+</script>
 
 <style>
 #app {

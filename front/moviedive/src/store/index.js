@@ -10,6 +10,7 @@ const API_URL = 'http://127.0.0.1:8000/api'
 export default new Vuex.Store({
   state: {
     token: null,
+    movies: []
   },
   getters: {  
   },
@@ -18,6 +19,9 @@ export default new Vuex.Store({
       SAVE_TOKEN(state, token) {
         state.token = token
         router.push({ name: 'ArticleView' })
+      },
+      GET_MOVIES(state, movies) {
+        state.movies = movies
       }
   },
   actions: {
@@ -50,6 +54,14 @@ export default new Vuex.Store({
           context.commit('SAVE_TOKEN', res.data.key)
         })
     },
+    getMovies(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/`,
+      })
+      .then(res => 
+        context.commit('GET_MOVIES', res.data))
+    }
   },
   modules: {
   }

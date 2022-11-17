@@ -4,8 +4,9 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from .models import Movie
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import MovieListSerializer, MovieSerializer
+from .serializers import MovieListSerializer, MovieSerializer, AutoCompleteSerializer
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -13,13 +14,19 @@ from django.db.models import Count
 def movie_list(request):
     keyword = request.GET.get('keyword')
 
-    if keyword:
-        movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
-        wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
-    else:
-        movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
-        wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
+    # if keyword:
+    #     movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
+    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
+    # else:
+    #     movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
+    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
+    
+    movies = get_list_or_404(Movie)
+    paginator = Paginator(movies, 20)
+    page_number = request.GET.get('page')
+    current_page = int(page_number) if page_number else 1
 
+    movie_list = paginator.get_page(current_page)
     serializer = MovieListSerializer(movie_list, many=True)
     return Response(serializer.data)
 
@@ -46,4 +53,6 @@ def movie_collections(request, movie_pk):
 
 @api_view(['GET'])
 def auto_complete(request, keyword):
-    pass
+    movies = Movie.objects.filter(title__contains=keyword).order_by('-vote_average')[:10]
+    serializer = AutoCompleteSerializer(movies, many=True)
+    return Response(serializer.data)
