@@ -26,8 +26,19 @@ class ProfileResponseSerializer(serializers.ModelSerializer):
         fields = ('nickname', 'profile_img', 'message',)
 
 class UserNicknameSerializer(serializers.ModelSerializer):
-
+    nickname = serializers.CharField(max_length=10)
+    
     class Meta:
         model = get_user_model()
         fields = ('nickname',)
+    # def update(self, instance, data):
+    #     instance.nickname = data.get("nickname", instance.nickname)
+    #     instance.save()
+    #     return instance
         
+class UserMessageSerializer(serializers.ModelSerializer):
+    message = serializers.CharField(max_length=30)
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('message',)
