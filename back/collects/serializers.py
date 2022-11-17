@@ -67,7 +67,7 @@ class CollectionListSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
         
         class Meta:
-            modle = Movie
+            model = Movie
             fields = ('pk', 'title', 'poster_path',)
     
     user = UserSerializer(read_only=True)
@@ -80,3 +80,9 @@ class CollectionListSerializer(serializers.ModelSerializer):
 
 class UserLikesColletctionSerializer(serializers.ModelSerializer):
     pass
+
+class CollectionCommentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Comment
+        fields = ('pk', 'content',)

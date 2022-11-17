@@ -3,15 +3,24 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer
+from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer
 from .models import Collection, Comment
 from movies.models import Movie
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 @api_view(['GET'])
 def collections_list(request):
-    pass
+    collections = get_list_or_404(Collection)
+    paginator = Paginator(collections, 20)
+    page_number = request.GET.get('page')
+    current_page = int(page_number) if page_number else 1
+
+    collection_list = paginator.get_page(current_page)
+    serializer = CollectionListSerializer(collection_list, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['POST'])
 def create_collection(request):
@@ -60,11 +69,22 @@ def like_collection(request, collection_pk):
         collection.like_users.add(user)
         serializer = CollectionDetailSerializer(collection)
         return Response(serializer.data)
+    
+@api_view(['POST'])
+def comment_create(request, collection_pk):
+    collection = get_object_or_404(Collection, pk=collection_pk)
+    serializer = CollectionCommentSerializer(data=request.data)
+    if serializer.is_valid():
+        comment = serializer.save(user=request.user, collection = collection)
+        serializer = CollectionCommentSerializer(comment)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
 
 
 @api_view(['GET', 'POST'])
 def comments_list(request, collection_pk):
     comments = get_list_or_404(Comment, pk=collection_pk)
+    pass
 
 @api_view(['PUT', 'DELETE'])
 def comment_status(request, collection_pk):

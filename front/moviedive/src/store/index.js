@@ -12,12 +12,14 @@ export default new Vuex.Store({
     token: null,
     movies: [],
     currentUser: {},
+    collections: []
   },
   getters: {  
     isLoggedIn(state) {
       return state.token ? true : false
     },
     currentUser: state => state.currentUser,
+    authHeader: state => ({ Authorization: `Token ${state.token}`})
   },
   mutations: {
       // 회원가입 && 로그인
@@ -29,6 +31,9 @@ export default new Vuex.Store({
         state.movies = movies
       },
       SET_CURRENT_USER: (state, user) => state.currentUser = user,
+      GET_COLLECTIONS(state, collections) {
+        state.collections = collections
+      }
   },
   actions: {
     signUp(context, payload) {
@@ -74,21 +79,21 @@ export default new Vuex.Store({
           context.commit('SAVE_TOKEN', res.data.key)
         })
     },
-    // logout({ getters, dispatch }) {
-    //   axios({
-    //     url: `${API_URL}/accounts/logout/`,
-    //     method: 'post',
-    //     // data: {},
-    //     headers: getters.authHeader,
-    //   })
-    //     .then(() => {
-    //       dispatch('removeToken')
-    //       router.push({ name: 'login' })
-    //     })
-    //     .error(err => {
-    //       console.error(err.response)
-    //     })
-    // },
+    logout({ getters, dispatch }) {
+      axios({
+        url: `${API_URL}/accounts/logout/`,
+        method: 'post',
+        // data: {},
+        headers: getters.authHeader,
+      })
+        .then(() => {
+          dispatch('removeToken')
+          router.push({ name: 'login' })
+        })
+        .error(err => {
+          console.error(err.response)
+        })
+    },
     getMovies(context) {
       axios({
         method: 'get',
@@ -123,6 +128,16 @@ export default new Vuex.Store({
             }
           })
       }
+    },
+    getCollections(context) {
+      axios({
+        method: 'GET',
+        url: `${API_URL}/collections/`,
+      })
+      .then((res)=>{
+        context.commit('GET_COLLECTIONS', res.data)
+      })
+
     },
   },
   modules: {
