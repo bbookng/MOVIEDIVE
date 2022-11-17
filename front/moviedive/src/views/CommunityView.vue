@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <h1>
+      Hello, Community !
+    </h1>
+  </div>
 </template>
 
 <script>

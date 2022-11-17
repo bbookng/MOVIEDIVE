@@ -42,3 +42,9 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
         fields= ('pk', 'title', 'movies', 'like_users_cnt','description', 'user', 'like_users',)
+
+class CollectionListSerializer(serializers.ModelSerializer):
+    pass
+
+class UserLikesColletctionSerializer(serializers.ModelSerializer):
+    pass

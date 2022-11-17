@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from .serializers import CurrentUserResponseSerializer, UpdateUserRequestSerializer
+from .serializers import CurrentUserResponseSerializer, UpdateUserRequestSerializer, UserNicknameSerializer
 
 
 # Create your views here.
@@ -57,3 +57,11 @@ def get_user_reviews(request, username):
 @api_view(['GET'])
 def get_user_collections(request, username):
     pass
+
+@api_view(['POST'])
+def get_nickname(request):
+    user = request.user
+    serializer = UserNicknameSerializer(user, data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(status=status.HTTP_200_OK)

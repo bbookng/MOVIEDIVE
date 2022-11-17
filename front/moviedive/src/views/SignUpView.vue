@@ -9,7 +9,13 @@
       <input type="password" id="password1" v-model="password1"><br>
 
       <label for="password2"> password confirmation : </label>
-      <input type="password" id="password2" v-model="password2">
+      <input type="password" id="password2" v-model="password2"><br>
+
+      <label for="email"> email : </label>
+      <input type="email" id="email" v-model="email"><br>
+
+      <label for="nickname"> nickname : </label>
+      <input type="nickname" id="nickname" v-model="nickname">
       
       <input type="submit" value="SignUp">
     </form>
@@ -24,6 +30,9 @@ export default {
       username: null,
       password1: null,
       password2: null,
+      email: null,
+      nickname: null,
+
     }
   },
   methods: {
@@ -31,17 +40,18 @@ export default {
       const username = this.username
       const password1 = this.password1
       const password2 = this.password2
+      const email = this.email
+      const nickname = this.nickname
 
       const payload = {
-        // username,
-        // password1,
-        // password2,
-        username: username,
-        password1: password1,
-        password2: password2,
+        username,
+        password1,
+        password2,
+        email,
       }
 
       this.$store.dispatch('signUp', payload)
+      this.$store.dispatch('getNickname', nickname)
 
     }
   }

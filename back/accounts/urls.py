@@ -4,7 +4,8 @@ from django.urls import path
 app_name="accounts"
 
 urlpatterns = [
-    path("currentUser/", views.get_current_user_profile, name="currentUser"),
+    path("currentuser/", views.get_current_user_profile, name="currentUser"),
+    path('signup/setnickname/', views.get_nickname),
     path('profile/update/', views.update_profile, name="update"),
     path('profile/<int:user_pk>/follow/', views.follow, name="follow"),
     path("profile/<username>/", views.get_profile, name="profile"),

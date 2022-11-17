@@ -15,7 +15,7 @@ class UpdateUserRequestSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
-        fields = ('nickname', 'profile_img')
+        fields = ('nickname', 'profile_img', 'message',)
         
 
 # 보류
@@ -23,5 +23,11 @@ class ProfileResponseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
-        fields = ('nickname', 'profile_img')
+        fields = ('nickname', 'profile_img', 'message',)
+
+class UserNicknameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('nickname',)
         

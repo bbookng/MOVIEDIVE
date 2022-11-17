@@ -8,3 +8,4 @@ class User(AbstractUser):
     followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
     nickname = models.CharField(max_length=10)
     profile_img = models.ImageField(blank=True)
+    message = models.CharField(max_length=20)

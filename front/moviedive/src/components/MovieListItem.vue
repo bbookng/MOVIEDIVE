@@ -4,6 +4,8 @@
     <p>{{ movie.title }}</p>
     <img :src=imgURL alt="">
     <hr>
+
+    
   </div>
 </template>
 

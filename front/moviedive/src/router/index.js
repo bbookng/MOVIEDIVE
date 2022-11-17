@@ -3,26 +3,56 @@ import VueRouter from 'vue-router'
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
 import MainView from '@/views/MainView'
+import CollectionsView from '@/views/CollectionsView'
+import CommunityView from '@/views/CommunityView'
+import PlayView from '@/views/PlayView'
+import DeepDiveView from '@/views/DeepDiveView'
+import MyPageView from '@/views/MyPageView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'main',
+    component: MainView
+  },
+  {
     path: '/signup',
-    name: 'SignUpView',
+    name: 'signup',
     component: SignUpView
   },
 
   {
     path: '/login',
-    name: 'LogInView',
+    name: 'login',
     component: LogInView
   },
   {
-    path: '/',
-    name: 'MainView',
-    component: MainView
+    path: '/collection',
+    name: 'collection',
+    component: CollectionsView
   },
+  {
+    path: '/community',
+    name: 'community',
+    component: CommunityView
+  },
+  {
+    path: '/play',
+    name: 'play',
+    component: PlayView
+  },
+  {
+    path: '/deepdive',
+    name: 'deepdive',
+    component: DeepDiveView
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: MyPageView
+  }
 ]
 
 const router = new VueRouter({
