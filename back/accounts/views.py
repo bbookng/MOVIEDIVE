@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from .serializers import CurrentUserResponseSerializer, UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer
+from .serializers import CurrentUserResponseSerializer, UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer, UserLikeMovieSerializer, UserMakesCollectionSerializer, UserReviewSerializer
 
 
 # Create your views here.
@@ -32,6 +32,7 @@ def update_profile(request):
 @api_view(['GET'])
 def get_profile(request, username):
     user = get_object_or_404(User, username)
+    pass
     
 
 @api_view(['POST'])
@@ -46,17 +47,22 @@ def follow(request, user_pk):
 
 @api_view(['GET'])
 def get_likelists(request, username):
-    user = get_object_or_404(get_user_model(), username)
-    pass
+    user = get_object_or_404(get_user_model(), username=username)
+    serializer = UserLikeMovieSerializer(user)
+    return Response(serializer.data)
     
 
 @api_view(['GET'])
 def get_user_reviews(request, username):
-    pass
+    user = get_object_or_404(get_user_model(), username=username)
+    serializer = UserReviewSerializer(user)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def get_user_collections(request, username):
-    pass
+    user = get_object_or_404(get_user_model(), username=username)
+    serializer = UserMakesCollectionSerializer(user)
+    return Response(serializer.data)
 
 @api_view(['PUT'])
 def set_nickname(request):

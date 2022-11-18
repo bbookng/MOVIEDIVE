@@ -185,35 +185,6 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    
-    fetchMovie({ commit, getters }, moviePk) {
-      /* 영화 정보 1개 받아오기
-      GET: article URL (token)
-        성공하면
-          응답으로 받은 정보를 state.movie에 저장
-        실패하면
-          단순 에러일 때는
-            에러 메시지 표시
-          404 에러일 때는
-            NotFound404 로 이동
-      */
-      axios({
-        url: drf.movies.movie(moviePk),
-        method: 'get',
-        headers: getters.authHeader,
-      })
-        .then(res => {
-          console.log(res.data)
-          commit('SET_MOVIE', res.data)
-        })
-          
-        .catch(err => {
-          console.error(err.response)
-          if (err.response.status === 404) {
-            router.push({ name: 'NotFound404' })
-          }
-        })
-    },
   },
   modules: {
   }
