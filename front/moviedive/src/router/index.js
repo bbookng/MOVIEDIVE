@@ -13,7 +13,7 @@ import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
 import ReviewFormView from '@/views/ReviewFormView'
-import CollectionDetailView from '@/views/CollectionDetailView'
+// import CollectionDetailView from '@/views/CollectionDetailView'
 import SearchResultView from '@/views/SearchResultView'
 import CollectionCreationFormView from '@/views/CollectionCreationFormView'
 
@@ -94,11 +94,6 @@ const routes = [
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
-  },
-  {
-    path: '/collection/create',
-    name: 'create_collection',
-    component: CollectionCreationFormView
   },
 ]
 

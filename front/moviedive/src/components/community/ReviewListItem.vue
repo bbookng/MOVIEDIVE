@@ -3,7 +3,6 @@
     <h5>{{ review.movie_title }}</h5>
     <p>{{ review.username }}</p>
     <router-link
-      @click="getReviewDetail"
       :to="{ name: 'review_detail', params: { movieId: this.review.movie, reviewId: this.review.id }}"
     >
     {{ review.title }}</router-link>

@@ -4,7 +4,7 @@
     <form @submit.prevent="createReview">
       <form @submit="searchThings(searchKeyword)">
         <div class="search-box">
-          <div class="s earch-container">
+          <div class="search-container">
             <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
             <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
           </div>
@@ -15,7 +15,7 @@
       <label for="content">내용 : </label>
       <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
       <label for="rate">별점 </label>
-      <input type="number" name="rate" min="0" max="5" step="0.5"><br>
+      <input type="number" name="rate" v-model="rate" min="0" max="5" step="0.5"><br>
       <input type="submit" id="submit" value="발행">
     </form>
   </div>
@@ -50,6 +50,7 @@ export default {
     },
     fillSearchKeyword(suggest){
       this.searchKeyword = suggest.title
+      this.movie = suggest.id
     },
     changeKeyword(event) {
       this.searchKeyword = event.target.value
@@ -61,7 +62,7 @@ export default {
       const content = this.content
       const rate = this.rate
       if (!movie) {
-        alert('영화를 입력해주세요')
+        alert('영화를 선택해주세요')
         return
       } else if (!title) {
         alert('제목을 입력해주세요')
@@ -88,7 +89,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'ReviewDetailView' })
+          this.$router.push({ name: 'community' })
         })
         .catch((err) => {
           console.log(err)
