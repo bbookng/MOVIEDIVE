@@ -275,6 +275,7 @@ export default new Vuex.Store({
     deleteSuggestion({ commit }) {
       commit('SET_SUGGESTS', [])
     },
+    
 
   },
 

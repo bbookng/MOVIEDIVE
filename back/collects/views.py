@@ -35,6 +35,8 @@ def collection_detail(request, collection_pk):
 
     def collection_detail():
         serializer = CollectionDetailSerializer(collection)
+        print(serializer.get_value)
+        
         return Response(serializer.data)
 
     def update_collection():

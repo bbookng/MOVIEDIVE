@@ -25,7 +25,8 @@ export default {
   computed: {},
   methods: {
     showCollectionDetail() {
-      this.$store.commit("SET_ISCOLLECTION_DETAIL", true);
+      this.$store.commit("SET_ISCOLLECTION_DETAIL", true),
+      this.$emit('sendcollection', this.collection.pk)
     },
   },
 };
