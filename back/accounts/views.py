@@ -68,6 +68,8 @@ def get_user_collections(request, username):
 def set_nickname(request):
     user = request.user
     print(user)
+    print(request)
+    print(request.data)
     serializer = UserNicknameSerializer(user, request.data)
     if serializer.is_valid():
         serializer.save()
@@ -77,6 +79,7 @@ def set_nickname(request):
 def set_message(request):
     user = request.user
     print(user)
+
     serializer = UserMessageSerializer(user, request.data)
     if serializer.is_valid():
         serializer.save()

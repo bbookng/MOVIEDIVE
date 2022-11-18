@@ -68,16 +68,24 @@ export default new Vuex.Store({
           email: payload.email,
         }
       })
-        .then((res) => {
-          // console.log(res)
-          context.commit('SAVE_TOKEN', res.data.key)
+      .then((res) => {
+        context.commit('SAVE_TOKEN', res.data.key)
+        // console.log(res)
+      })
+      .then(() => {
+          console.log(payload.nickname)
+          context.dispatch('getNickname', payload.nickname)
+          
         })
         .catch(() => alert('이미 있다'))
     },
-    getNickname(context, nickname) {
+    getNickname( context, nickname ) {
+      console.log(nickname)
+      console.log(drf.accounts.set_nickname)
       axios({
-        method: 'post',
-        url: `${API_URL}/accounts/signup/setnickname/`,
+        method: 'put',
+        url: 'http://localhost:8000/api/accounts/profile/set_nickname/',
+        headers: context.getters.authHeader,
         data: {
           nickname: nickname
         }
@@ -98,6 +106,7 @@ export default new Vuex.Store({
         .then((res) => {
           // console.log(res)
           context.commit('SAVE_TOKEN', res.data.key)
+          context.dispatch("fetchCurrentUser")
         })
     },
     removeToken({ commit }) {
@@ -105,10 +114,13 @@ export default new Vuex.Store({
       state.token 삭제
       localStorage에 token 추가
       */
-      commit('SET_TOKEN', '')
-      localStorage.setItem('token', '')
+
+      console.log("removeToken")
+      localStorage.setItem("token", "")
+      commit('SAVE_TOKEN', '')
+      
     },
-    logout({ getters, dispatch }) {
+    logout({ dispatch }) {
       /* 
       POST: token을 logout URL로 보내기
         성공하면
@@ -122,11 +134,11 @@ export default new Vuex.Store({
         url: drf.accounts.logout(),
         method: 'post',
         // data: {},
-        headers: getters.authHeader,
+        // headers: getters.authHeader,
       })
         .then(() => {
           dispatch('removeToken')
-          router.push({ name: 'login' })
+          router.push({ name: 'main' })
         })
         .error(err => {
           console.error(err.response)
@@ -150,7 +162,7 @@ export default new Vuex.Store({
             기존 토큰 삭제
             LoginView로 이동
       */
-      if (getters.isLoggedIn) {
+    if (getters.isLoggedIn) {
         axios({
           url: `${API_URL}/accounts/currentuser/`,
           method: 'get',

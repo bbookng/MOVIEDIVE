@@ -79,6 +79,11 @@ const routes = [
     component: MyPageView
   },
   {
+    path: '/collection/create/',
+    name: 'create_collection',
+    component: CollectionCreationFormView
+  },
+  {
     path: '/collection/:collection_pk',
     name: 'collection_detail',
     component: CollectionDetailView
@@ -87,11 +92,6 @@ const routes = [
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
-  },
-  {
-    path: '/collection/create',
-    name: 'create_collection',
-    component: CollectionCreationFormView
   },
 ]
 

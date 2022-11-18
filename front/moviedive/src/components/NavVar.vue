@@ -48,9 +48,9 @@
             <span class="visually-hidden">프로필이미지</span>
           </button>
           <ul class="dropdown-menu">
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username} }">마이페이지</router-link></li>
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username} }">프로필 관리</router-link></li>
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username} }">계정 설정</router-link></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">마이페이지</router-link></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">프로필 관리</router-link></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">계정 설정</router-link></li>
             <li><hr class="dropdown-divider"></li>
             <li><router-link class="dropdown-item nav-item" :to="{ name: 'logout' }">로그아웃</router-link></li>
           </ul>
