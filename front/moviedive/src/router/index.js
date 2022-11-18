@@ -4,6 +4,7 @@ import store from '../store'
 
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
+import LogoutView from '@/views/LogoutView.vue'
 import MainView from '@/views/MainView'
 import CollectionsView from '@/views/CollectionsView'
 import CommunityView from '@/views/CommunityView'
@@ -32,6 +33,12 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LogInView
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView
+
   },
   {
     path: '/collection',
@@ -66,7 +73,7 @@ const routes = [
     component: DeepDiveView
   },
   {
-    path: '/mypage',
+    path: '/mypage/:username',
     name: 'mypage',
     component: MyPageView
   },

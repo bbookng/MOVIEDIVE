@@ -48,12 +48,13 @@
             <span class="visually-hidden">프로필이미지</span>
           </button>
           <ul class="dropdown-menu">
-            <li><router-link class="dropdown-item" :to="{ name: 'mypage' }">MyPage</router-link></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username} }">MyPage</router-link></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username} }">MyPage</router-link></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><router-link class="dropdown-item nav-item" :to="{ name: 'logout' }">로그아웃</router-link></li>
           </ul>
         </div>
+
 
         <!-- 크기 수정 필요해요.. 할 줄 모르겠어 ㅠ ㅠ -->
         <li v-if="isLoggedIn">
@@ -68,6 +69,7 @@
   </nav>
   
 </template>
+
 
 <script>
 import AutoCompleteSuggestions from '@/components/AutoCompleteSuggestions'
