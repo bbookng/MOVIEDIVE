@@ -14,6 +14,7 @@ import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
 import CollectionDetailView from '@/views/CollectionDetailView'
 import SearchResultView from '@/views/SearchResultView'
+import CollectionCreationFormView from '@/views/CollectionCreationFormView'
 
 Vue.use(VueRouter)
 
@@ -58,7 +59,7 @@ const routes = [
   },
   {
     path: '/review-create',
-    name: 'review-create',
+    name: 'review_create',
     component: ReviewCreateView
   },
   //
@@ -87,6 +88,11 @@ const routes = [
     name: 'search_result',
     component: SearchResultView
 
+  },
+  {
+    path: '/collection/create',
+    name: 'create_collection',
+    component: CollectionCreationFormView
   },
 ]
 
