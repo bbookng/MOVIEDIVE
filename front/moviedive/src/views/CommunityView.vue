@@ -1,17 +1,18 @@
 <template>
-  <div>
+  <div class="page">
     <input
       type="text"
       placeholder="영화 제목으로 리뷰 검색"
     >
     <br>
     <router-link :to="{ name: 'review-create' }">[CREATE]</router-link>
+    <hr>
     <ReviewList/>
   </div>
 </template>
 
 <script>
-import ReviewList from '@/components/ReviewList'
+import ReviewList from '@/components/community/ReviewList'
 
 export default {
   name: 'CommunityView',
@@ -40,5 +41,7 @@ export default {
 </script>
 
 <style>
-
+.page {
+  margin: 0 2em;
+}
 </style>

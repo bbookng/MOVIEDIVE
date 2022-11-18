@@ -9,6 +9,7 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
+import SearchResultView from '@/views/SearchResultView'
 
 Vue.use(VueRouter)
 
@@ -65,7 +66,12 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MyPageView
-  }
+  },
+  {
+    path: '/search/:keyword/',
+    name: 'search_result',
+    component: SearchResultView
+  },
 ]
 
 const router = new VueRouter({

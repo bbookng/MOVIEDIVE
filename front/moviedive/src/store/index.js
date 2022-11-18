@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '@/router'
+import drf from '@/api/drf'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ export default new Vuex.Store({
     currentUser: {},
     collections: []
   },
-  getters: {  
+  getters: {
+    movies: state => state.movies,  
     isLoggedIn(state) {
       return state.token ? true : false
     },
@@ -27,21 +29,21 @@ export default new Vuex.Store({
     authHeader: state => ({ Authorization: `Token ${state.token}`})
   },
   mutations: {
-      // 회원가입 && 로그인
-      SAVE_TOKEN(state, token) {
-        state.token = token
-        router.push({ name: 'main' })
-      },
-      GET_MOVIES(state, movies) {
-        state.movies = movies
-      },
-      SET_CURRENT_USER: (state, user) => state.currentUser = user,
-      GET_COLLECTIONS(state, collections) {
-        state.collections = collections
-      },
-      GET_REVIEWS(state, reviews) {
-        state.reviews = reviews
-      },
+    // 회원가입 && 로그인
+    SAVE_TOKEN(state, token) {
+      state.token = token
+      router.push({ name: 'main' })
+    },
+    GET_MOVIES(state, movies) {
+      state.movies = movies
+    },
+    SET_CURRENT_USER: (state, user) => state.currentUser = user,
+    GET_COLLECTIONS(state, collections) {
+      state.collections = collections
+    },
+    GET_REVIEWS(state, reviews) {
+      state.reviews = reviews
+    },
   },
   actions: {
     signUp(context, payload) {
@@ -161,6 +163,35 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err)
+        })
+    },
+    
+    fetchMovie({ commit, getters }, moviePk) {
+      /* 영화 정보 1개 받아오기
+      GET: article URL (token)
+        성공하면
+          응답으로 받은 정보를 state.movie에 저장
+        실패하면
+          단순 에러일 때는
+            에러 메시지 표시
+          404 에러일 때는
+            NotFound404 로 이동
+      */
+      axios({
+        url: drf.movies.movie(moviePk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          console.log(res.data)
+          commit('SET_MOVIE', res.data)
+        })
+          
+        .catch(err => {
+          console.error(err.response)
+          if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          }
         })
     },
   },
