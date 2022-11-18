@@ -41,12 +41,12 @@
             </div>
           </form>
         </li>
-        <li v-if="isLoggedIn">
+        <li v-if="isLoggedIn" style="position:relative">
           <router-link :to="{ name: 'mypage' }">MyPage</router-link>
         </li>
         
         <!-- 크기 수정 필요해요.. 할 줄 모르겠어 ㅠ ㅠ -->
-        <li class="toggle-btn" id="_1st-toggle-btn">
+        <li class="toggle-btn" id="_1st-toggle-btn" style="position:relative">
           <div>
             <input type="checkbox">
             <span></span>
@@ -211,16 +211,16 @@ export default {
     background: #40444b;
   }
 
-  .toggle-btn {
-  position: relative;
-  width: 145px;
-  height: 74px;
-  margin: 0 auto;
-  border-radius: 40px;
+.toggle-btn {
+position: relative;
+width: 145px;
+height: 74px;
+margin: 0 auto;
+border-radius: 40px;
 }
 
 input[type="checkbox"] {
-  width: 100%;
+  width: 150%;
   height: 100%;
   position: absolute;
   top: 0px;

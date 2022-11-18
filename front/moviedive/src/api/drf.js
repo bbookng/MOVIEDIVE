@@ -4,6 +4,7 @@ const ACCOUNTS = 'accounts/'
 const MOVIES = 'movies/'
 const COLLECTIONS = 'collections/'
 const COMMUNITY = 'commnunity/'
+const GAMES = 'games/'
 
 
 export default {
@@ -27,14 +28,11 @@ export default {
     },
     movies: {
         movies: () => HOST + MOVIES,
-        movie: moviePk => HOST + MOVIES + `${moviePk}`,
-        wishMovie: moviePk => HOST + MOVIES + `${moviePk}/` + 'wish/',
-        review: moviePk => HOST + MOVIES + `${moviePk}/` + 'review/',
-        reviews: moviePk => HOST + MOVIES + `${moviePk}/` + 'reviews/',
-        likeUpDeReview: (moviePk, reviewPk) => HOST + MOVIES + `${moviePk}/` + 'reviews/' + `${reviewPk}`,
-        //   HOST + MOVIES + `${articlePk}/` + REVIEWS + `${commentPk}/`,
+        movie: movie_pk => HOST + MOVIES + `${movie_pk}`,
+        likeMovie: movie_pk => HOST + MOVIES + `${movie_pk}/` + 'like/',
+        reviews: moviepk => HOST + MOVIES + `${movie_pk}/` + 'reviews/',
+        collections: movie_pk => HOST + MOVIES + `${movie_pk}/` + 'collections/',
         auto_complete: keyword => HOST + MOVIES + 'search/' + `${keyword}/`,
-        lookForCollections: moviePk => HOST + MOVIES + `${moviePk}/` + 'collections/'
     },
     collections: {
         main_collections: () => HOST + COLLECTIONS +  'main',
@@ -43,16 +41,18 @@ export default {
         collection_detail: collectionPk => HOST + COLLECTIONS + `${collectionPk}/`,
         like_collection: collectionPk => HOST + COLLECTIONS + `${collectionPk}/` + LIKE,
     },
-    bingos: {
-        current_bingo: () => HOST + BINGOS + 'current',
+    games: {
+        actorquiz: () => HOST + GAMES + 'actorquiz/',
+        oxquiz: () => HOST + GAMES + 'oxquiz/',
+        user_exp: user_pk => HOST + GAMES + `${user_pk}`
     },
     community: {
-        community_list: () => HOST + COMMUNITY,
-        create_thread: moviePk => HOST + COMMUNITY + `create/${moviePk}/`,
-
-        thread_detail: threadPk => HOST + COMMUNITY + `${threadPk}`,
-        create_comment: threadPk => HOST + COMMUNITY + `${threadPk}/` + 'comment/',
-        delete_comment: (threadPk, commentPk) => HOST + COMMUNITY + `${threadPk}/` + 'comment/' +`${commentPk}/`,
-        checkThread: moviePk => HOST + COMMUNITY + 'moviethread/' + `${moviePk}/`
-    }
+        review_list: () => HOST + COMMUNITY,
+        search_review: movie_pk => HOST + COMMUNITY + `${movie_pk}/`,
+        create_review:  movie_pk => HOST + COMMUNITY +  `${movie_pk}/` + 'create/',
+        review_detail: (movie_pk, review_pk) => HOST + COMMUNITY + `${movie_pk}/` + `${review_pk}`,
+        like_review: (movie_pk, review_pk) => HOST + COMMUNITY + `${movie_pk}/` + `${review_pk}` + 'like/',
+        comments_list: (movie_pk, review_pk) => HOST + COMMUNITY + `${movie_pk}/` + `${review_pk}` + 'comments/',
+        comment_statue: (movie_pk, review_pk, comment_pk) => HOST + COMMUNITY + `${movie_pk}/` + `${review_pk}` + 'comments/' + `${comment_pk}`,
+    },
     }
