@@ -15,12 +15,12 @@ from community.models import Review
 def movie_list(request):
     keyword = request.GET.get('keyword')
 
-    # if keyword:
-    #     movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
-    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
-    # else:
-    #     movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
-    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
+    if keyword:
+        movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
+        like_count=Count('like_users', distinct=True)).order_by('-popularity')
+    else:
+        movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
+        like_count=Count('like_users', distinct=True)).order_by('-popularity')
     
     movies = get_list_or_404(Movie)
     paginator = Paginator(movies, 20)

@@ -4,8 +4,9 @@
       type="text"
       placeholder="영화 제목으로 리뷰 검색"
     >
-    <br>
-    <router-link :to="{ name: 'review_create' }">[CREATE]</router-link>
+    <button
+      @click="goToReviewCreate"
+    >리뷰 작성하기</button>
     <hr>
     <ReviewList/>
   </div>
@@ -36,6 +37,9 @@ export default {
         this.$router.push({ name: 'LogInView' })
       }
     },
+    goToReviewCreate() {
+      this.$router.push({ name: 'review_create' })
+    }
   }
 }
 </script>

@@ -15,6 +15,10 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
+    def movie_title(self):
+        return self.movie.title
+
+    @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at
         if time < timedelta(minutes=1):

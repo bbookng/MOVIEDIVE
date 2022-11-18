@@ -12,8 +12,11 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
+import ReviewFormView from '@/views/ReviewFormView'
+// import CollectionDetailView from '@/views/CollectionDetailView'
 import SearchResultView from '@/views/SearchResultView'
 import CollectionCreationFormView from '@/views/CollectionCreationFormView'
+
 
 Vue.use(VueRouter)
 
@@ -52,14 +55,19 @@ const routes = [
     component: CommunityView
   },
   {
-    path: '/review-detail/:movieId/:reviewId',
-    name: 'review-detail',
+    path: '/review_detail/:movieId/:reviewId',
+    name: 'review_detail',
     component: () => import('@/views/ReviewDetailView')
   },
   {
-    path: '/review-create',
+    path: '/review/create',
     name: 'review_create',
     component: ReviewCreateView
+  },
+  {
+    path: '/review/:movie_id/:review_id',
+    name: 'review_form',
+    component: ReviewFormView
   },
   //
   {

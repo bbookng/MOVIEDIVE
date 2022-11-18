@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>리뷰 작성</h1>
+    
     <form @submit.prevent="createReview">
       <form @submit="searchThings(searchKeyword)">
         <div class="search-box">
@@ -14,9 +15,7 @@
       <input type="text" id="title" v-model.trim="title"><br>
       <label for="content">내용 : </label>
       <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
-      <label for="rate">별점 </label>
-      <input type="number" name="rate" v-model="rate" min="0" max="5" step="0.5"><br>
-      <input type="submit" id="submit" value="발행">
+      <input type="submit" id="submit">
     </form>
   </div>
 </template>
@@ -33,11 +32,11 @@ export default {
   name: 'ReviewFormView',
   data() {
     return {
-      searchKeyword: '',
       movie: null,
       title: null,
       content: null,
       rate: null,
+      searchKeyword: '',
     }
   },
   components: {
@@ -48,9 +47,8 @@ export default {
     searchThings(keyword) {        
       this.$router.push({ name: 'search_result', params: { keyword } })
     },
-    fillSearchKeyword(suggest){
-      this.searchKeyword = suggest.title
-      this.movie = suggest.id
+    fillSearchKeyword(keyword){
+      this.searchKeyword = keyword
     },
     changeKeyword(event) {
       this.searchKeyword = event.target.value
@@ -62,7 +60,7 @@ export default {
       const content = this.content
       const rate = this.rate
       if (!movie) {
-        alert('영화를 선택해주세요')
+        alert('영화를 입력해주세요')
         return
       } else if (!title) {
         alert('제목을 입력해주세요')
@@ -89,7 +87,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'community' })
+          this.$router.push({ name: 'ReviewDetailView' })
         })
         .catch((err) => {
           console.log(err)
