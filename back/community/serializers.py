@@ -28,15 +28,3 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
         read_only_fields = ('user', )
-<<<<<<< HEAD
-
-# movies에 있는 걸로 해보고 안 되면 살리고 되면 지우기
-# class AutoCompleteSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-        
-#         model = Movie
-#         fields=('id', 'title',)
-=======
-        
->>>>>>> fb94408605ed4286aa388d9f9a2627d8ed6a9ef1

@@ -17,11 +17,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || '',
     movies: [],
     movie: {},
-<<<<<<< HEAD
     suggests: {},
-=======
-    suggests: [],
->>>>>>> fb94408605ed4286aa388d9f9a2627d8ed6a9ef1
     reviews: [],
     currentUser: {},
     collections: [],

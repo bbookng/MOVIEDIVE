@@ -1,14 +1,9 @@
 <template>
   <div>
     <h1>Hello, Collections !</h1>
-<<<<<<< HEAD
-    <router-link :to="{ name:'create_collection' }">새 컬렉션</router-link>
-    <CollectionList/>
-=======
     <router-link :to="{ name: 'create_collection' }">새 컬렉션</router-link>
     <CollectionList v-if="!isCollectionDetail" />
     <CollectionDetail v-if="isCollectionDetail" />
->>>>>>> fb94408605ed4286aa388d9f9a2627d8ed6a9ef1
   </div>
 </template>
 

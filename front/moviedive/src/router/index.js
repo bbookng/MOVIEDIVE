@@ -12,11 +12,8 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
-<<<<<<< HEAD
 import ReviewFormView from '@/views/ReviewFormView'
 import CollectionDetailView from '@/views/CollectionDetailView'
-=======
->>>>>>> fb94408605ed4286aa388d9f9a2627d8ed6a9ef1
 import SearchResultView from '@/views/SearchResultView'
 import CollectionCreationFormView from '@/views/CollectionCreationFormView'
 
@@ -97,6 +94,11 @@ const routes = [
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
+  },
+  {
+    path: '/collection/create',
+    name: 'create_collection',
+    component: CollectionCreationFormView
   },
 ]
 
