@@ -48,10 +48,11 @@ export default {
         password1,
         password2,
         email,
+        nickname
       }
 
       this.$store.dispatch('signUp', payload)
-      this.$store.dispatch('getNickname', nickname)
+      
 
     }
   }

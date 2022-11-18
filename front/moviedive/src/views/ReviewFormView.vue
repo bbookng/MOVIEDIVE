@@ -1,10 +1,11 @@
 <template>
   <div>
     <h1>리뷰 작성</h1>
+    
     <form @submit.prevent="createReview">
       <form @submit="searchThings(searchKeyword)">
         <div class="search-box">
-          <div class="s earch-container">
+          <div class="search-container">
             <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
             <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
           </div>
@@ -14,9 +15,7 @@
       <input type="text" id="title" v-model.trim="title"><br>
       <label for="content">내용 : </label>
       <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
-      <label for="rate">별점 </label>
-      <input type="number" name="rate" min="0" max="5" step="0.5"><br>
-      <input type="submit" id="submit" value="발행">
+      <input type="submit" id="submit">
     </form>
   </div>
 </template>
@@ -33,11 +32,11 @@ export default {
   name: 'ReviewFormView',
   data() {
     return {
-      searchKeyword: '',
       movie: null,
       title: null,
       content: null,
       rate: null,
+      searchKeyword: '',
     }
   },
   components: {
@@ -48,8 +47,8 @@ export default {
     searchThings(keyword) {        
       this.$router.push({ name: 'search_result', params: { keyword } })
     },
-    fillSearchKeyword(suggest){
-      this.searchKeyword = suggest.title
+    fillSearchKeyword(keyword){
+      this.searchKeyword = keyword
     },
     changeKeyword(event) {
       this.searchKeyword = event.target.value

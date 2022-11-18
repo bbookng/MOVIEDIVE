@@ -1,12 +1,15 @@
 <template>
   <div>
     <h1>Detail</h1>
-    <p>영화 번호: {{ review?.movie }}</p>
+    <p>{{ review?.movie_title }}</p>
     <p>글 번호 : {{ review?.id }}</p>
     <p>제목 : {{ review?.title }}</p>
     <p>내용 : {{ review?.content }}</p>
     <p>작성시간 : {{ review?.created_at }}</p>
     <p>수정시간 : {{ review?.updated_at }}</p>
+    <button
+      @click="goToReviewForm"
+    >수정</button>
   </div>
 </template>
 
@@ -38,7 +41,10 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
+    goToReviewForm() {
+      this.$router.push({ name: 'review_form', params: { movie_id: this.review.movie, review_id: this.review.id }})
+    },
   }
 }
 </script>

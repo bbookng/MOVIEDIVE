@@ -12,9 +12,14 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
+<<<<<<< HEAD
+import ReviewFormView from '@/views/ReviewFormView'
 import CollectionDetailView from '@/views/CollectionDetailView'
+=======
+>>>>>>> fb94408605ed4286aa388d9f9a2627d8ed6a9ef1
 import SearchResultView from '@/views/SearchResultView'
 import CollectionCreationFormView from '@/views/CollectionCreationFormView'
+
 
 Vue.use(VueRouter)
 
@@ -53,14 +58,19 @@ const routes = [
     component: CommunityView
   },
   {
-    path: '/review-detail/:movieId/:reviewId',
-    name: 'review-detail',
+    path: '/review_detail/:movieId/:reviewId',
+    name: 'review_detail',
     component: () => import('@/views/ReviewDetailView')
   },
   {
-    path: '/review-create',
+    path: '/review/create',
     name: 'review_create',
     component: ReviewCreateView
+  },
+  {
+    path: '/review/:movie_id/:review_id',
+    name: 'review_form',
+    component: ReviewFormView
   },
   //
   {
@@ -79,19 +89,14 @@ const routes = [
     component: MyPageView
   },
   {
-    path: '/collection/:collection_pk',
-    name: 'collection_detail',
-    component: CollectionDetailView
+    path: '/collection/create/',
+    name: 'create_collection',
+    component: CollectionCreationFormView
   },
   {
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
-  },
-  {
-    path: '/collection/create',
-    name: 'create_collection',
-    component: CollectionCreationFormView
   },
 ]
 

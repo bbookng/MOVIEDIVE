@@ -18,7 +18,7 @@ export default {
 
         // username으로 프로필 제공
         profile: username => HOST + ACCOUNTS + 'profile/' + `${username}/`,
-        set_nickname: () => HOST + ACCOUNTS + 'profile/' + 'set_nickname/',
+        set_nickname: () => HOST + ACCOUNTS + 'profile/set_nickname/',
         set_message: () => HOST + ACCOUNTS + 'profile/' + 'set_message/',
         update_profile: username => HOST + ACCOUNTS + 'profile/' + `${username}/update/`,
         followuser: user_pk => HOST + ACCOUNTS + 'profile/' + `${user_pk}/` + 'follow/',

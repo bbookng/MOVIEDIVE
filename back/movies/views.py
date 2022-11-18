@@ -15,12 +15,12 @@ from community.models import Review
 def movie_list(request):
     keyword = request.GET.get('keyword')
 
-    # if keyword:
-    #     movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
-    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
-    # else:
-    #     movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
-    #     wish_count=Count('wish_users', distinct=True)).order_by('-popularity')
+    if keyword:
+        movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
+        like_count=Count('like_users', distinct=True)).order_by('-popularity')
+    else:
+        movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
+        like_count=Count('like_users', distinct=True)).order_by('-popularity')
     
     movies = get_list_or_404(Movie)
     paginator = Paginator(movies, 20)
@@ -48,8 +48,6 @@ def like_movie(request, movie_pk):
     else:
         movie.like_users.add(user)
         return Response(status=status.HTTP_200_OK)
-
-# reviews 와 collections 역참조 하기
 
 @api_view(['GET'])
 def movie_reviews(request, movie_pk):

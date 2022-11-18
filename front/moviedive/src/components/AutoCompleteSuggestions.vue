@@ -1,7 +1,7 @@
 <template>
   <div id="suggestions"> 
-    <div v-for="suggest in suggests" :key="suggest.title">
-      <div @click="select_suggestion(suggest.title)" class="suggestion-item">{{ suggest.title }}</div>
+    <div v-for="suggest in suggests" :key="suggest.id">
+      <div @click="select_suggestion(suggest)" class="suggestion-item">{{ suggest.title }}</div>
     </div>
   </div>  
 </template>
@@ -15,8 +15,8 @@ export default {
   },
   methods: {
     ...mapActions(['deleteSuggestion']),
-    select_suggestion(title) {
-      this.$emit('titleFromSuggestions', title)
+    select_suggestion(suggest) {
+      this.$emit('titleFromSuggestions', suggest)
       this.deleteSuggestion()
     },
     summary(a) {

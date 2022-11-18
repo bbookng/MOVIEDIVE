@@ -54,9 +54,8 @@ class AutoCompleteSerializer(serializers.ModelSerializer):
 
     class Meta:
         
-        model=Movie
-        fields=('title',)
-
+        model = Movie
+        fields = '__all__'
 class ReviewSerializer(serializers.ModelSerializer):
     
     class UserSerializer(serializers.ModelSerializer):   
