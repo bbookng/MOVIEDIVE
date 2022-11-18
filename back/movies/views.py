@@ -4,9 +4,10 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from .models import Movie
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import MovieListSerializer, MovieSerializer, AutoCompleteSerializer
+from .serializers import MovieListSerializer, MovieSerializer, AutoCompleteSerializer, ReviewSerializer
 from django.db.models import Count
 from django.core.paginator import Paginator
+from community.models import Review
 
 # Create your views here.
 
@@ -39,16 +40,27 @@ def movie_detail(request, movie_pk):
 
 @api_view(['POST'])
 def like_movie(request, movie_pk):
-    pass
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user = request.user
+    if movie.like_users.filter(pk=user.pk).exists():
+        movie.like_users.remove(user)
+        return Response(status=status.HTTP_200_OK)
+    else:
+        movie.like_users.add(user)
+        return Response(status=status.HTTP_200_OK)
 
 # reviews 와 collections 역참조 하기
 
 @api_view(['GET'])
 def movie_reviews(request, movie_pk):
-    pass
-
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    reviews = Review.objects.filter(movie=movie).annotate(likes_cnt = Count('like_users', distinct=True)).order_by('-like_cnt')[:3]
+    serializer = ReviewSerializer(reviews, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    
 @api_view(['GET'])
 def movie_collections(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
     pass
 
 @api_view(['GET'])

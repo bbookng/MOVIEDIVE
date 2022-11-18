@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MovieList from '@/components/MovieList'
+import MovieList from '@/components/movies/MovieList'
 
 export default {
   name: 'MainView',
