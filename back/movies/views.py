@@ -49,8 +49,6 @@ def like_movie(request, movie_pk):
         movie.like_users.add(user)
         return Response(status=status.HTTP_200_OK)
 
-# reviews 와 collections 역참조 하기
-
 @api_view(['GET'])
 def movie_reviews(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
