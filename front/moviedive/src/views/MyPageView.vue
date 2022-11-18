@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>MyPage</h1>
+    <div>
+      {{ currentuser }}
+    </div>
   </div>
   
 </template>
@@ -8,6 +10,19 @@
 <script>
 export default {
   name: 'MyPageView',
+  computed: {
+    currentuser() {
+      return this.$store.getters.currentuser
+    }
+
+  },
+  methods: {
+
+  },
+  created() {
+
+  }
+
 }
 </script>
 

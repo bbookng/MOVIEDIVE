@@ -1,14 +1,13 @@
 <template>
   <div>
     <h1>Hello, Collections !</h1>
-    <button @click="createCollection">Create Collection</button>
+    <router-link :to="{name:'create_collection'}">새 컬렉션</router-link>
     <CollectionList/>
   </div>
 </template>
 
 <script>
 import CollectionList from '@/components/collections/CollectionList.vue'
-
 
 export default {
   name: 'CollectionsView',

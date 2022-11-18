@@ -4,6 +4,7 @@ import store from '../store'
 
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
+import LogoutView from '@/views/LogoutView.vue'
 import MainView from '@/views/MainView'
 import CollectionsView from '@/views/CollectionsView'
 import CommunityView from '@/views/CommunityView'
@@ -13,6 +14,7 @@ import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
 import CollectionDetailView from '@/views/CollectionDetailView'
 import SearchResultView from '@/views/SearchResultView'
+import CollectionCreationFormView from '@/views/CollectionCreationFormView'
 
 Vue.use(VueRouter)
 
@@ -34,6 +36,12 @@ const routes = [
     component: LogInView
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView
+
+  },
+  {
     path: '/collection',
     name: 'collection',
     component: CollectionsView
@@ -51,7 +59,7 @@ const routes = [
   },
   {
     path: '/review-create',
-    name: 'review-create',
+    name: 'review_create',
     component: ReviewCreateView
   },
   //
@@ -66,7 +74,7 @@ const routes = [
     component: DeepDiveView
   },
   {
-    path: '/mypage',
+    path: '/mypage/:username',
     name: 'mypage',
     component: MyPageView
   },
@@ -79,6 +87,11 @@ const routes = [
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
+  },
+  {
+    path: '/collection/create',
+    name: 'create_collection',
+    component: CollectionCreationFormView
   },
 ]
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>{{ collection.title }}</p>
-    <img :src=mainImgURL alt="..." @click="getCollectionDetail">
+    <img :src=mainImgURL alt="...">
   </div>
 </template>
 
@@ -20,13 +20,7 @@ export default {
     computed: {
     
     },
-    methods: {
-        getCollectionDetail() {
-            this.$route.push({name: 'collection_detail', params: { pk: this.collection.user.pk}})
-            
-        }
-    }
-
+    
 }
 </script>
 

@@ -14,13 +14,14 @@ export default new Vuex.Store({
     createPersistedState(),
   ],
   state: {
-    token: null,
+    token: localStorage.getItem('token') || '' ,
     movies: [],
     movie: {},
     suggests:[],
     reviews: [],
     currentUser: {},
-    collections: []
+    collections: [],
+    authError: null,
   },
   getters: {
     movies: state => state.movies,
@@ -31,7 +32,8 @@ export default new Vuex.Store({
       return state.token ? true : false
     },
     currentUser: state => state.currentUser,
-    authHeader: state => ({ Authorization: `Token ${state.token}`})
+    authHeader: state => ({ Authorization: `Token ${state.token}`}),
+    authError: state => state.authError,
   },
   mutations: {
     // 회원가입 && 로그인
@@ -43,6 +45,7 @@ export default new Vuex.Store({
       state.movies = movies
     },
     SET_CURRENT_USER: (state, user) => state.currentUser = user,
+    SET_AUTH_ERROR: (state, error) => state.authError = error,
     GET_COLLECTIONS(state, collections) {
       state.collections = collections
     },
@@ -97,9 +100,26 @@ export default new Vuex.Store({
           context.commit('SAVE_TOKEN', res.data.key)
         })
     },
+    removeToken({ commit }) {
+      /* 
+      state.token 삭제
+      localStorage에 token 추가
+      */
+      commit('SET_TOKEN', '')
+      localStorage.setItem('token', '')
+    },
     logout({ getters, dispatch }) {
+      /* 
+      POST: token을 logout URL로 보내기
+        성공하면
+          토큰 삭제
+          사용자 알람
+          LoginView로 이동
+        실패하면
+          에러 메시지 표시
+      */
       axios({
-        url: `${API_URL}/accounts/logout/`,
+        url: drf.accounts.logout(),
         method: 'post',
         // data: {},
         headers: getters.authHeader,

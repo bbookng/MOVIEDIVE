@@ -5,7 +5,7 @@
       placeholder="영화 제목으로 리뷰 검색"
     >
     <br>
-    <router-link :to="{ name: 'review-create' }">[CREATE]</router-link>
+    <router-link :to="{ name: 'review_create' }">[CREATE]</router-link>
     <hr>
     <ReviewList/>
   </div>
