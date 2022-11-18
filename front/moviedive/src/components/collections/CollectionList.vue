@@ -4,6 +4,7 @@
       v-for="collection in collections"
       :key="collection.id"
       :collection="collection"
+      @sendcollection="sendCollection"
     />
     <p>?</p>
   </div>
@@ -14,7 +15,15 @@ import CollectionListItem from "@/components/collections/CollectionListItem.vue"
 
 export default {
   name: "CollectionList",
-  props: {},
+  data() {
+    return {
+      collection_pk: null,
+    }
+
+  },
+  props: {
+
+  },
   components: {
     CollectionListItem,
   },
@@ -23,7 +32,13 @@ export default {
       return this.$store.state.collections;
     },
   },
-  methods: {},
+  methods: {
+    sendCollection(collection_pk) {
+      this.collection_pk = collection_pk
+      this.$emit('sendcollection', this.collection_pk)
+      console.log(this.collection_pk)
+    }
+  },
 };
 </script>
 
