@@ -41,10 +41,20 @@
             </div>
           </form>
         </li>
-        <li v-if="isLoggedIn" style="position:relative">
-          <router-link :to="{ name: 'mypage' }">MyPage</router-link>
-        </li>
         
+        <div v-if="isLoggedIn" class="btn-group">
+          <button type="button" class="btn btn-danger"></button>
+          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">프로필이미지</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><router-link class="dropdown-item" :to="{ name: 'mypage' }">MyPage</router-link></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+
         <!-- 크기 수정 필요해요.. 할 줄 모르겠어 ㅠ ㅠ -->
         <li class="toggle-btn" id="_1st-toggle-btn" style="position:relative">
           <div>

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
+
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
 import MainView from '@/views/MainView'
@@ -9,6 +11,7 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewCreateView from '@/views/ReviewCreateView'
+import CollectionDetailView from '@/views/CollectionDetailView'
 
 Vue.use(VueRouter)
 
@@ -65,13 +68,45 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MyPageView
-  }
+  },
+  {
+    path: '/collection/:collection_pk',
+    name: 'collection_detail',
+    component: CollectionDetailView
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+// Navigation Guard 설정
+router.beforeEach((to, from, next) => {
+  // 이전 페이지에서 발생한 에러메시지 삭제
+  store.commit('SET_AUTH_ERROR', null)
+
+  const { isLoggedIn } = store.getters
+
+  const noAuthPages = ['login', 'signup']
+
+  const isAuthRequired = !noAuthPages.includes(to.name)
+
+  if (isAuthRequired && !isLoggedIn && to.name !== 'main') {
+    alert('Require Login. Redirecting..')
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+
+  if (to.name == 'main') {
+    next({ name: 'main' })
+  }
+
+  if (!isAuthRequired && isLoggedIn) {
+    next({ name: 'main' })
+  }
 })
 
 export default router
