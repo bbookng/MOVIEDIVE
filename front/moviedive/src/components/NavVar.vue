@@ -98,7 +98,16 @@ export default {
     nickname() {
       return this.currentUser.profile_info ? this.currentUser.profile_info[0].nickname : 'guest'
     },
-  }
+  },
+  methods: {
+    fillSearchKeyword(keyword){
+      this.searchKeyword = keyword
+    },
+    changeKeyword(event) {
+      this.searchKeyword = event.target.value
+      this.autoComplete(this.searchKeyword)
+    },
+  },
 }
 </script>
 

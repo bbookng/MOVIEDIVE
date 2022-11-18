@@ -10,5 +10,4 @@ urlpatterns = [
     path('<int:movie_pk>/reviews/', views.movie_reviews, name="reviews"),
     path('<int:movie_pk>/collections/', views.movie_collections, name='collections'),
     path('search/<keyword>/', views.auto_complete),
-    
 ]

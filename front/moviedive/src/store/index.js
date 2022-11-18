@@ -16,13 +16,18 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || '' ,
     movies: [],
+    movie: {},
+    suggests:[],
     reviews: [],
     currentUser: {},
     collections: [],
     authError: null,
   },
   getters: {
-    movies: state => state.movies,  
+    movies: state => state.movies,
+    movie: state => state.movie,
+    // searched_movies: state => state.searched_movies,
+    suggests: state => state.suggests, 
     isLoggedIn(state) {
       return state.token ? true : false
     },
@@ -47,6 +52,9 @@ export default new Vuex.Store({
     GET_REVIEWS(state, reviews) {
       state.reviews = reviews
     },
+    SET_MOVIES: (state, movies) => state.movies = movies,
+    SET_MOVIE: (state, movie) => state.movie = movie,
+    SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
   },
   actions: {
     signUp(context, payload) {
@@ -185,7 +193,74 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    fetchMovies({ commit, getters }, keyword) {
+      /* 게시글 목록 받아오기
+      GET: articles URL (token)
+        성공하면
+          응답으로 받은 게시글들을 state.articles에 저장
+        실패하면
+          에러 메시지 표시
+      */
+      let query = "?"
+      if (keyword) {
+        query += `keyword=${keyword}`
+      }
+
+      axios({
+        url: drf.movies.movies()+query,
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          console.log(res.data)
+          commit(`SET_MOVIES`, res.data)
+        })
+        .catch(err => console.error(err.response))
+    },
+    fetchMovie({ commit, getters }, moviePk) {
+      /* 영화 정보 1개 받아오기
+      GET: article URL (token)
+        성공하면
+          응답으로 받은 정보를 state.movie에 저장
+        실패하면
+          단순 에러일 때는
+            에러 메시지 표시
+          404 에러일 때는
+            NotFound404 로 이동
+      */
+      axios({
+        url: drf.movies.movie(moviePk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          console.log(res.data)
+          commit('SET_MOVIE', res.data)
+        })
+          
+        .catch(err => {
+          console.error(err.response)
+          if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          }
+        })
+    },
+    autoComplete({ commit, getters }, keyword) {
+      commit('SET_SUGGESTS', [])
+      axios({
+        url: drf.movies.auto_complete(keyword),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_SUGGESTS', res.data)
+      })
+    },
+    deleteSuggestion({ commit }) {
+      commit('SET_SUGGESTS', [])
+    },
   },
+
   modules: {
   }
 })

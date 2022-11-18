@@ -87,7 +87,6 @@ const routes = [
     path: '/search/:keyword/',
     name: 'search_result',
     component: SearchResultView
-
   },
   {
     path: '/collection/create',
