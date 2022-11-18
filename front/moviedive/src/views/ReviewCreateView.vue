@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>리뷰 작성</h1>
-    <form @submit.prevent="createArticle">
+    <form @submit.prevent="createReview">
       <label for="title">제목 : </label>
       <input type="text" id="title" v-model.trim="title"><br>
       <label for="content">내용 : </label>
@@ -16,32 +16,43 @@ import axios from 'axios'
 
 const API_URL = 'http://127.0.0.1:8000'
 
-
 export default {
   name: 'ReviewCreateView',
   data() {
     return {
+      movie: null,
       title: null,
       content: null,
+      rate: null,
     }
   },
   methods: {
-    createArticle() {
+    createReview() {
+      const movie = this.movie
       const title = this.title
       const content = this.content
-      if (!title) {
+      const rate = this.rate
+      if (!movie) {
+        alert('영화를 입력해주세요')
+        return
+      } else if (!title) {
         alert('제목을 입력해주세요')
         return
       } else if (!content) {
         alert('내용을 입력해주세요')
         return
+      } else if (!rate) {
+        alert('평점을 입력해주세요')
+        return
       }
       axios({
         method: 'post',
-        url: `${API_URL}/api/v1/articles/`,
+        url: `${API_URL}/api/community/`,
         data: {
+          movie: movie,
           title: title,
           content: content,
+          rate: rate,
         },
         headers: {
           Authorization: `Token ${this.$store.state.token}`
@@ -49,7 +60,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'ArticleView' })
+          this.$router.push({ name: 'ReviewView' })
         })
         .catch((err) => {
           console.log(err)
