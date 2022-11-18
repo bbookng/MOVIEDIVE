@@ -46,10 +46,11 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
     like_users_cnt = serializers.IntegerField(source='like_users.count', read_only=True)
     movies = MovieSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
+    comments_cnt = serializers.IntegerField(source='comments.count', read_only=True)
 
     class Meta:
         model = Collection
-        fields= ('pk', 'title', 'movies', 'like_users_cnt','description', 'user', 'comments', 'like_users',)
+        fields= '__all__'
 
 class CollectionUpdateSerializer(serializers.ModelSerializer):
     
