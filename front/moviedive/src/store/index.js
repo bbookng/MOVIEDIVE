@@ -14,26 +14,29 @@ export default new Vuex.Store({
     createPersistedState(),
   ],
   state: {
-    token: localStorage.getItem('token') || '' ,
+    token: localStorage.getItem('token') || '',
     movies: [],
     movie: {},
-    suggests:[],
+    suggests: [],
     reviews: [],
     currentUser: {},
     collections: [],
     authError: null,
+    isCollectionDetail: false
   },
   getters: {
     movies: state => state.movies,
     movie: state => state.movie,
     // searched_movies: state => state.searched_movies,
-    suggests: state => state.suggests, 
+    suggests: state => state.suggests,
     isLoggedIn(state) {
       return state.token ? true : false
     },
+    collections: state => state.collections,
     currentUser: state => state.currentUser,
-    authHeader: state => ({ Authorization: `Token ${state.token}`}),
+    authHeader: state => ({ Authorization: `Token ${state.token}` }),
     authError: state => state.authError,
+    isCollectionDetail: state => state.isCollectionDetail
   },
   mutations: {
     // 회원가입 && 로그인
@@ -55,6 +58,7 @@ export default new Vuex.Store({
     SET_MOVIES: (state, movies) => state.movies = movies,
     SET_MOVIE: (state, movie) => state.movie = movie,
     SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
+    SET_ISCOLLECTION_DETAIL: (state, bool) => state.isCollectionDetail = bool
   },
   actions: {
     signUp(context, payload) {
@@ -68,18 +72,18 @@ export default new Vuex.Store({
           email: payload.email,
         }
       })
-      .then((res) => {
-        context.commit('SAVE_TOKEN', res.data.key)
-        // console.log(res)
-      })
-      .then(() => {
+        .then((res) => {
+          context.commit('SAVE_TOKEN', res.data.key)
+          // console.log(res)
+        })
+        .then(() => {
           console.log(payload.nickname)
           context.dispatch('getNickname', payload.nickname)
-          
+
         })
         .catch(() => alert('이미 있다'))
     },
-    getNickname( context, nickname ) {
+    getNickname(context, nickname) {
       console.log(nickname)
       console.log(drf.accounts.set_nickname)
       axios({
@@ -90,9 +94,9 @@ export default new Vuex.Store({
           nickname: nickname
         }
       })
-      .then((res) => {
-        console.log(res)
-      })
+        .then((res) => {
+          console.log(res)
+        })
     },
     logIn(context, payload) {
       axios({
@@ -118,7 +122,7 @@ export default new Vuex.Store({
       console.log("removeToken")
       localStorage.setItem("token", "")
       commit('SAVE_TOKEN', '')
-      
+
     },
     logout({ dispatch }) {
       /* 
@@ -149,8 +153,8 @@ export default new Vuex.Store({
         method: 'get',
         url: `${API_URL}/movies/`,
       })
-      .then(res => 
-        context.commit('GET_MOVIES', res.data))
+        .then(res =>
+          context.commit('GET_MOVIES', res.data))
     },
     fetchCurrentUser({ commit, getters, dispatch }) {
       /*
@@ -162,7 +166,7 @@ export default new Vuex.Store({
             기존 토큰 삭제
             LoginView로 이동
       */
-    if (getters.isLoggedIn) {
+      if (getters.isLoggedIn) {
         axios({
           url: `${API_URL}/accounts/currentuser/`,
           method: 'get',
@@ -184,9 +188,9 @@ export default new Vuex.Store({
         method: 'GET',
         url: `${API_URL}/collections/`,
       })
-      .then((res)=>{
-        context.commit('GET_COLLECTIONS', res.data)
-      })
+        .then((res) => {
+          context.commit('GET_COLLECTIONS', res.data)
+        })
     },
     getReviews(context) {
       axios({
@@ -219,7 +223,7 @@ export default new Vuex.Store({
       }
 
       axios({
-        url: drf.movies.movies()+query,
+        url: drf.movies.movies() + query,
         method: 'get',
         headers: getters.authHeader,
       })
@@ -249,7 +253,7 @@ export default new Vuex.Store({
           console.log(res.data)
           commit('SET_MOVIE', res.data)
         })
-          
+
         .catch(err => {
           console.error(err.response)
           if (err.response.status === 404) {
@@ -264,13 +268,14 @@ export default new Vuex.Store({
         method: 'get',
         headers: getters.authHeader,
       })
-      .then(res => {
-        commit('SET_SUGGESTS', res.data)
-      })
+        .then(res => {
+          commit('SET_SUGGESTS', res.data)
+        })
     },
     deleteSuggestion({ commit }) {
       commit('SET_SUGGESTS', [])
     },
+
   },
 
   modules: {

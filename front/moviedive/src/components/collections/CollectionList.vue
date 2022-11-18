@@ -4,35 +4,28 @@
       v-for="collection in collections"
       :key="collection.id"
       :collection="collection"
-      @click="getCollectionDetail"
-      />
+    />
+    <p>?</p>
   </div>
 </template>
 
 <script>
-import CollectionListItem from '@/components/collections/CollectionListItem.vue'
+import CollectionListItem from "@/components/collections/CollectionListItem.vue";
+
 export default {
-  name: 'CollectionList',
+  name: "CollectionList",
+  props: {},
   components: {
     CollectionListItem,
   },
   computed: {
     collections() {
-      return this.$store.state.collections
-    }
+      return this.$store.state.collections;
+    },
   },
-  methods: {
-        getCollectionDetail() {
-            this.$router.push({name: 'collection_detail', params: { pk: this.collection.user.pk}})
-            
-        }
-    }
-
-
-
-}
+  methods: {},
+};
 </script>
 
 <style>
-
 </style>
