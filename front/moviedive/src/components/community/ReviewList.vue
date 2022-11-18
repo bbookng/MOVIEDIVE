@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ReviewListItem from '@/components/ReviewListItem'
+import ReviewListItem from '@/components/community/ReviewListItem'
 
 export default {
   name: 'ReviewList',

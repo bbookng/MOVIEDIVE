@@ -2,6 +2,16 @@
   <div>
     <h1>리뷰 작성</h1>
     <form @submit.prevent="createReview">
+      <form @submit="searchThings(searchKeyword)">
+        <div class="search-box">
+          <div class="search-container">
+            <button class="search-icon"><i class="bi bi-search"></i></button>
+            <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="Search..." />
+            <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
+          </div>
+        </div>
+      </form>
+      <!-- <input type="text" id="movie" v-model.trim="movie"><br> -->
       <label for="title">제목 : </label>
       <input type="text" id="title" v-model.trim="title"><br>
       <label for="content">내용 : </label>
@@ -13,10 +23,13 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex'
+import AutoCompleteSuggestions from '@/components/AutoCompleteSuggestions'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
+  
   name: 'ReviewCreateView',
   data() {
     return {
@@ -26,7 +39,21 @@ export default {
       rate: null,
     }
   },
+  components: {
+    AutoCompleteSuggestions
+  },
   methods: {
+    ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
+    searchThings(keyword) {        
+      this.$router.push({ name: 'search_result', params: { keyword } })
+    },
+    fillSearchKeyword(keyword){
+      this.searchKeyword = keyword
+    },
+    changeKeyword(event) {
+      this.searchKeyword = event.target.value
+      this.autoComplete(this.searchKeyword)
+    },
     createReview() {
       const movie = this.movie
       const title = this.title
@@ -71,5 +98,27 @@ export default {
 </script>
 
 <style>
-
+  .search-box{
+    width: 300px;
+    height: 40px;
+    font-size:20px;
+  }
+    .search-container{
+    width: 300px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+  }
+  .search-icon{
+    padding-right:10px;
+    background:black;
+    position: absolute;
+    border: none;
+    top: -2px;
+    left:82%;
+    margin-left: 17px;
+    margin-top: 6px;
+    z-index: 1;
+    color: #FFF;
+  }
 </style>
