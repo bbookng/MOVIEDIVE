@@ -8,6 +8,7 @@ import CommunityView from '@/views/CommunityView'
 import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
+import ReviewCreateView from '@/views/ReviewCreateView'
 
 Vue.use(VueRouter)
 
@@ -33,11 +34,23 @@ const routes = [
     name: 'collection',
     component: CollectionsView
   },
+  // community
   {
     path: '/community',
     name: 'community',
     component: CommunityView
   },
+  {
+    path: '/review-detail/:movieId/:reviewId',
+    name: 'review-detail',
+    component: () => import('@/views/ReviewDetailView')
+  },
+  {
+    path: '/review-create',
+    name: 'review-create',
+    component: ReviewCreateView
+  },
+  //
   {
     path: '/play',
     name: 'play',

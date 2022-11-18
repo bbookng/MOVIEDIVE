@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     movies: [],
+    reviews: [],
     currentUser: {},
   },
   getters: {  
@@ -18,15 +19,18 @@ export default new Vuex.Store({
     currentUser: state => state.currentUser,
   },
   mutations: {
-      // 회원가입 && 로그인
-      SAVE_TOKEN(state, token) {
-        state.token = token
-        router.push({ name: 'main' })
-      },
-      GET_MOVIES(state, movies) {
-        state.movies = movies
-      },
-      SET_CURRENT_USER: (state, user) => state.currentUser = user,
+    // 회원가입 && 로그인
+    SAVE_TOKEN(state, token) {
+      state.token = token
+      router.push({ name: 'main' })
+    },
+    SET_CURRENT_USER: (state, user) => state.currentUser = user,
+    GET_MOVIES(state, movies) {
+      state.movies = movies
+    },
+    GET_REVIEWS(state, reviews) {
+      state.reviews = reviews
+    },
   },
   actions: {
     signUp(context, payload) {
@@ -121,6 +125,23 @@ export default new Vuex.Store({
             }
           })
       }
+    },
+    getReviews(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_REVIEWS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
   modules: {
