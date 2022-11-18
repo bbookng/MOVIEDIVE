@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer
+from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer, CommentSerializer
 from .models import Collection, Comment
 from movies.models import Movie
 from django.core.paginator import Paginator
@@ -78,14 +78,25 @@ def comment_create(request, collection_pk):
         comment = serializer.save(user=request.user, collection = collection)
         serializer = CollectionCommentSerializer(comment)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-
-
-@api_view(['GET', 'POST'])
-def comments_list(request, collection_pk):
-    comments = get_list_or_404(Comment, pk=collection_pk)
-    pass
 
 @api_view(['PUT', 'DELETE'])
-def comment_status(request, collection_pk):
-    pass
+def comment_status(request, collection_pk, comment_pk):
+    collection = get_object_or_404(Collection, pk=collection_pk)
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    
+    def update_comment():
+        if comment.user.pk == request.user.pk:
+            serializer = CommentSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(collection=collection, user=request.user)
+                return Response(serializer.data)
+
+    def delete_comment():
+        comment.delete()
+        serializer = CollectionDetailSerializer(collection)
+        return Response(serializer.data)
+
+    if request.method == 'PUT':
+        return update_comment()
+    elif request.method == 'DELETE':
+        return delete_comment()

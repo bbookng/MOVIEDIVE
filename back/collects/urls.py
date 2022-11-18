@@ -9,7 +9,7 @@ urlpatterns = [
     path('create/', views.create_collection),
     path('<int:collection_pk>/', views.collection_detail),
     path('<int:collection_pk>/like/', views.like_collection),
-    path('<int:collection_pk>/comments/', views.comments_list),
+    # path('<int:collection_pk>/comments/', views.comments_list),
     path('<int:collection_pk>/comments/create/', views.comment_create),
     path('<int:collection_pk>/comments/<comment_pk>/', views.comment_status),
 ]

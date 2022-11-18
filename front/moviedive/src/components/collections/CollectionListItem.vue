@@ -13,6 +13,7 @@ export default {
         collection: Object
     },
     data() {
+        // 메인 포스터는 뭐할지 나중에 수정
         return {
             mainImgURL: `https://image.tmdb.org/t/p/original/${ this.collection.movies[0].poster_path }`
         }

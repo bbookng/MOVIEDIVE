@@ -38,8 +38,9 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = Comment
-            fields = '__all__'
-    
+            fields = ('pk', 'user', 'content', 'created_at', 'created_string')
+            read_only_fields = ('collection', )
+            
     user = UserSerializer(read_only=True)
     like_users = UserSerializer(many=True, read_only=True)
     like_users_cnt = serializers.IntegerField(source='like_users.count', read_only=True)
@@ -48,7 +49,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields= ('pk', 'title', 'movies', 'like_users_cnt','description', 'user', 'like_users', 'comments',)
+        fields= ('pk', 'title', 'movies', 'like_users_cnt','description', 'user', 'comments', 'like_users',)
 
 class CollectionUpdateSerializer(serializers.ModelSerializer):
     
@@ -78,11 +79,24 @@ class CollectionListSerializer(serializers.ModelSerializer):
         model = Collection
         fields = ('pk', 'title', 'user', 'movies', 'likes_count')
 
-class UserLikesColletctionSerializer(serializers.ModelSerializer):
-    pass
-
 class CollectionCommentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Comment
         fields = ('pk', 'content',)
+
+class CommentSerializer(serializers.ModelSerializer):
+    
+    class UserSerializer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = get_user_model()
+            fields = ('id', 'nickname', 'profile_img')
+    
+    user = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = Comment
+        fields = ('pk', 'user', 'content', 'created_at', 'created_string')
+        read_only_fields = ('collection',)
+        

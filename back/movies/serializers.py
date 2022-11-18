@@ -56,3 +56,16 @@ class AutoCompleteSerializer(serializers.ModelSerializer):
         
         model=Movie
         fields=('title',)
+
+class ReviewSerializer(serializers.ModelSerializer):
+    
+    class UserSerializer(serializers.ModelSerializer):   
+        class Meta:
+            model = get_user_model()
+            fields = ('pk', 'nickname', 'profile_img')
+            
+    user = UserSerializer(read_only=True)
+    
+    class Meta:    
+        model = Review
+        fields = ('user', 'content', 'title', 'created_at')
