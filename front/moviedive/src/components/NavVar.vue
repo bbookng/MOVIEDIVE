@@ -73,13 +73,14 @@
 
 
 <script>
+import { mapActions } from 'vuex'
 import AutoCompleteSuggestions from '@/components/AutoCompleteSuggestions'
 
 export default {
   name: 'NavVar',
   data() {
     return {
-      searchKeyword: "",
+      searchKeyword: '',
     }
   },
   components: {
@@ -100,14 +101,19 @@ export default {
     },
   },
   methods: {
-    fillSearchKeyword(keyword){
-      this.searchKeyword = keyword
+    ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
+    searchThings(keyword) {        
+      this.$router.push({ name: 'search_result', params: { keyword } })
+    },
+    fillSearchKeyword(suggest){
+      this.searchKeyword = suggest.title
+      this.movie = suggest.id
     },
     changeKeyword(event) {
       this.searchKeyword = event.target.value
       this.autoComplete(this.searchKeyword)
     },
-  },
+  }
 }
 </script>
 

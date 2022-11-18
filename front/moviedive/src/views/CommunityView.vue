@@ -1,9 +1,13 @@
 <template>
   <div class="page">
-    <input
-      type="text"
-      placeholder="영화 제목으로 리뷰 검색"
-    >
+    <form @submit="searchThings(searchKeyword)">
+        <div class="search-box">
+          <div class="search-container">
+            <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
+            <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
+          </div>
+        </div>
+      </form>
     <button
       @click="goToReviewCreate"
     >리뷰 작성하기</button>
@@ -14,11 +18,14 @@
 
 <script>
 import ReviewList from '@/components/community/ReviewList'
+import { mapActions } from 'vuex'
+import AutoCompleteSuggestions from '@/components/AutoCompleteSuggestions'
 
 export default {
   name: 'CommunityView',
   components: {
     ReviewList,
+    AutoCompleteSuggestions,
   },
   computed: {
     isLoggedIn() {
@@ -38,8 +45,20 @@ export default {
       }
     },
     goToReviewCreate() {
-      this.$router.push({ name: 'review_create' })
-    }
+      this.$router.push({ name: 'create_review' })
+    },
+    ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
+    searchThings(keyword) {        
+      this.$router.push({ name: 'search_result', params: { keyword } })
+    },
+    fillSearchKeyword(suggest){
+      this.searchKeyword = suggest.title
+      this.movie = suggest.id
+    },
+    changeKeyword(event) {
+      this.searchKeyword = event.target.value
+      this.autoComplete(this.searchKeyword)
+    },
   }
 }
 </script>

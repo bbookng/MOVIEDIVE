@@ -7,9 +7,8 @@
     <p>내용 : {{ review?.content }}</p>
     <p>작성시간 : {{ review?.created_at }}</p>
     <p>수정시간 : {{ review?.updated_at }}</p>
-    <button
-      @click="goToReviewForm"
-    >수정</button>
+    <button @click="updateReview">수정</button>
+    <button @click="deleteReview">삭제</button>
   </div>
 </template>
 
@@ -42,9 +41,25 @@ export default {
           console.log(err)
         })
     },
-    goToReviewForm() {
-      this.$router.push({ name: 'review_form', params: { movie_id: this.review.movie, review_id: this.review.id }})
+    deleteReview() {
+      if (confirm('정말 삭제하시겠습니까?') == true) {
+        axios({
+        method: 'delete',
+        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}`
+      })
+        .then((res) => {
+            console.log(res.status)
+            this.$router.push({ name: 'community' })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     },
+    // 라우터 말고 prop으로 ..?
+    // updateReview() {
+    //   this.$router.push({ name: 'create_review' })
+    // }
   }
 }
 </script>
