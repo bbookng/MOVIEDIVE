@@ -5,8 +5,7 @@
       <form @submit="searchThings(searchKeyword)">
         <div class="search-box">
           <div class="search-container">
-            <button class="search-icon"><i class="bi bi-search"></i></button>
-            <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="Search..." />
+            <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
             <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
           </div>
         </div>
@@ -37,6 +36,7 @@ export default {
       title: null,
       content: null,
       rate: null,
+      searchKeyword: '',
     }
   },
   components: {
@@ -120,5 +120,23 @@ export default {
     margin-top: 6px;
     z-index: 1;
     color: #FFF;
+  }
+  #suggestion-box {
+    position:absolute;
+    /* visibility: hidden; */
+    left:20px;
+    z-index: 5;
+  }
+  #suggestion-box {
+    position:absolute;
+    font-size:15px;
+    width: 300px;
+    opacity: 0;
+    top:50px;
+    left:20px;
+    z-index: 5;
+  }
+  .search-container:focus-within #suggestion-box {
+      opacity: 1;
   }
 </style>

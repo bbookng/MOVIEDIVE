@@ -16,12 +16,17 @@ export default new Vuex.Store({
   state: {
     token: null,
     movies: [],
+    movie: {},
+    suggests:[],
     reviews: [],
     currentUser: {},
     collections: []
   },
   getters: {
-    movies: state => state.movies,  
+    movies: state => state.movies,
+    movie: state => state.movie,
+    // searched_movies: state => state.searched_movies,
+    suggests: state => state.suggests, 
     isLoggedIn(state) {
       return state.token ? true : false
     },
@@ -44,6 +49,9 @@ export default new Vuex.Store({
     GET_REVIEWS(state, reviews) {
       state.reviews = reviews
     },
+    SET_MOVIES: (state, movies) => state.movies = movies,
+    SET_MOVIE: (state, movie) => state.movie = movie,
+    SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
   },
   actions: {
     signUp(context, payload) {
@@ -166,6 +174,30 @@ export default new Vuex.Store({
         })
     },
     
+    fetchMovies({ commit, getters }, keyword) {
+      /* 게시글 목록 받아오기
+      GET: articles URL (token)
+        성공하면
+          응답으로 받은 게시글들을 state.articles에 저장
+        실패하면
+          에러 메시지 표시
+      */
+      let query = "?"
+      if (keyword) {
+        query += `keyword=${keyword}`
+      }
+
+      axios({
+        url: drf.movies.movies()+query,
+        method: 'get',
+        headers: getters.authHeader,
+      })
+        .then(res => {
+          console.log(res.data)
+          commit(`SET_MOVIES`, res.data)
+        })
+        .catch(err => console.error(err.response))
+    },
     fetchMovie({ commit, getters }, moviePk) {
       /* 영화 정보 1개 받아오기
       GET: article URL (token)
@@ -194,7 +226,22 @@ export default new Vuex.Store({
           }
         })
     },
+    autoComplete({ commit, getters }, keyword) {
+      commit('SET_SUGGESTS', [])
+      axios({
+        url: drf.movies.auto_complete(keyword),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_SUGGESTS', res.data)
+      })
+    },
+    deleteSuggestion({ commit }) {
+      commit('SET_SUGGESTS', [])
+    },
   },
+
   modules: {
   }
 })
