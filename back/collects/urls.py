@@ -7,6 +7,7 @@ urlpatterns = [
     # 조회랑 생성 합쳐도 될듯 ?
     path('', views.collections_list),
     path('create/', views.create_collection),
+    path('create/suggest/<keyword>/', views.get_suggestions),
     path('<int:collection_pk>/', views.collection_detail),
     path('<int:collection_pk>/like/', views.like_collection),
     # path('<int:collection_pk>/comments/', views.comments_list),

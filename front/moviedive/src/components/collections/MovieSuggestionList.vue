@@ -1,28 +1,38 @@
 <template>
-  <div id="suggestions">
-    <div v-for="suggest in suggests" :key="suggest.title">
-        <div @click="select_suggestion(suggest.pk)">
-            <img :src=imgURL(suggest.poster_path) alt="포스터입니당.">
+  <div>
+    <div>
+        <div @click="select_suggestion(suggest.pk)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
+            <SuggestionMovieItem :suggest="suggest"/>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import SuggestionMovieItem from './SuggestionMovieItem.vue'
+
 export default {
     name: 'MovieSuggestionList',
+    components: {
+        SuggestionMovieItem
+    },
+    data() {
+        return {
+            suggest: [],
+        }
+    },
     props: {
         suggests: Array
     },
     computed: {
-        imgURL(poster) {
-            return `https://image.tmdb.org/t/p/original/${poster}`
-        }
     },
     methods: {
         select_suggestion(pk){
             this.$emit('pkFromSuggestions', pk)
         }
+    },
+    created() {
+
     }
 }
 </script>

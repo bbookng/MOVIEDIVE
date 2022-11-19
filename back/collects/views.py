@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer, CommentSerializer
+from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer, CommentSerializer, AutoCompleteSerializer
 from .models import Collection, Comment
 from movies.models import Movie
 from django.core.paginator import Paginator
@@ -102,3 +102,9 @@ def comment_status(request, collection_pk, comment_pk):
         return update_comment()
     elif request.method == 'DELETE':
         return delete_comment()
+
+@api_view(['GET'])
+def get_suggestions(request, keyword):
+    movies = Movie.objects.filter(title__contains=keyword).order_by('-vote_average')[:20]
+    serializer = AutoCompleteSerializer(movies, many=True)
+    return Response(serializer.data)

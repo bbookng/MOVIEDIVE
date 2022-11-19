@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:8000/api/'
+const HOST = 'http://127.0.0.1:8000/api/'
 
 const ACCOUNTS = 'accounts/'
 const MOVIES = 'movies/'
@@ -35,11 +35,13 @@ export default {
         auto_complete: keyword => HOST + MOVIES + 'search/' + `${keyword}/`,
     },
     collections: {
-        main_collections: () => HOST + COLLECTIONS +  'main',
         collection_list: () => HOST + COLLECTIONS,
-        collection_list_orderby: () => HOST + 'collections',
+        collection_create: () => HOST + COLLECTIONS + 'create/',
+        collection_suggestions: keyword => HOST + COLLECTIONS + 'create/' + `${keyword}/`,
         collection_detail: collection_pk => HOST + COLLECTIONS + `${collection_pk}/`,
-        like_collection: collection_pk => HOST + COLLECTIONS + `${collection_pk}/` + 'like/',
+        collection_like: collection_pk => HOST + COLLECTIONS + `${collection_pk}/` + 'like/',
+        collection_comments_create: collection_pk => HOST + COLLECTIONS + `${collection_pk}/` + 'comments/create/',
+        collection_comments_status: (collection_pk, comment_pk) => HOST + COLLECTIONS + `${collection_pk}/` + 'comments/' + `${comment_pk}`,
     },
     games: {
         actorquiz: () => HOST + GAMES + 'actorquiz/',

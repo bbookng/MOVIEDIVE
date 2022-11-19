@@ -100,4 +100,9 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('pk', 'user', 'content', 'created_at', 'created_string')
         read_only_fields = ('collection',)
-        
+
+class AutoCompleteSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Movie
+        fields= ('pk', 'title', 'poster_path')
