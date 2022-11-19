@@ -27,6 +27,11 @@ export default {
     ReviewList,
     AutoCompleteSuggestions,
   },
+  data() {
+    return{
+      searchKeyword: '',
+    }
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn

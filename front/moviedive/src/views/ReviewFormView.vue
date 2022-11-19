@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h1>리뷰 작성</h1>
-    <form @submit.prevent="createReview">
-      <form @submit="searchThings(searchKeyword)">
+    <h1 v-if="!review_id">리뷰 작성</h1>
+    <h1 v-if="review_id">리뷰 수정</h1>
+    <form @submit.prevent="saveReview">
+      <form v-if="!review_id" @submit="searchThings(searchKeyword)">
         <div class="search-box">
           <div class="search-container">
             <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
@@ -10,6 +11,7 @@
           </div>
         </div>
       </form>
+      <p v-if="movie_id">{{ movie_title }}</p>
       <label for="title">제목 : </label>
       <input type="text" id="title" v-model.trim="title"><br>
       <label for="content">내용 : </label>
@@ -38,12 +40,41 @@ export default {
       title: null,
       content: null,
       rate: null,
+
+      requestBody: this.$route.query,
+      review_id: this.$route.query.id,
+      movie_id: this.$route.query.movie,
+      movie_title: this.$route.query.movie_title,
     }
   },
   components: {
     AutoCompleteSuggestions
   },
+  mounted() {
+    this.getUpdateDetail()
+  },
   methods: {
+    getUpdateDetail() {
+      if (this.review_id !== undefined) {
+        axios({
+        method: 'GET',
+        url: `${API_URL}/api/community/${this.movie_id}/${this.review_id}`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          this.movie = res.data.movie
+          this.title = res.data.title
+          this.content = res.data.content
+          this.rate = res.data.rate
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    },
     ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
     searchThings(keyword) {        
       this.$router.push({ name: 'search_result', params: { keyword } })
@@ -56,7 +87,7 @@ export default {
       this.searchKeyword = event.target.value
       this.autoComplete(this.searchKeyword)
     },
-    createReview() {
+    saveReview() {
       const movie = this.movie
       const title = this.title
       const content = this.content
@@ -74,26 +105,50 @@ export default {
         alert('평점을 입력해주세요')
         return
       }
-      axios({
-        method: 'post',
-        url: `${API_URL}/api/community/`,
-        data: {
+      this.data = {
+          id: this.review_id,
           movie: movie,
           title: title,
           content: content,
           rate: rate,
-        },
+      }
+
+      if (this.review_id === undefined) {
+        axios({
+        method: 'post',
+        url: `${API_URL}/api/community/`,
+        data: this.data,
         headers: {
           Authorization: `Token ${this.$store.state.token}`
         }
-      })
-        .then((res) => {
-          console.log(res)
-          this.$router.push({ name: 'community' })
         })
-        .catch((err) => {
-          console.log(err)
+          .then((res) => {
+            console.log(res)
+            alert('생성 완료!')
+            this.$router.push({ name: 'community' })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } else {
+        axios({
+        method: 'put',
+        url: `${API_URL}/api/community/${ this.movie_id }/${ this.review_id }/`,
+        data: this.data,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
         })
+          .then((res) => {
+            console.log(res)
+            alert('수정 완료!')
+            this.$router.push({ name: 'community' })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+
     }
   }
 }

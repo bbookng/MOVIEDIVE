@@ -14,9 +14,8 @@ from .models import Review, Comment
 @api_view(['GET', 'POST'])
 def review_list(request):
     if request.method == 'GET':
-        reviews = get_list_or_404(Review)
+        reviews = get_list_or_404(Review.objects.order_by('-created_at'))
         serializer = ReviewListSerializer(reviews, many=True)
-        print(serializer.get_value)
         return Response(serializer.data)
 
     elif request.method == 'POST':
@@ -39,7 +38,6 @@ def review_detail(request, movie_pk, review_pk):
 
     if request.method == 'GET':
         serializer = ReviewSerializer(review)
-        print(serializer.data)
         return Response(serializer.data)
     
     elif request.method == 'DELETE':

@@ -56,10 +56,10 @@ export default {
           })
       }
     },
-    // 라우터 말고 prop으로 ..?
-    // updateReview() {
-    //   this.$router.push({ name: 'create_review' })
-    // }
+    updateReview() {
+      console.log(this.review)
+      this.$router.push({ name: 'create_review', query: this.review })
+    }
   }
 }
 </script>
