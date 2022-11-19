@@ -36,7 +36,7 @@ export default new Vuex.Store({
     currentUser: state => state.currentUser,
     authHeader: state => ({ Authorization: `Token ${state.token}` }),
     authError: state => state.authError,
-    isCollectionDetail: state => state.isCollectionDetail
+    isCollectionDetail: state => state.isCollectionDetail,
   },
   mutations: {
     // 회원가입 && 로그인
@@ -58,7 +58,8 @@ export default new Vuex.Store({
     SET_MOVIES: (state, movies) => state.movies = movies,
     SET_MOVIE: (state, movie) => state.movie = movie,
     SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
-    SET_ISCOLLECTION_DETAIL: (state, bool) => state.isCollectionDetail = bool
+    SET_ISCOLLECTION_DETAIL: (state, bool) => state.isCollectionDetail = bool,
+    SET_COLLECTION: (state, collection) => state.collection = collection,
   },
   actions: {
     signUp(context, payload) {
@@ -290,12 +291,9 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(res.data)
-        router.push({ name: 'collection'})
       })
 
-    }
-    
-
+    },
   },
 
   modules: {

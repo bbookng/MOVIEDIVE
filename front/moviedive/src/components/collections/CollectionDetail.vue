@@ -1,34 +1,40 @@
 <template>
   <div id="collection-detail">
-    <h1>header img 들어갈 공간</h1>
-    {{collection}}
-    <hr />
+    <img :src=mainPosterURL alt="">
+    <hr>
     <h3>{{ collection.title }}</h3>
     <p>{{ collection.description }}</p>
     <p>
-      <span>좋아요 {{ collection.like_users_cnt }}</span> | 
+      <span>좋아요 {{ like_cnt }}</span> | 
       <span> 댓글 수 {{ collection.comments_cnt }}</span> |
-      <span> {{ collection.created_string }}전 업데이트</span>
+      <span> {{ collection.created_string }} 업데이트</span>
     </p>
     <div>
-      <!-- <button @click="likeCollection">좋아요</button>
-      <button @click="goCommentsList">댓글</button> -->
+      <button @click="likeCollection(collection.pk)">좋아요</button>
+      <button @click="goCommentsList">댓글</button>
       <button>공유</button>
     </div>
+    <hr>
     <div>
       <h3>작품들</h3>
+      <div v-for=" suggest in collection.movies " :key="suggest.pk" >
+        <SuggestionMovieItem :suggest="suggest"/>
+        {{ suggest.title }}
+      </div>
     </div>
     <hr />
-    <div>
-      <p>댓글</p>
-      <span>댓글 개수</span>
+    <div id="commentSet">
+      <p>댓글 <span>{{ collection.comments_cnt }}</span> </p>
+      {{ collection.comments}}
       <ul>
-        <li>댓글들</li>
+        <div v-for="comment in collection.collection_comments" :key="comment.pk">
+          <li>{{ comment.content }} <span>{{ comment.created_string }}</span> </li>
+        </div>
       </ul>
       <hr />
-      <form action="submit">
-        <input type="text" value="컬렉션에 댓글 남기기" />
-        <button>등록</button>
+      <form @submit.prevent="createComment">
+        <input v-model="comment_content" type="text" placeholder="컬렉션에 댓글 남기기" />
+        <input type="submit">
       </form>
     </div>
   </div>
@@ -36,14 +42,26 @@
 
 <script>
 import axios from 'axios';
+import SuggestionMovieItem from '@/components/collections/SuggestionMovieItem'
+
 export default {
   name: "CollectionDetail",
+  components: {
+    SuggestionMovieItem
+  },
   data() {
     return {
       collection: null,
+      mainPosterURL: null,
+      suggest: null,
+      comment_content: null,
     };
   },
-  computed: {},
+  computed: {
+    like_cnt () {
+      return this.collection.like_users_cnt
+    }
+  },
   props: {
     collection_pk: Number,
   },
@@ -60,15 +78,53 @@ export default {
       })
       .then((res)=>{
         this.collection = res.data
+        this.mainPosterURL = `https://image.tmdb.org/t/p/original/${res.data.movies[0].backdrop_path}`
       })
     },
-    // likeCollection() {
-    //   // 컬렉션 좋아요 + 1
+    likeCollection() {
+      const API_URL = 'http://127.0.0.1:8000/api'
+      // 컬렉션 좋아요 + 1
+      axios({
+        url: `${API_URL}/collections/${this.collection_pk}/like/`,
+        method: 'post',
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.like_cnt = res.data.like_users_cnt
+       
+      })
 
-    // },
-    // goCommentsList() {
-    //   // 댓글 div 로 이동
-    // }
+    },
+    createComment() {
+      const API_URL = 'http://127.0.0.1:8000/api'
+      const content = this.comment_content
+
+      if (!content) {
+        alert('내용을 입력해주세요')
+        return
+      } 
+
+      axios({
+        url: `${API_URL}/collections/${this.collection_pk}/comments/create/`,
+        method: 'post',
+        data: { content },
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+
+    },
+    goCommentsList() {
+      // 댓글 div 로 이동
+      const commentbox = document.getElementById("commentSet")
+      commentbox.scrollIntoView({behavior: 'smooth'})
+    }
     
   },
   created() {

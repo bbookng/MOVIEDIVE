@@ -19,6 +19,7 @@
     <div v-if="isSelected">
         <CollectionCreate
           :selected_movies="selected_movies"
+          :isSelected="isSelected"
         />
     </div>
     </div>

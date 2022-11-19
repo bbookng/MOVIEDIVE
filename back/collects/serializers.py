@@ -26,7 +26,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = Movie
-            fields = ('id', 'title', 'poster_path',)
+            fields = ('id', 'title', 'poster_path', 'backdrop_path')
     
     class UserSerializer(serializers.ModelSerializer):
 
@@ -38,7 +38,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = Comment
-            fields = ('pk', 'user', 'content', 'created_at', 'commnet_created_string',)
+            fields = ('pk', 'user', 'content', 'created_at', 'created_string',)
             read_only_fields = ('collection', )
             
     user = UserSerializer(read_only=True)
@@ -50,7 +50,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields= '__all__'
+        fields= ('id', 'user', 'title', 'movies', 'description', 'like_users', 'like_users_cnt', 'collection_comments', 'comments_cnt', 'created_at', 'created_string',)
 
 class CollectionUpdateSerializer(serializers.ModelSerializer):
     

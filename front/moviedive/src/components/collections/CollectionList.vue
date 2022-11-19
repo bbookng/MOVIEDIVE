@@ -2,6 +2,8 @@
   <div>
     <div v-if="!create_collection">
       <button @click="showCreationForm">새 컬렉션</button>
+      <CollectionListItem/>
+      <hr>
       <CollectionListItem 
         v-for="collection in collections"
         :key="collection.id"
@@ -36,6 +38,9 @@ export default {
     collections() {
       return this.$store.state.collections;
     },
+    // user_like_collection() {
+
+    // }
   },
   methods: {
     sendCollection(collection_pk) {

@@ -24,6 +24,7 @@ export default {
     name: 'CollectionCreate',
     props: {
         selected_movies: Array,
+        isSelected: Boolean,
     },
     data() {
         return {
@@ -36,7 +37,6 @@ export default {
             return this.selected_movies.map(movie => movie.pk)
         }
         
-
     },
     methods: {
         createCollection() {
