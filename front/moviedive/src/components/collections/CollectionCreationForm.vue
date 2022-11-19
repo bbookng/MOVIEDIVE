@@ -7,11 +7,6 @@
             <input autocomplete="off" @input="getSuggestions" :search_keyword="search_keyword" type="text" id="nc-search-keyword" placeholder="영화제목을 입력해주세요" />
         </div>
         <button @click="createCollection">선택완료</button>
-        <div v-if="selected_movies">
-            <span>
-                {{ selected_movies }}
-            </span>
-        </div>
         <div>
             <MovieSuggestionList selected_movies="selected_movies" @FromSuggestions="selectMovie" :suggests="suggests"/>
         </div>
@@ -50,6 +45,7 @@ export default {
     },
     methods: {
         selectMovie(suggest) {
+            // 포함되어 있으면 제거하고 없으면 들어가게 로직 다시 짜기
             this.selected_movies = [...this.selected_movies, suggest]
         },
         getSuggestions(event){

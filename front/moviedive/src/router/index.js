@@ -12,10 +12,7 @@ import PlayView from '@/views/PlayView'
 import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewFormView from '@/views/ReviewFormView'
-// import CollectionDetailView from '@/views/CollectionDetailView'
 import SearchResultView from '@/views/SearchResultView'
-import CollectionCreationFormView from '@/views/CollectionCreationFormView'
-
 
 Vue.use(VueRouter)
 
@@ -77,11 +74,6 @@ const routes = [
     path: '/mypage/:username',
     name: 'mypage',
     component: MyPageView
-  },
-  {
-    path: '/collection/create/',
-    name: 'create_collection',
-    component: CollectionCreationFormView
   },
   {
     path: '/search/:keyword/',
