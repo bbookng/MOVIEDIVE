@@ -12,14 +12,15 @@
 <script>
 import MovieListItem from '@/components/movies/MovieListItem.vue'
 export default {
+  props:{
+    movies: Array
+  },
   name: 'MovieList',
   components: {
     MovieListItem,
   },
   computed: {
-    movies() {
-      return this.$store.state.movies
-    }
+
   }
 
 

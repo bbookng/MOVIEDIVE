@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MovieList/>
+    <MovieList :movies="movies"/>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
   name: 'MainView',
   components: {
     MovieList
+  },
+  computed:{
+        movies() {
+      return this.$store.state.movies
+    }
   },
   created() {
     this.getMovies()

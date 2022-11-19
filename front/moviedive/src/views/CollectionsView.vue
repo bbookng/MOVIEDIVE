@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Hello, Collections !</h1>
-    <router-link :to="{ name: 'create_collection' }">새 컬렉션</router-link>
+    <!-- <router-link :to="{ name: 'create_collection' }">새 컬렉션</router-link> -->
     <CollectionList @sendcollection="getCollection" v-if="!isCollectionDetail" />
     <CollectionDetail :collection_pk="collection_pk" v-if="isCollectionDetail" />
   </div>
