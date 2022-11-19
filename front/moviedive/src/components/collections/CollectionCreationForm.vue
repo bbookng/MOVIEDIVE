@@ -34,12 +34,12 @@ export default {
         selectMovie(pk) {
             this.selected_movies = [...this.selected_movies, pk]
         },
-        getSuggestions(){
-            axios({
-                method: 'get',
-                url: 
-            })
-        }
+        // getSuggestions(){
+        //     axios({
+        //         method: 'get',
+        //         url: 
+        //     })
+        // }
     }
 }
 </script>
