@@ -9,6 +9,12 @@ from movies.models import Movie
 from django.core.paginator import Paginator
 
 # Create your views here.
+@api_view(['GET'])
+def get_main_collections(request):
+    collections = Collection.objects.filter(on_main=True).order_by('?')[:4]
+    serializer = CollectionListSerializer(collections, many=True)
+    print(serializer)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def collections_list(request):

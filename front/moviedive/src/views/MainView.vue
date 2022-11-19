@@ -1,29 +1,32 @@
 <template>
   <div>
+    <MainTrailer/>
     <MovieList :movies="movies"/>
   </div>
 </template>
 
 <script>
 import MovieList from '@/components/movies/MovieList'
+import MainTrailer from '@/components/main/MainTrailer.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'MainView',
   components: {
-    MovieList
+    MovieList,
+    MainTrailer,
   },
   computed:{
-        movies() {
+      movies() {
       return this.$store.state.movies
     }
   },
   created() {
     this.getMovies()
+    this.fetchNewMovieList()   
   },
   methods: {
-    getMovies() {
-      this.$store.dispatch('getMovies')
-    }
+    ...mapActions(['fetchNewMovieList', 'getMovies']),
   }
 
 }

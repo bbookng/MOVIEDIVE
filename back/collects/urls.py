@@ -13,4 +13,5 @@ urlpatterns = [
     # path('<int:collection_pk>/comments/', views.comments_list),
     path('<int:collection_pk>/comments/create/', views.comment_create),
     path('<int:collection_pk>/comments/<comment_pk>/', views.comment_status),
+    path('get/collection/main/', views.get_main_collections),
 ]

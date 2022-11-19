@@ -16,6 +16,7 @@ class Collection(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_collections', blank=True)
+    on_main = models.BooleanField(default=False)
     
     @property
     def created_string(self):

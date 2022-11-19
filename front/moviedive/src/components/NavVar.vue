@@ -1,5 +1,5 @@
 <template>
-  <nav class="d-flex justify-content-between align-items-center text-light my-4">
+  <nav id="nav-bar" class="d-flex justify-content-between align-items-center text-light">
     <div style="width:27rem;" class="nav-left">
       <ul class="d-flex justify-content-between align-items-center my-0 px-0" >
         <li class="m-0">
@@ -118,6 +118,9 @@ export default {
 </script>
 
 <style scoped>
+#nav-bar {
+  height: 80px; 
+}
   a {
     color: rgb(19, 18, 18);
     text-decoration: none;

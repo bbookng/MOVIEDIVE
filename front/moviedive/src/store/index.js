@@ -21,6 +21,7 @@ export default new Vuex.Store({
     reviews: [],
     currentUser: {},
     collections: [],
+    newmovielist: [],
     authError: null,
     isCollectionDetail: false
   },
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     currentUser: state => state.currentUser,
     authHeader: state => ({ Authorization: `Token ${state.token}` }),
     authError: state => state.authError,
+    newmovielist: state => state.newmovielist,
     isCollectionDetail: state => state.isCollectionDetail,
   },
   mutations: {
@@ -60,6 +62,7 @@ export default new Vuex.Store({
     SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
     SET_ISCOLLECTION_DETAIL: (state, bool) => state.isCollectionDetail = bool,
     SET_COLLECTION: (state, collection) => state.collection = collection,
+    SET_NEW_MOVIE_LIST: (state, movies) => state.newmovielist = movies
   },
   actions: {
     signUp(context, payload) {
@@ -294,6 +297,18 @@ export default new Vuex.Store({
       })
 
     },
+    fetchNewMovieList(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/collections/2/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        },
+      })
+      .then((res) => {
+        context.commit('SET_NEW_MOVIE_LIST', res.data)
+      })
+    }
   },
 
   modules: {

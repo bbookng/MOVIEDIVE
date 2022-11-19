@@ -1,6 +1,8 @@
 <template>
-  <div id="collection-detail">
-    <img :src=mainPosterURL alt="">
+  <div id="collection-detail" class="row">
+    <div id="collection-bg-img-box">
+      <img id="collection-bg-img" :src=mainPosterURL alt="">
+    </div>
     <hr>
     <h3>{{ collection.title }}</h3>
     <p>{{ collection.description }}</p>
@@ -137,4 +139,21 @@ export default {
 </script>
 
 <style>
+#collection-detail {
+  width: 80vw;
+  border: black 1px;
+}
+
+#collection-bg-img-box {
+  width:80%;
+  height:500px;
+  overflow: hidden;
+  margin:0 auto;
+}
+
+#collection-bg-img {
+  width:100%;
+  height:100%;
+  object-fit: cover;
+}
 </style>

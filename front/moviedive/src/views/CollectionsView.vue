@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Hello, Collections !</h1>
-    <!-- <router-link :to="{ name: 'create_collection' }">새 컬렉션</router-link> -->
+  <div id="collection-view-container" class="container">
     <CollectionList @sendcollection="getCollection" v-if="!isCollectionDetail" />
     <CollectionDetail :collection_pk="collection_pk" v-if="isCollectionDetail" />
   </div>
@@ -45,4 +43,11 @@ export default {
 </script>
 
 <style>
+#collection-view-container{
+width: 100vw;
+border-radius: 10px;
+border: black 1px solid;
+padding-left: 0;
+padding-right: 0;
+}
 </style>
