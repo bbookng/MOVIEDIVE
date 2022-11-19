@@ -10,7 +10,6 @@
       />
     </div>
     <CollectionCreationFrom v-if="create_collection"/>
-    <p>?</p>
   </div>
 </template>
 

@@ -25,7 +25,10 @@ def collections_list(request):
 @api_view(['POST'])
 def create_collection(request):
     serializer = CollectionCreateSerializer(data=request.data)
+    print(request.data)
+    print(request.user)
     if serializer.is_valid():
+        print('check')
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

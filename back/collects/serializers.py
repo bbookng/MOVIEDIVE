@@ -38,7 +38,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = Comment
-            fields = ('pk', 'user', 'content', 'created_at', 'created_string',)
+            fields = ('pk', 'user', 'content', 'created_at', 'commnet_created_string',)
             read_only_fields = ('collection', )
             
     user = UserSerializer(read_only=True)
@@ -50,7 +50,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields= ('id', 'user', 'title', 'movies', 'description', 'like_users', 'like_users_cnt', 'collection_comments', 'comments_cnt', 'created_at','created_string',)
+        fields= '__all__'
 
 class CollectionUpdateSerializer(serializers.ModelSerializer):
     

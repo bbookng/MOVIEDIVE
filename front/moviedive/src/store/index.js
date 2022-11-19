@@ -275,6 +275,25 @@ export default new Vuex.Store({
     deleteSuggestion({ commit }) {
       commit('SET_SUGGESTS', [])
     },
+    createCollection(context, payload) {
+      axios({
+        method: 'post',
+        url: `${API_URL}/collections/create/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        },
+        data: {
+          movies: payload.selected_movies_pk,
+          title: payload.collection_title,
+          description: payload.collection_description,
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+        router.push({ name: 'collection'})
+      })
+
+    }
     
 
   },

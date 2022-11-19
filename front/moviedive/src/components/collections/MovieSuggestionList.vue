@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-        <div @click="select_suggestion(suggest.pk)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
+        <div @click="select_suggestion(suggest)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
             <SuggestionMovieItem :suggest="suggest"/>
         </div>
     </div>
@@ -27,8 +27,8 @@ export default {
     computed: {
     },
     methods: {
-        select_suggestion(pk){
-            this.$emit('pkFromSuggestions', pk)
+        select_suggestion(suggest){
+            this.$emit('FromSuggestions', suggest)
         }
     },
     created() {
