@@ -32,13 +32,13 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = get_user_model()
-            fields = ('pk', 'nickname', 'profile_img')
+            fields = ('pk', 'nickname', 'profile_img',)
     
     class CommentSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = Comment
-            fields = ('pk', 'user', 'content', 'created_at', 'commnet_created_string',)
+            fields = ('pk', 'user', 'content', 'created_at', 'created_string',)
             read_only_fields = ('collection', )
             
     user = UserSerializer(read_only=True)
@@ -64,7 +64,7 @@ class CollectionListSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = get_user_model()
-            fields = ('pk', 'nickname', 'profile_img')
+            fields = ('pk', 'nickname', 'profile_img',)
             
     class MovieSerializer(serializers.ModelSerializer):
         
@@ -78,7 +78,7 @@ class CollectionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ('pk', 'title', 'user', 'movies', 'likes_count')
+        fields = ('pk', 'title', 'user', 'movies', 'likes_count',)
 
 class CollectionCommentSerializer(serializers.ModelSerializer):
     
@@ -92,17 +92,17 @@ class CommentSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = get_user_model()
-            fields = ('id', 'nickname', 'profile_img')
+            fields = ('id', 'nickname', 'profile_img',)
     
     user = UserSerializer(read_only=True)
     
     class Meta:
         model = Comment
-        fields = ('pk', 'user', 'content', 'created_at', 'created_string')
+        fields = ('pk', 'user', 'content', 'created_at', 'created_string',)
         read_only_fields = ('collection',)
 
 class AutoCompleteSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Movie
-        fields= ('pk', 'title', 'poster_path')
+        fields= ('pk', 'title', 'poster_path',)
