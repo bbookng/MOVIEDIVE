@@ -1,7 +1,22 @@
 <template>
   <div>
+    {{ currentUser }}
     <div>
-      {{ currentuser }}
+      {{ profileImg }}
+      <img :src=profileImg alt="프로필 이미지 넣자">
+      <div>
+        <div>
+          {{ currentUser.nickname }}
+          <button>팔로우</button>
+        </div>
+        <div>
+          {{}}
+
+        </div>
+        <div>
+          {{ currentUser.message }}
+        </div>
+      </div>
     </div>
   </div>
   
@@ -11,10 +26,12 @@
 export default {
   name: 'MyPageView',
   computed: {
-    currentuser() {
-      return this.$store.getters.currentuser
+    currentUser() {
+      return this.$store.getters.currentUser
+    },
+    profileImg() {
+      return this.currentUser.profile_img
     }
-
   },
   methods: {
 
