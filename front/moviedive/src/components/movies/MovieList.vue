@@ -6,6 +6,10 @@
       v-for="movie in movies"
       :key="movie.id"
       :movie="movie"/>
+      <MovieListItem
+      v-for="movie in new_movies"
+      :key="movie.id"
+      :movie="movie"/>
     </span>
     
   </div>
@@ -15,7 +19,8 @@
 import MovieListItem from '@/components/movies/MovieListItem.vue'
 export default {
   props:{
-    movies: Array
+    movies: Array,
+    new_movies: Array
   },
   name: 'MovieList',
   components: {

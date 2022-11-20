@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>UserMovies</h1>
-    {{ movies }}
+    <div v-for="movie in movies" :key="movie">
+      <UserMovieListItem :movie="movie"/>
+    </div>
     <MovieDetail/>
 
   </div>
@@ -10,11 +12,13 @@
 <script>
 import axios from 'axios';
 import MovieDetail from '@/components/movies/MovieDetail.vue'
+import UserMovieListItem from '@/components/profile/UserMovieListItem.vue'
 
 export default {
     name: 'UserLikesMovies',
     components: {
       MovieDetail,
+      UserMovieListItem,
     },
     data() {
       return {
