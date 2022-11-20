@@ -37,7 +37,7 @@ class Review(models.Model):
         return self.content
 
 class Comment(models.Model):
-    Review = models.ForeignKey(Review, related_name="community_comments", on_delete= models.CASCADE)
+    review = models.ForeignKey(Review, related_name="community_comments", on_delete= models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_comments')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

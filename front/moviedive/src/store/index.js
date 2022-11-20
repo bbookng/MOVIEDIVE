@@ -23,7 +23,8 @@ export default new Vuex.Store({
     collections: [],
     newmovielist: [],
     authError: null,
-    isCollectionDetail: false
+    isCollectionDetail: false,
+    API_URL: 'http://127.0.0.1:8000/api',
   },
   getters: {
     movies: state => state.movies,
@@ -38,7 +39,6 @@ export default new Vuex.Store({
     authHeader: state => ({ Authorization: `Token ${state.token}` }),
     authError: state => state.authError,
     newmovielist: state => state.newmovielist,
-    isCollectionDetail: state => state.isCollectionDetail,
   },
   mutations: {
     // 회원가입 && 로그인
@@ -60,7 +60,6 @@ export default new Vuex.Store({
     SET_MOVIES: (state, movies) => state.movies = movies,
     SET_MOVIE: (state, movie) => state.movie = movie,
     SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
-    SET_ISCOLLECTION_DETAIL: (state, bool) => state.isCollectionDetail = bool,
     SET_COLLECTION: (state, collection) => state.collection = collection,
     SET_NEW_MOVIE_LIST: (state, movies) => state.newmovielist = movies
   },
@@ -114,6 +113,7 @@ export default new Vuex.Store({
         .then((res) => {
           // console.log(res)
           context.commit('SAVE_TOKEN', res.data.key)
+          console.log(res.data.key)
           context.dispatch("fetchCurrentUser")
         })
     },

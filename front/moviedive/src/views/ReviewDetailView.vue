@@ -1,14 +1,48 @@
 <template>
   <div>
-    <h1>Detail</h1>
-    <p>{{ review?.movie_title }}</p>
-    <p>글 번호 : {{ review?.id }}</p>
-    <p>제목 : {{ review?.title }}</p>
-    <p>내용 : {{ review?.content }}</p>
-    <p>작성시간 : {{ review?.created_at }}</p>
-    <p>수정시간 : {{ review?.updated_at }}</p>
-    <button @click="updateReview">수정</button>
-    <button @click="deleteReview">삭제</button>
+    <div>
+      <p>{{ review?.movie_title }}</p>
+    <p>{{ review?.title }}</p>
+    <div>
+      <img src="" alt="...">
+      {{ user.nickname }}
+      {{ $moment(updated_at).format('YYYY.MM.DD HH:mm') }}
+    </div>
+    <hr>
+
+    </div>
+    <div>
+      <div>
+        {{ review?.content }}
+      </div>
+      <div>
+        <button @click="likeReview">좋아요</button>
+        <button>댓글</button>
+        <button>공유</button>
+      </div>
+      <hr>
+      <div>
+        <div id="comments-list" v-for="comment in comments" :key="comment.id">
+          <div>
+            <img src="" alt=" user 프로필 이미지">
+          </div>
+          <div>
+            {{ comment.user.nickname }}
+            {{ comment.content }}
+          </div>
+        </div>
+        <div>
+          <form @submit.prevent="createComment">
+            <input v-model="comment_content" type="text" placeholder="리뷰에 댓글 남기기" />
+            <input type="submit">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div v-if="isMe">
+      <button @click="updateReview">수정</button>
+      <button @click="deleteReview">삭제</button>
+    </div>
   </div>
 </template>
 
@@ -22,7 +56,20 @@ export default {
   data() {
     return {
       review: null,
+      user: null,
+      comment_content: null,
+      isMe: true, 
     }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser
+    },
+    comments() {
+      return this.review.community_comments
+    },
+
+
   },
   created() {
     this.getReviewDetail()
@@ -31,11 +78,17 @@ export default {
     getReviewDetail() {
       axios({
         method: 'get',
-        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}`
+        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
       })
         .then((res) => {
-          console.log(res)
           this.review = res.data
+          this.user = res.data.user
+        })
+        .then(()=>{
+          this.checkUser()
         })
         .catch((err) => {
           console.log(err)
@@ -45,10 +98,13 @@ export default {
       if (confirm('정말 삭제하시겠습니까?') == true) {
         axios({
         method: 'delete',
-        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}`
+        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      
       })
-        .then((res) => {
-            console.log(res.status)
+        .then(() => {
             this.$router.push({ name: 'community' })
           })
           .catch((err) => {
@@ -57,8 +113,51 @@ export default {
       }
     },
     updateReview() {
-      console.log(this.review)
       this.$router.push({ name: 'create_review', query: this.review })
+    },
+    likeReview() {
+      const API_URL = 'http://127.0.0.1:8000/api'
+      axios({
+        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}/like/`,
+        method: 'post',
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+      .then((res) => { 
+        this.getReviewDetail()
+        console.log(res.data)
+      })
+    },
+    createComment() {
+      const API_URL = 'http://127.0.0.1:8000/api'
+      const content = this.comment_content
+
+      if (!content) {
+        alert('내용을 입력해주세요')
+        return
+      } 
+
+      axios({
+        url: `${API_URL}/community/${this.$route.params.movieId}/${this.$route.params.reviewId}/comments/create/`,
+        method: 'post',
+        data: { content },
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+      .then((res) => {
+        this.getReviewDetail()
+        console.log(res.data)
+      })
+
+    },
+    checkUser() {
+      if (this.currentUser.id == this.user.id) {
+        return this.isMe = true
+      } else {
+        return this.isMe = false
+      }
     }
   }
 }

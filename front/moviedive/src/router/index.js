@@ -13,6 +13,7 @@ import DeepDiveView from '@/views/DeepDiveView'
 import MyPageView from '@/views/MyPageView'
 import ReviewFormView from '@/views/ReviewFormView'
 import SearchResultView from '@/views/SearchResultView'
+import CollectionDetailView from '@/views/CollectionDetailView'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,11 @@ const routes = [
     path: '/collection',
     name: 'collection',
     component: CollectionsView
+  },
+  {
+    path: '/collection/:colletionPk',
+    name: 'collection_detail',
+    component: CollectionDetailView
   },
   // community
   {
@@ -80,6 +86,7 @@ const routes = [
     name: 'search_result',
     component: SearchResultView
   },
+
 ]
 
 const router = new VueRouter({

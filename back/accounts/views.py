@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from .serializers import CurrentUserResponseSerializer, UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer, UserLikeMovieSerializer, UserMakesCollectionSerializer, UserReviewSerializer
+from .serializers import UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer, UserLikeMovieSerializer, UserMakesCollectionSerializer, UserReviewSerializer, ProfileResponseSerializer
 
 
 # Create your views here.
@@ -14,25 +14,39 @@ User = get_user_model()
 @api_view(['GET'])
 def get_current_user_profile(request):
     user = request.user
-    serializer = CurrentUserResponseSerializer(user)   
+    serializer = ProfileResponseSerializer(user)   
     return Response(serializer.data)
     
     
+# @api_view(['PUT'])
+# def update_profile(request):
+#     user = request.user
+#     serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save()
+#         return Response(status=status.HTTP_200_OK)
+    
+    
+# # 특정 사용자의 프로필 정보를 가져옴
+# @api_view(['GET'])
+# def get_profile(request, username):
+#     user = get_object_or_404(get_user_model(), username=username)
+#     serializer = ProfileResponseSerializer(user)
+#     return Response(serializer.data)
 
-@api_view(['PUT'])
-def update_profile(request):
-    user = request.user
-    serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(status=status.HTTP_200_OK)
-    
-    
-# 특정 사용자의 프로필 정보를 가져옴
-@api_view(['GET'])
-def get_profile(request, username):
-    user = get_object_or_404(User, username)
-    pass
+@api_view(['GET', 'PUT'])
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    if request.method=="GET":
+        serializer = ProfileResponseSerializer(user)
+        return Response(serializer.data)
+    elif request.method=="PUT":
+        if request.user == user:
+            serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                serializer = ProfileResponseSerializer(user)
+                return Response(serializer.data)
     
 
 @api_view(['POST'])

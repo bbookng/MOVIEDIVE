@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Review, Comment
+from movies.models import Movie
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
@@ -10,21 +11,38 @@ class ReviewListSerializer(serializers.ModelSerializer):
         model = Review
         fields = ('movie', 'movie_title', 'id', 'title', 'content', 'user', 'username', 'created_string',)
 
-
 class CommentSerializer(serializers.ModelSerializer):
-
+    
+    class UserSerializer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = get_user_model()
+            fields = ('id', 'nickname', 'profile_img',)
+    
+    user = UserSerializer(read_only=True)
+    
     class Meta:
         model = Comment
-        fields = '__all__'
-        read_only_fields = ('review',)
-
+        fields = ('pk', 'user', 'content', 'created_at', 'created_string',)
 
 class ReviewSerializer(serializers.ModelSerializer):
-    comment_set = CommentSerializer(many=True, read_only=True)
-    comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
-    username = serializers.CharField(source='user.username', read_only=True)
-
+    
+    class ReviewUserSerializer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = get_user_model()
+            fields = ('id', 'username', 'nickname', 'profile_img')
+            
+    user = ReviewUserSerializer(read_only=True)
+    community_comments = CommentSerializer(many=True, read_only=True)
+    comment_count = serializers.IntegerField(source='community_comments.count', read_only=True)
+    
     class Meta:
         model = Review
-        fields = ('title', 'content', 'created_at', 'id', 'like_users', 'movie', 'movie_title', 'rate', 'updated_at', 'user', 'username', 'comment_set', 'comment_count', 'created_string',)
-        read_only_fields = ('user', )
+        fields = '__all__'
+
+class ReviewCommentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Comment
+        fields = ('pk', 'content',)

@@ -1,16 +1,18 @@
 <template>
   <div>
     <p>{{ collection.title }}</p>
-    <img
+    <router-link :to="{ name: 'collection_detail', params: { collectionPk: this.collection.pk }}">
+      <img
       class="collectionPoster"
       :src="mainImgURL"
       alt="..."
-      @click="showCollectionDetail"
-    />
+      />
+    </router-link>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "CollectionListItem",
   props: {
@@ -24,10 +26,7 @@ export default {
   },
   computed: {},
   methods: {
-    showCollectionDetail() {
-      this.$store.commit("SET_ISCOLLECTION_DETAIL", true),
-      this.$emit('sendcollection', this.collection.pk)
-    },
+
   },
 };
 </script>

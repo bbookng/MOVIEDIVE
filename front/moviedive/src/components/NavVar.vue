@@ -3,7 +3,9 @@
     <div style="width:27rem;" class="nav-left">
       <ul class="d-flex justify-content-between align-items-center my-0 px-0" >
         <li class="m-0">
-          <router-link :to="{ name: 'main' }">LOGO</router-link>         
+          <router-link :to="{ name: 'main' }">
+          <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/MOVIEDIVE_navydd.png" alt="">
+        </router-link>         
         </li>
         <li>
           <router-link :to="{ name: 'collection' }">Collection</router-link>

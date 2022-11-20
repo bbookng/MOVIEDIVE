@@ -4,22 +4,7 @@ from movies.models import Movie
 from collects.models import Collection
 from community.models import Review
 
-class CurrentUserResponseSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = get_user_model()
-        fields = "__all__"
-        
-
 class UpdateUserRequestSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = get_user_model()
-        fields = ('nickname', 'profile_img', 'message',)
-        
-
-# 리뷰 갯수, 팔로잉, 팔로워, 내가 만든 컬렉션 추가
-class ProfileResponseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
@@ -43,9 +28,17 @@ class UserMakesCollectionSerializer(serializers.ModelSerializer):
     
     class MadeCollectionSerializer(serializers.ModelSerializer):
         
+        class CollectionMovieSerializer(serializers.ModelSerializer):
+            
+            class Meta:
+                model = Movie
+                fields = ('pk', 'title', 'poster_path')
+        
+        movies = CollectionMovieSerializer(many=True, read_only=True)
+        
         class Meta:
             model = Collection
-            fields = ('pk', 'title', 'movies', 'like_users')
+            fields = ('pk', 'title', 'movies', 'like_users',)
     
     collections = MadeCollectionSerializer(many=True)
     
@@ -54,21 +47,29 @@ class UserMakesCollectionSerializer(serializers.ModelSerializer):
         fields = ('collections',)
         
 class UserReviewSerializer(serializers.ModelSerializer):
-    
+      
     class ReviewSerializer(serializers.ModelSerializer):
+        
+        class ReviewMovieSerializer(serializers.ModelSerializer):
+            
+            class Meta:       
+                model = Movie
+                fields = ('pk', 'id', 'title',)
+            
+        movie = ReviewMovieSerializer(read_only=True)
         
         class Meta:
             model = Review
-            fields = ('pk', 'title', 'user', 'movie')
+            fields = ('id', 'pk', 'title', 'user', 'movie', 'content')
+        
     
-    reviews = ReviewSerializer(many=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
     
     class Meta:
         model = get_user_model()
         fields = ('reviews', )
         
         
-
 class UserNicknameSerializer(serializers.ModelSerializer):
     nickname = serializers.CharField(max_length=10)
     
@@ -86,5 +87,25 @@ class UserMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('message',)
+
+# 리뷰 갯수, 팔로잉, 팔로워, 내가 만든 컬렉션 추가
+class ProfileResponseSerializer(serializers.ModelSerializer):
+    followers_cnt = serializers.IntegerField(source='followers.count', read_only=True)
+    followings_cnt = serializers.IntegerField(source='followings.count', read_only=True)
+    reviews_cnt = serializers.IntegerField(source='reviews.count', read_only=True)
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'pk', 'username', 'nickname', 'profile_img', 'message', 'followings_cnt', 'reviews', 'reviews_cnt', 'followers_cnt')
         
+        
+# class CurrentUserResponseSerializer(serializers.ModelSerializer):
+#     # reviews = UserReviewSerializer(many=True, read_only=True)
+#     followings_cnt = serializers.IntegerField(source='followings.count', read_only=True)
+#     followers_cnt = serializers.IntegerField(source='followers.count', read_only=True)
+#     # reviews_cnt = serializers.IntegerField(source='reviews.count', read_only=True)
+    
+#     class Meta:
+#         model = get_user_model()
+#         fields = ('id', 'username', 'nickname', 'profile_img', 'message', 'followings_cnt', 'followers_cnt',)
         

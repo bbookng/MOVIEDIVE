@@ -8,7 +8,6 @@
         v-for="collection in collections"
         :key="collection.id"
         :collection="collection"
-        @sendcollection="sendCollection"
       />
     </div>
     <CollectionCreationFrom v-if="create_collection"/>
@@ -25,7 +24,6 @@ export default {
       collection_pk: null,
       create_collection: false,
     }
-
   },
   props: {
 
@@ -38,18 +36,10 @@ export default {
     collections() {
       return this.$store.state.collections;
     },
-    // user_like_collection() {
 
-    // }
   },
   methods: {
-    sendCollection(collection_pk) {
-      this.collection_pk = collection_pk
-      this.$emit('sendcollection', this.collection_pk)
-      console.log(this.collection_pk)
-    }, 
     showCreationForm() {
-      console.log(1)
       this.create_collection = true
     }
   },
