@@ -4,7 +4,9 @@ import store from '../store'
 
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
-import LogoutView from '@/views/LogoutView.vue'
+import LogoutView from '@/views/LogoutView'
+
+import DiveView from '@/views/DiveView'
 import MainView from '@/views/MainView'
 import CollectionsView from '@/views/CollectionsView'
 import CommunityView from '@/views/CommunityView'
@@ -20,6 +22,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'dive',
+    component: DiveView
+  },
+  {
+    path: '/main',
     name: 'main',
     component: MainView
   },
