@@ -12,7 +12,9 @@
       <span> {{ collection.created_string }} 업데이트</span>
     </p>
     <div>
-      <button @click="likeCollection(collection.pk)">좋아요</button>
+      {{collection}}
+      <button @click="likeCollection()">좋아요</button>
+      <!-- <button @clic/k="likeC/ollection(collection.id)" v-if="liked">좋아요취소</button> -->
       <button @click="goCommentsList">댓글</button>
       <button>공유</button>
     </div>
@@ -60,9 +62,18 @@ export default {
     };
   },
   computed: {
-    like_cnt () {
-      return this.collection.like_users_cnt
-    }
+    currentUser() {
+      return this.$store.getters.currentUser
+    },
+    like_cnt() {
+      return this.collection.like_users_cnt; // 이 값이 화면에 반환되게 해놓음.
+    },
+    // liked() {
+    //   console.log(this.collection)
+    //   return this.collection.like_users_cnt ? this.collection.like_users.filter(element => {
+    //     return element.pk == this.currentUser.pk
+    //   }) .length : false
+    // },
   },
   props: {
     collection_pk: Number,
@@ -93,10 +104,7 @@ export default {
           Authorization: `Token ${this.$store.state.token}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
-        this.like_cnt = res.data.like_users_cnt
-       
+      .then((res) => { 
       })
 
     },
