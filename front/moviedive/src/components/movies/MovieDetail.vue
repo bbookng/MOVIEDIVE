@@ -24,15 +24,36 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img :src=mainPosterURL alt="">
+            {{ movie_detail.title }} 
+            <span><button @click="likeMovie">좋아요</button></span>
+            <div>
+              {{ movie_detail.vote_average }}
+              <span>몇세관람, 러닝타임</span>
+            </div>
+            <div>
+              <button>넷플릭스</button>
+              <button>왓챠</button>
+              <button>디즈니플러스</button>
+            </div>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <p>{{ movie_detail.overview }}</p>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div>
+            <router-link :to="{ name: 'create_review' }">리뷰 작성하기</router-link>
+            <hr>
+            <div>
+              <p>최근 리뷰</p>
+              <div v-for="review in movie_detail.reviews" :key="review.id">
+                <span>{{ review.title }}</span> |
+                <span>{{ review.created_string}}</span> |
+                <span><img src="" alt="유저 프로필 사진"></span>
+                <span>{{ review.user.username}}</span>
+              </div>
+              <router-link :to="{ name: 'community' }">리뷰 더 보기</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -41,44 +62,57 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const API_URL = 'http://127.0.0.1:8000/api'
+
 export default {
   name: 'MovieDetail',
-  components: {
-
+  data() {
+    return {
+      movie_detail: null,
+      mainPosterURL: null,
+    }
   },
+  props: {
+    movie: Object,
+  },
+  methods: {
+    getMovieDetail() {
+      axios({
+          url: `${API_URL}/movies/${this.movie.pk}/`,
+          method: 'get',
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`
+          }
+        })
+        .then((res)=>{
+          this.movie_detail = res.data
+          this.mainPosterURL = `https://image.tmdb.org/t/p/original/${res.data.backdrop_path}`
+        })
+    },
+    likeMovie() {
+      axios({
+          url: `${API_URL}/movies/${this.movie_detail.pk}/like/`,
+          method: 'post',
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`
+          }
+        })
+        .then(() => { 
+          this.getMovieDetail()
+        })
+
+    }
+  },
+  created() {
+    this.getMovieDetail()
+  }
 
 
 }
 </script>
 
 <style scoped>
-#modal-header {
-  text-align: right;
-}
-.modal-dialog {
-  filter: drop-shadow(2px 4px 6px #7A7373);
-}
-.modal-content {
-  background: #000000; 
-  border-radius: 10px;
-}
-#modal-body {
-  height:700px;
-}
-#poster-box {
-  width:480px;
-  height: 670px;
-}
-#poster {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-}
-#movie-info{
-  height: 305px;
-}
-.close-btn {
-  background:transparent;
-  color: #e11616;
-}
+
 </style>

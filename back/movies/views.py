@@ -67,7 +67,8 @@ def auto_complete(request, keyword):
     serializer = AutoCompleteSerializer(movies, many=True)
     return Response(serializer.data)
 
-def get_new_movies():
+@api_view(['GET'])
+def get_new_movies(request):
     movies = Movie.objects.order_by('-release_date')[:10]
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)

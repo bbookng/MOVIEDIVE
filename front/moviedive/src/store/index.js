@@ -262,18 +262,6 @@ export default new Vuex.Store({
     deleteSuggestion({ commit }) {
       commit('SET_SUGGESTS', [])
     },
-    fetchNewMovieList(context) {
-      axios({
-        method: 'get',
-        url: `${API_URL}/movies/new/`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        },
-      })
-      .then((res) => {
-        context.commit('SET_NEW_MOVIE_LIST', res.data)
-      })
-    }
   },
 
   modules: {

@@ -20,7 +20,7 @@ class MovieListSerializer(serializers.ModelSerializer):
             model = get_user_model()
             fields = ('pk', 'username')
 
-    # like_users = UserSerializer(many=True)
+    like_users = UserSerializer(many=True)
     # genres = GenreSerializer(many=True)
 
     class Meta:
@@ -36,19 +36,28 @@ class MovieSerializer(serializers.ModelSerializer):
 
             class Meta:
                 model = get_user_model()
-                fields = ('pk', 'nickname')
+                fields = ('pk', 'nickname', 'profile_img')
         
         user = UserSerializer(read_only=True)
 
         class Meta:
             model = Review
-            fields = ('pk', 'user', 'title', 'created_at', 'updated_at')
+            fields = ('pk', 'user', 'title', 'created_at', 'updated_at', 'created_string')
     
     reviews = MovieReviewSerializer(many=True, read_only=True)
     
+    class UserSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = get_user_model()
+            fields = ('pk', 'nickname', 'profile_img',)
+
+    like_users = UserSerializer(many=True, read_only=True)
+    like_users_cnt = serializers.IntegerField(source='like_users.count', read_only=True)
+    
     class Meta:
         model = Movie
-        fields = ('pk', 'title', 'overview', 'poster_path', 'vote_average', 'reviews')
+        fields = ('pk', 'like_users_cnt', 'like_users', 'title', 'overview', 'poster_path', 'vote_average', 'reviews', 'backdrop_path')
 
 class AutoCompleteSerializer(serializers.ModelSerializer):
 
