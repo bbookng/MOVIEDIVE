@@ -148,6 +148,7 @@ export default {
       })
       .then((res) => {
         this.getReviewDetail()
+        this.comment_content = null
         console.log(res.data)
       })
 

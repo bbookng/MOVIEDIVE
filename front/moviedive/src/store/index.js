@@ -196,23 +196,6 @@ export default new Vuex.Store({
           context.commit('GET_COLLECTIONS', res.data)
         })
     },
-    getReviews(context) {
-      axios({
-        method: 'get',
-        url: `${API_URL}/community/`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        }
-      })
-        .then((res) => {
-          // console.log(res, context)
-          // console.log(res.data)
-          context.commit('GET_REVIEWS', res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
     fetchMovies({ commit, getters }, keyword) {
       /* 게시글 목록 받아오기
       GET: articles URL (token)
@@ -279,28 +262,10 @@ export default new Vuex.Store({
     deleteSuggestion({ commit }) {
       commit('SET_SUGGESTS', [])
     },
-    createCollection(context, payload) {
-      axios({
-        method: 'post',
-        url: `${API_URL}/collections/create/`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        },
-        data: {
-          movies: payload.selected_movies_pk,
-          title: payload.collection_title,
-          description: payload.collection_description,
-        }
-      })
-      .then((res) => {
-        console.log(res.data)
-      })
-
-    },
     fetchNewMovieList(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/collections/2/`,
+        url: `${API_URL}/movies/new/`,
         headers: {
           Authorization: `Token ${context.state.token}`
         },

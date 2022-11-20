@@ -1,7 +1,7 @@
 <template>
   <div>
     <MainTrailer/>
-    <MovieList :movies="movies"/>
+    <MovieList :new_movies="new_movies"/>
   </div>
 </template>
 
@@ -19,6 +19,9 @@ export default {
   computed:{
       movies() {
       return this.$store.state.movies
+    },
+    new_movies() {
+      return this.$store.state.newmovielist
     }
   },
   created() {

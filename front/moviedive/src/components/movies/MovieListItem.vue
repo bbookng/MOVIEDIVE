@@ -5,7 +5,8 @@
     <div>
       <img type="button" data-bs-toggle="modal" data-bs-target="#movieDetail" class="movie-list-poster" :src=imgURL alt="">
     </div>
-    <movie-detail></movie-detail>
+    <MovieDetail
+    class="modal fade" id="movieDetail" tabindex="-1" aria-labelledby="movieDetail" aria-hidden="true"/>
     <hr>
 
     

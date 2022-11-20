@@ -66,3 +66,11 @@ def auto_complete(request, keyword):
     movies = Movie.objects.filter(title__contains=keyword).order_by('-vote_average')[:10]
     serializer = AutoCompleteSerializer(movies, many=True)
     return Response(serializer.data)
+
+def get_new_movies():
+    movies = Movie.objects.order_by('-release_date')[:10]
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
+
+def random_collections():
+    pass

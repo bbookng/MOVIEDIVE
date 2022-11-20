@@ -1,5 +1,6 @@
 <template>
   <div>
+    <form @submit.prevent="createCollection">
     <label for="collection_title">이름 : </label>
     <input type="text" id="collection_title" v-model="collection_title">
 
@@ -10,7 +11,8 @@
 
     <br>
 
-    <button @click="createCollection">컬렉션 생성하기</button>
+    <input type="submit" value="컬렉션 생성하기">
+    </form>
 
 
     {{ selected_movies }}
@@ -20,6 +22,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8000/api'
+
 export default {
     name: 'CollectionCreate',
     props: {
@@ -40,18 +45,26 @@ export default {
     },
     methods: {
         createCollection() {
-            const collection_title = this.collection_title
-            const collection_description = this.collection_description
-            const selected_movies_pk = this.selected_movies_pk
-
-            const payload = {
-                collection_title,
-                collection_description,
-                selected_movies_pk
+            axios({
+                method: 'post',
+                url: `${API_URL}/collections/create/`,
+                headers: {
+                Authorization: `Token ${this.$store.state.token}`
+                },
+                data: {
+                movies: this.selected_movies_pk,
+                title: this.collection_title,
+                description: this.collection_description,
                 }
-
-            this.$store.dispatch('createCollection', payload)
-        }
+            })
+            .then((res) => {
+                console.log(res.data)
+                this.$router.push({ name: 'collection' })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    },
     }
 
 }

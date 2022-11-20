@@ -1,7 +1,7 @@
 <template>
-    <div id="collection-detail" class="row">
-      <div id="collection-bg-img-box">
-        <img id="collection-bg-img" :src=mainPosterURL alt="">
+    <div id="collection-detail" class="container">
+      <div id="collection-bg-img-box" class="row">
+        <img id="collection-bg-img" :src=mainPosterURL alt="" class="col">
       </div>
       <hr>
       <h3>{{ collection.title }}</h3>
@@ -11,6 +11,10 @@
         <span> 댓글 수 {{ collection.comments_cnt }}</span> |
         <span> {{ collection.created_string }} 업데이트</span>
       </p>
+      <div>
+        <!-- <button @click="updateCollection">수정</button> -->
+        <button @click="deleteCollection">삭제</button>
+      </div>
       <div>
         <button @click="likeCollection">좋아요</button>
         <button @click="goCommentsList">댓글</button>
@@ -46,6 +50,8 @@
   import axios from 'axios';
   import SuggestionMovieItem from '@/components/collections/SuggestionMovieItem'
   
+  const API_URL = 'http://127.0.0.1:8000/api'
+
   export default {
     name: "CollectionDetailView",
     components: {
@@ -69,8 +75,7 @@
     },
     methods: {
       getCollection(collection_pk) {
-        const API_URL = 'http://127.0.0.1:8000/api'
-  
+        
         axios({
           url: `${API_URL}/collections/${collection_pk}/`,
           method: 'get',
@@ -84,7 +89,7 @@
         })
       },
       likeCollection() {
-        const API_URL = 'http://127.0.0.1:8000/api'
+
         // 컬렉션 좋아요 + 1
         axios({
           url: `${API_URL}/collections/${this.collection_pk}/like/`,
@@ -100,7 +105,6 @@
   
       },
       createComment() {
-        const API_URL = 'http://127.0.0.1:8000/api'
         const content = this.comment_content
   
         if (!content) {
@@ -118,6 +122,7 @@
         })
         .then((res) => {
           this.getCollection(this.collection_pk)
+          this.comment_content = null
           console.log(res.data)
         })
   
@@ -126,6 +131,28 @@
         // 댓글 div 로 이동
         const commentbox = document.getElementById("commentSet")
         commentbox.scrollIntoView({behavior: 'smooth'})
+      },
+      // updateCollection() {
+        
+      // },
+      deleteCollection() {
+        if (confirm('정말 삭제하시겠습니까?') == true) {
+          axios({
+          method: 'delete',
+          url: `${API_URL}/collections/${this.collection_pk}/`,
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`
+          }
+        
+        })
+          .then(() => {
+              this.$router.push({ name: 'collection' })
+            })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+
       }
       
     },
