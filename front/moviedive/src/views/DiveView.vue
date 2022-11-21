@@ -1,21 +1,20 @@
 <template>
-  <div id="three-canvas"></div>
+  <div>
+    <DiveCanvas/>
+  </div>
 </template>
 
 <script>
+import DiveCanvas from '@/components/DiveCanvas'
 
-  export default {
-    
-    name: 'DiveView',
-
+export default {
+  name: 'DiveView',
+  components: {
+    DiveCanvas,
   }
+}
 </script>
 
-<style scoped>
-  #three-canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-  }
+<style>
+
 </style>
