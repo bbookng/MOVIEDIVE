@@ -16,6 +16,7 @@ import MyPageView from '@/views/MyPageView'
 import ReviewFormView from '@/views/ReviewFormView'
 import SearchResultView from '@/views/SearchResultView'
 import CollectionDetailView from '@/views/CollectionDetailView'
+import CollectionCreationFormView from '@/views/CollectionCreationFormView'
 
 Vue.use(VueRouter)
 
@@ -48,14 +49,14 @@ const routes = [
 
   },
   {
+    path: '/collection/:collectionPk',
+    name: 'collection_detail',
+    component: CollectionDetailView
+  },
+  {
     path: '/collection',
     name: 'collection',
     component: CollectionsView
-  },
-  {
-    path: '/collection/:colletionPk',
-    name: 'collection_detail',
-    component: CollectionDetailView
   },
   // community
   {
@@ -93,7 +94,11 @@ const routes = [
     name: 'search_result',
     component: SearchResultView
   },
-
+  {
+    path: '/collection/save/',
+    name: 'save_collection',
+    component: CollectionCreationFormView
+  },
 ]
 
 const router = new VueRouter({

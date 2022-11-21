@@ -25,6 +25,7 @@ export default new Vuex.Store({
     authError: null,
     isCollectionDetail: false,
     API_URL: 'http://127.0.0.1:8000/api',
+    collection: [],
   },
   getters: {
     movies: state => state.movies,
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     authHeader: state => ({ Authorization: `Token ${state.token}` }),
     authError: state => state.authError,
     newmovielist: state => state.newmovielist,
+    collection: state => state.collection,
   },
   mutations: {
     // 회원가입 && 로그인

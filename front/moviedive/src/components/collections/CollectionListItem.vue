@@ -24,7 +24,8 @@ export default {
       mainImgURL: `https://image.tmdb.org/t/p/original/${this.collection.movies[0].poster_path}`,
     };
   },
-  computed: {},
+  computed: {
+  },
   methods: {
 
   },

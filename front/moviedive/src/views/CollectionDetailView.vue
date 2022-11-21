@@ -12,7 +12,7 @@
         <span> {{ collection.created_string }} 업데이트</span>
       </p>
       <div>
-        <!-- <button @click="updateCollection">수정</button> -->
+        <router-link :to="{ name: 'save_collection' }">수정</router-link>
         <button @click="deleteCollection">삭제</button>
       </div>
       <div>

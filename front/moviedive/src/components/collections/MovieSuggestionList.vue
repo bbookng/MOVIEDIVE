@@ -28,6 +28,7 @@ export default {
     },
     methods: {
         select_suggestion(suggest){
+            console.log(suggest)
             this.$emit('FromSuggestions', suggest)
         }
     },
