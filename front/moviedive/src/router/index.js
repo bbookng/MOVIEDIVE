@@ -17,6 +17,7 @@ import ReviewFormView from '@/views/ReviewFormView'
 import SearchResultView from '@/views/SearchResultView'
 import CollectionDetailView from '@/views/CollectionDetailView'
 import CollectionCreationFormView from '@/views/CollectionCreationFormView'
+import NotFound404 from '@/views/NotFound404'
 
 Vue.use(VueRouter)
 
@@ -98,6 +99,15 @@ const routes = [
     path: '/collection/save/',
     name: 'save_collection',
     component: CollectionCreationFormView
+  },
+  {
+    path: '/404',
+    name: 'NotFound404',
+    component: NotFound404
+  },
+  {
+    path: '*',
+    redirect: '/404'
   },
 ]
 

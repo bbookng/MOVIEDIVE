@@ -26,6 +26,7 @@ export default new Vuex.Store({
     isCollectionDetail: false,
     API_URL: 'http://127.0.0.1:8000/api',
     collection: [],
+    mypage: 1,
   },
   getters: {
     movies: state => state.movies,
@@ -63,7 +64,10 @@ export default new Vuex.Store({
     SET_MOVIE: (state, movie) => state.movie = movie,
     SET_SUGGESTS: (state, suggests) => state.suggests = suggests,
     SET_COLLECTION: (state, collection) => state.collection = collection,
-    SET_NEW_MOVIE_LIST: (state, movies) => state.newmovielist = movies
+    SET_NEW_MOVIE_LIST: (state, movies) => state.newmovielist = movies,
+    GET_MY_PAGE: (state, flag) => state.mypage = flag,
+    GET_PROFILE_MODIFY: (state, flag) => state.mypage = flag,
+    GET_ACCOUNT_MODIFY: (state, flag) => state.mypage = flag ,
   },
   actions: {
     signUp(context, payload) {
@@ -248,6 +252,23 @@ export default new Vuex.Store({
           if (err.response.status === 404) {
             router.push({ name: 'NotFound404' })
           }
+        })
+    },
+    getReviews(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_REVIEWS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
         })
     },
     autoComplete({ commit, getters }, keyword) {

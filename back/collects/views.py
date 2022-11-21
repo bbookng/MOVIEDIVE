@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer, CommentSerializer, AutoCompleteSerializer
+from .serializers import CollectionCreateSerializer, CollectionUpdateSerializer, CollectionDetailSerializer, CollectionListSerializer, CollectionCommentSerializer, CommentSerializer, AutoCompleteSerializer, UserLikeCollectionSerializer
 from .models import Collection, Comment
 from movies.models import Movie
 from django.core.paginator import Paginator
@@ -18,7 +18,7 @@ def get_main_collections(request):
 
 @api_view(['GET'])
 def collections_list(request):
-    collections = get_list_or_404(Collection)
+    collections = get_list_or_404(Collection).order_by('-like_users_cnt')
     paginator = Paginator(collections, 20)
     page_number = request.GET.get('page')
     current_page = int(page_number) if page_number else 1
@@ -111,4 +111,10 @@ def comment_status(request, collection_pk, comment_pk):
 def get_suggestions(request, keyword):
     movies = Movie.objects.filter(title__contains=keyword).order_by('-vote_average')[:20]
     serializer = AutoCompleteSerializer(movies, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_user_collections(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    serializer = UserLikeCollectionSerializer(user)
     return Response(serializer.data)

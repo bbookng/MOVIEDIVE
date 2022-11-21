@@ -1,24 +1,53 @@
 <template>
   <div>
-    <MyPage v-if="this.mypage == 1"/>
-    <ProfileModify v-if="this.mypage == 2"/>
-    <AccountModify v-if="this.mypage == 3"/>
+    <div id="profile-top">
+        {{ profileImg }}
+        <div id="profile-image">
+          <img :src=profileImg alt="프로필 이미지 넣자">
+        </div>
+        <div id="profile-top-right">
+          <div>
+            {{ user.nickname }}
+            <button v-if="isNotMe" @click="follow">팔로우</button>
+          </div>
+          <div>
+            리뷰 {{ user.reviews_cnt }} |
+            팔로워 {{ user.followers_cnt }} |
+            팔로잉 {{ user.followings_cnt }} |
+          </div>
+          <div>
+            {{ user.message }}
+          </div>
+        </div>
+        <div>
+          {{ collection_highlight }}
+        </div>
+      </div>
+      <div>
+        <button @click="getUserReviews">리뷰</button>
+        <button @click="getUserCollections">컬렉션</button>
+        <button @click="getUserLikes">좋아요</button>
+      </div>
+      <div>
+        <UserReview :user="user" v-if="select_component == 1"/>
+        <UserCollection :user="user" v-if="select_component == 2"/>
+        <UserLikesMovies :user="user" v-if="select_component == 3"/>
+      </div>
   </div>
-  
 </template>
 
 <script>
 import axios from 'axios'
-import ProfileModify from '@/components/profile/ProfileModify.vue';
-import AccountModify from '@/components/profile/AccountModify.vue';
-import MyPage from '@/components/profile/MyPage.vue'
+import UserCollection from '@/components/profile/UserCollection.vue'
+import UserLikesMovies from '@/components/profile/UserLikesMovies.vue'
+import UserReview from '@/components/profile/UserReview.vue';
 
 export default {
-  name: 'MyPageView',
+  name: 'MyPage',
   components: {
-    ProfileModify,
-    AccountModify,
-    MyPage
+    UserCollection,
+    UserLikesMovies,
+    UserReview,
   },
   data() {
     return {
@@ -94,6 +123,7 @@ export default {
   }
 
 }
+
 </script>
 
 <style>

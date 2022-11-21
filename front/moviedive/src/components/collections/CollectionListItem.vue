@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ collection.title }}</p>
+    <!-- <p>{{ collection.title }}</p> -->
     <router-link :to="{ name: 'collection_detail', params: { collectionPk: this.collection.pk }}">
       <img
       class="collectionPoster"
@@ -8,6 +8,16 @@
       alt="..."
       />
     </router-link>
+    {{ collection.like_users_cnt }}
+    {{ collection.comments_cnt }}
+    <div id="selectcollection">
+      {{ collection.title }}
+      {{ collection.description }}
+      <div>
+        <img :src=profileImg alt="프로필이미지">
+        {{ collection.user.nickname }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,6 +35,9 @@ export default {
     };
   },
   computed: {
+    profileImg() {
+      return this.collection.profile_img
+    }
   },
   methods: {
 

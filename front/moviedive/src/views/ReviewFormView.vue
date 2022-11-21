@@ -107,10 +107,10 @@ export default {
       }
       this.data = {
           id: this.review_id,
-          movie: movie,
-          title: title,
-          content: content,
-          rate: rate,
+          movie: this.movie,
+          title: this.title,
+          content: this.content,
+          rate: this.rate,
       }
 
       if (this.review_id === undefined) {

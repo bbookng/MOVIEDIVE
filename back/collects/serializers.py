@@ -106,3 +106,11 @@ class AutoCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields= ('pk', 'title', 'poster_path',)
+
+class UserLikeCollectionSerializer(serializers.ModelSerializer):
+
+    like_collections = CollectionDetailSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'id', 'nickname', 'like_collections',)

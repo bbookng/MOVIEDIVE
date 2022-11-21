@@ -23,12 +23,7 @@
     </div>
     <div class="nav-right" style="width:18rem;">
       <ul class="d-flex justify-content-end align-items-center my-0">
-        <li v-if="!isLoggedIn" class="mx-3">
-          <router-link :to="{ name: 'login' }" class="right-nav-item">Login</router-link>
-        </li>
-        <li v-if="!isLoggedIn" class="mx-1">
-          <router-link :to="{ name: 'signup' }" class="right-nav-item">Signup</router-link>
-        </li>
+        
 
         
 
@@ -50,11 +45,25 @@
             <span class="visually-hidden">프로필이미지</span>
           </button>
           <ul class="dropdown-menu">
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">{{ currentUser.nickname }}</router-link></li>
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">프로필 관리</router-link></li>
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'mypage', params: { username } }">계정 설정</router-link></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><router-link class="dropdown-item nav-item" :to="{ name: 'logout' }">로그아웃</router-link></li>
+            <li v-if="!isLoggedIn">
+              <router-link class="dropdown-item nav-item cd-signin" :to="{ name: 'login' }">Login</router-link>
+            </li>
+            <li v-if="!isLoggedIn">
+              <router-link class="dropdown-item nav-item cd-signup" :to="{ name: 'signup' }">Signup</router-link>
+            </li>
+            <li v-if="isLoggedIn">
+              <button @click="myPage">마이페이지</button>
+            </li>
+            <li v-if="isLoggedIn">
+              <button @click="profileModify">프로필 관리</button>
+            </li>
+            <li v-if="isLoggedIn">
+              <button @click="accountModify">계정 설정</button>
+            </li>
+            <li  v-if="isLoggedIn"><hr class="dropdown-divider"></li>
+            <li v-if="isLoggedIn">
+              <router-link class="dropdown-item nav-item" :to="{ name: 'logout' }">로그아웃</router-link>
+            </li>
           </ul>
         </div>
 
@@ -101,6 +110,9 @@ export default {
     nickname() {
       return this.currentUser.profile_info ? this.currentUser.profile_info[0].nickname : 'guest'
     },
+    mypage() {
+      return this.$store.state.myPage
+    }
   },
   methods: {
     ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
@@ -115,6 +127,18 @@ export default {
       this.searchKeyword = event.target.value
       this.autoComplete(this.searchKeyword)
     },
+    myPage() {
+      this.$store.commit('GET_MY_PAGE', 1)
+      this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
+    },
+    profileModify() {
+      this.$store.commit('GET_PROFILE_MODIFY', 2)
+      this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
+    },
+    accountModify() {
+      this.$store.commit('GET_ACCOUNT_MODIFY', 3)
+      this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
+    }
   }
 }
 </script>
