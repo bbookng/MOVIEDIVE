@@ -7,5 +7,9 @@ from django.conf import settings
 class User(AbstractUser):
     followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
     nickname = models.CharField(max_length=10)
-    profile_img = models.ImageField(blank=True)
+    profile_img = models.CharField(max_length=100, blank=True)
     message = models.CharField(max_length=20)
+    
+class Image(models.Model):
+    profile_img = models.FileField()
+    

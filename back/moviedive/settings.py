@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 from . import mysettings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,18 @@ ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
+AWS_ACCESS_KEY_ID = mysettings.AWS_ACCESS_KEY # .csv 파일에 있는 내용을 입력 Access key ID
+AWS_SECRET_ACCESS_KEY = mysettings.AWS_SECRET_KEY # .csv 파일에 있는 내용을 입력 Secret access key
+AWS_REGION = 'ap-northeast-2'
+
+###S3 Storages
+AWS_STORAGE_BUCKET_NAME = 'moviedive' # 설정한 버킷 이름
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'path/to/store/my/files/')
 
 INSTALLED_APPS = [
 # local apps
@@ -43,6 +56,9 @@ INSTALLED_APPS = [
     # drf_sepctacular
     'drf_spectacular',
 
+    # AWS S3
+    'storages',
+    
     # rest_framework
     'rest_framework',
     'rest_framework.authtoken',      # token 기반 auth

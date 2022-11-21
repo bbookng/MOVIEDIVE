@@ -18,7 +18,7 @@ def get_main_collections(request):
 
 @api_view(['GET'])
 def collections_list(request):
-    collections = get_list_or_404(Collection).order_by('-like_users_cnt')
+    collections = get_list_or_404(Collection)
     paginator = Paginator(collections, 20)
     page_number = request.GET.get('page')
     current_page = int(page_number) if page_number else 1

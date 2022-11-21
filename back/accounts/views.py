@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from .serializers import UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer, UserLikeMovieSerializer, UserMakesCollectionSerializer, UserReviewSerializer, ProfileResponseSerializer
+from .serializers import UpdateUserRequestSerializer, UserNicknameSerializer, UserMessageSerializer, UserLikeMovieSerializer, UserMakesCollectionSerializer, UserReviewSerializer, ProfileResponseSerializer ,PhotoSerializer, UserProfileImageUpdateSerializer
 
 
 # Create your views here.
@@ -98,3 +98,28 @@ def set_message(request):
     if serializer.is_valid():
         serializer.save()
         return Response(status=status.HTTP_200_OK)
+
+@api_view(['PUT'])
+def update_profileimg(request):
+    print("come")
+    profile_img = request.FILES['profile_img']
+    print(profile_img)
+    data = {
+        'profile_img': profile_img
+    }
+    serializers = PhotoSerializer(data = data)
+    print(3)
+    if serializers.is_valid():
+        serializers.save()
+        print(serializers.data)
+        new_data = { "profile_img": serializers.data['profile_img'] }
+        print(new_data)
+        user_serializer = UserProfileImageUpdateSerializer(instance=request.user, data=new_data)
+        print(user_serializer)
+        if user_serializer.is_valid():
+            print(user_serializer.errors)
+            user_serializer.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+    print(serializers.errors)
+    return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    

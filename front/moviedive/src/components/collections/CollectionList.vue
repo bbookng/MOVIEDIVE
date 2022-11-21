@@ -53,6 +53,7 @@ export default {
           }
         })
         .then((res)=>{
+          console.log(res.data)
           this.collections = res.data
         })
     },
@@ -65,7 +66,6 @@ export default {
           }
         })
         .then((res)=>{
-          console.log(res.data)
           this.userlikecollections = res.data.like_collections
         
         })

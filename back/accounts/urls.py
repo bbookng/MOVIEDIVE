@@ -13,4 +13,5 @@ urlpatterns = [
     path('profile/<username>/movies/', views.get_likelists),
     path('profile/<username>/reviews/', views.get_user_reviews),
     path('profile/<username>/collections/', views.get_user_collections),
+    path('profileimg/', views.update_profileimg),
 ]

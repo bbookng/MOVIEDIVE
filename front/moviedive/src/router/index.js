@@ -96,7 +96,7 @@ const routes = [
     component: SearchResultView
   },
   {
-    path: '/collection/save/',
+    path: '/collection/save/:collectionPk',
     name: 'save_collection',
     component: CollectionCreationFormView
   },

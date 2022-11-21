@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from .models import Image
 from movies.models import Movie
 from collects.models import Collection
 from community.models import Review
@@ -36,15 +37,23 @@ class UserMakesCollectionSerializer(serializers.ModelSerializer):
         
         movies = CollectionMovieSerializer(many=True, read_only=True)
         
+        class CollectionUserSerializer(serializers.ModelSerializer):
+            
+            class Meta:
+                model = get_user_model()
+                fields = ('pk', 'id', 'username', 'nickname')
+        
+        user = CollectionUserSerializer(read_only=True)
+        
         class Meta:
             model = Collection
-            fields = ('pk', 'title', 'movies', 'like_users',)
+            fields = ('pk', 'title', 'movies', 'like_users', 'user')
     
     collections = MadeCollectionSerializer(many=True)
     
     class Meta:
         model = get_user_model()
-        fields = ('collections',)
+        fields = ('collections', 'username', 'nickname', 'id', 'pk',)
         
 class UserReviewSerializer(serializers.ModelSerializer):
       
@@ -108,4 +117,12 @@ class ProfileResponseSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = get_user_model()
 #         fields = ('id', 'username', 'nickname', 'profile_img', 'message', 'followings_cnt', 'followers_cnt',)
-        
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('__all__')
+    
+class UserProfileImageUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('profile_img',)

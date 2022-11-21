@@ -11,7 +11,7 @@
         <span> 댓글 수 {{ collection.comments_cnt }}</span> |
         <span> {{ collection.created_string }} 업데이트</span>
       </p>
-      <div>
+      <div v-if="currentUser.pk == collection.user.pk">
         <router-link :to="{ name: 'save_collection' }">수정</router-link>
         <button @click="deleteCollection">삭제</button>
       </div>

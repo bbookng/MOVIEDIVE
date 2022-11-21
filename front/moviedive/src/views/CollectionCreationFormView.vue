@@ -1,7 +1,18 @@
 <template>
     <div>
-    <div v-if="!isselectCollection">
-
+    <div v-if="!isSelected">
+        <div>
+            <h4>컬렉션 만들기</h4>
+            <h5>영화들을 골라주세요</h5>
+            <input autocomplete="off" @input="getSuggestions" :search_keyword="search_keyword" type="text" id="nc-search-keyword" placeholder="영화제목을 입력해주세요" />
+        </div>
+        <button @click="createCollection">선택완료</button>
+        <div>
+            <MovieSuggestionList :selected_movies="selected_movies" @FromSuggestions="selectMovie" :suggests="suggests"/>
+        </div>
+        {{ selected_movies }}
+    </div>
+    <div v-if="isSelected">
         <form @submit.prevent="saveCollection">
             <label for="collection_title">이름 : </label>   
             <input type="text" id="collection_title" v-model="collection_title">
@@ -12,62 +23,67 @@
             
             <br>
             <button @click="selectMovies">영화 선택하기</button>
-            <input type="submit" value="컬렉션 생성하기">
+            <input type="submit" value="컬렉션 만들기">
+            {{ selected_movies }}
         </form>
-        
     </div>
-
-    <CollectionCreationForm
-       v-if="isselectCollection"
-      :selected_movies="selected_movies"
-      :isselectCollection="isselectCollection"
-      @isselectCollection="selectMovies"/>
-  
-      {{ selected_movies }}
-      {{ collection_movies }}
-  
-  
     </div>
-  </template>
-  
-  <script>
-  import axios from 'axios'
-  import CollectionCreationForm from '@/components/collections/CollectionCreationForm.vue'
+</template>
 
-  const API_URL = 'http://127.0.0.1:8000/api'
-  
-  
-  export default {
-      name: 'CollectionCreationFormView',
-      components: {
-        CollectionCreationForm
-      },
-      data() {
-          return {
-              collection_title: '',
-              collection_description: '',
-              collection_pk: this.$route.params.collectionPk,
-              collection_movies: null,
-              isselectCollection: false,
-          }
-      },
-      computed: {
-          selected_movies() {
-            return this.$store.getters.selected_movies
+<script>
+import MovieSuggestionList from "@/components/collections/MovieSuggestionList.vue"
+import axios  from "axios"
+
+const API_URL = 'http://127.0.0.1:8000/api'
+
+export default {
+    name: 'CollectionCreationForm',
+    components:{
+        MovieSuggestionList,
+    },
+    data() {
+        return {
+            search_keyword: "",
+            suggests: null,
+            selected_movies: [],
+            isSelected: false,
+            selectd_movie: null,
+            collection_title: '',
+            collection_description: '',
+            collection_pk: this.$route.params.collectionPk,
+            collection_movies: null,
+        }
+    },
+    computed: {
+        selected_movies_pk() {
+            return this.selected_movies.map(movie => movie.id)
           },
-          selected_movies_pk() {
-            if (this.selected_movies) {
-                return this.selected_movies.map(movie => movie.pk)
-            } else {
-                return false
-            }
-          },
-      },
-      mounted() {
+    },
+    mounted() {
         this.getCollection()
-        this.selectMovies()
-      },
-      methods: {
+    },
+    methods: {
+        selectMovie(suggest) {
+            // 포함되어 있으면 제거하고 없으면 들어가게 로직 다시 짜기
+            this.selected_movies = [...this.selected_movies, suggest]
+        },
+        getSuggestions(event){
+            const API_URL = 'http://127.0.0.1:8000/api/'
+
+            axios({
+                method: 'get',
+                url: API_URL + `collections/create/suggest/${event.target.value}/`,
+                headers: {
+                    Authorization: `Token ${this.$store.state.token}`
+                }
+            })
+            .then((res) => {
+                this.suggests = res.data
+            })
+        },
+        createCollection() {
+            this.isSelected = true
+        },
         getCollection() {
             if (this.collection_pk !== undefined) {
                 axios({
@@ -78,9 +94,10 @@
                     } 
                 })
                 .then((res) => {
-                    this.collection_movies = res.data.movies
+                    this.selected_movies = res.data.movies
                     this.collection_title = res.data.title
                     this.collection_description = res.data.description
+                    this.isSelected = true
                 })
                 .catch((err) => {
                     console.log(err)
@@ -122,7 +139,7 @@
             } else {
                 axios({
                     method: 'put',
-                    url: `${API_URL}/collectinons/${this.collection_pk}/`,
+                    url: `${API_URL}/collections/${this.collection_pk}/`,
                     headers: {
                         Authorization: `Token ${this.$store.state.token}`
                     },
@@ -133,23 +150,25 @@
                     }
                 })
                 .then((res) => {
+                    console.log(this.selected_movies_pk)
+                    
                     console.log(res)
                     alert('수정되었습니다.')
                     this.$router.push({ name: 'collection' })
                 })
                 .catch((err) => {
+                    console.log(this.selected_movies_pk)
                     console.log(err)
                 })
             }
         },
         selectMovies() {
-            this.isselectCollection = !this.isselectCollection
+            this.isSelected = false
         }
     }
-  
-  }
-  </script>
-  
-  <style>
-  
-  </style>
+}
+</script>
+
+<style>
+
+</style>
