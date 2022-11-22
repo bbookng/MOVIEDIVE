@@ -46,17 +46,20 @@ export default {
   methods: {
     onInputImage() {
       this.image = this.$refs.profileImage.files
-      console.log("this.image")
+      console.log("this image", this.image)
     },
     onClickFormButton() {
       const formdata = new FormData()
-      formdata.append('profile_img', this.image)
+      formdata.append('profile_img', this.image[0])
+      console.log(formdata)
 
       axios({
         method:'put',
-        url: `http://127.0.0.1:8000/api/accounts/profileimg/`,
+        url: '/api/accounts/profileimg/',
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+          'Access-Control-Allow-Headers': '*',
           'Content-Type': 'multipart/form-data',
           Authorization: `Token ${this.$store.state.token}`
         },
@@ -68,6 +71,24 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+      // axios({
+      //   method:'put',
+      //   url: 'test/api/accounts/profileimg/',
+      //   headers: {
+      //     'Access-Control-Allow-Origin': '*',
+      //     'Access-Control-Allow-Credentials': true,
+      //     'Access-Control-Allow-Headers': '*',
+      //     'Content-Type': 'multipart/form-data',
+      //     Authorization: `Token ${this.$store.state.token}`
+      //   },
+      //   data: formdata
+      // })
+      // .then((res) => {
+      //   console.log(res.data)
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
     },
   }
 }

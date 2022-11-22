@@ -9,7 +9,7 @@ class UpdateUserRequestSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
-        fields = ('nickname', 'profile_img', 'message',)
+        fields = ('nickname', 'message',)
         
 class UserLikeMovieSerializer(serializers.ModelSerializer):
     

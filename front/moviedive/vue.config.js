@@ -1,4 +1,20 @@
 const { defineConfig } = require('@vue/cli-service')
+const proxy = require('http-proxy-middleware')
+
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000/api',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+      // /accounts/profileimg/
+      
+    }
+
+  }
 })

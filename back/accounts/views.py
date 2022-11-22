@@ -101,14 +101,15 @@ def set_message(request):
 
 @api_view(['PUT'])
 def update_profileimg(request):
-    print("come")
+    print(1)
+    print(request.FILES)
     profile_img = request.FILES['profile_img']
-    print(profile_img)
+    print(2)
     data = {
         'profile_img': profile_img
     }
-    serializers = PhotoSerializer(data = data)
     print(3)
+    serializers = PhotoSerializer(data = data)
     if serializers.is_valid():
         serializers.save()
         print(serializers.data)
