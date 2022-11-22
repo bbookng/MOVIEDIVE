@@ -1,15 +1,21 @@
 <template>
   <div>
-    <h1> Let's Play the game !</h1>
+    <GameHeader />
+    <GameArea />
   </div>
 </template>
 
 <script>
+import GameHeader from "@/components/game/GameHeader.vue";
+import GameArea from "@/components/game/GameArea.vue";
 export default {
-  name: 'PlayView',
-}
+  name: "PlayView",
+  components: {
+    GameHeader,
+    GameArea,
+  },
+};
 </script>
 
 <style>
-
 </style>

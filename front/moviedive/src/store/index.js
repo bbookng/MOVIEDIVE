@@ -13,8 +13,8 @@ export default new Vuex.Store({
   plugins: [
     createPersistedState({
       key: 'vuex',
-      reducer (val) {
-        if(val.isLoggedIn === false) {
+      reducer(val) {
+        if (val.isLoggedIn === false) {
           return {}
         }
         return val
@@ -52,14 +52,11 @@ export default new Vuex.Store({
   },
   mutations: {
     // 회원가입 && 로그인
-    SAVE_TOKEN(state, token) {
-      state.token = token
-      router.push({ name: 'main' })
-    },
+    SET_TOKEN: (state, token) => state.token = token,
+    SET_CURRENT_USER: (state, user) => state.currentUser = user,
     GET_MOVIES(state, movies) {
       state.movies = movies
     },
-    SET_CURRENT_USER: (state, user) => state.currentUser = user,
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     GET_COLLECTIONS(state, collections) {
       state.collections = collections
@@ -73,32 +70,31 @@ export default new Vuex.Store({
     SET_NEW_MOVIE_LIST: (state, movies) => state.newmovielist = movies,
     GET_MY_PAGE: (state, flag) => state.mypage = flag,
     GET_PROFILE_MODIFY: (state, flag) => state.mypage = flag,
-    GET_ACCOUNT_MODIFY: (state, flag) => state.mypage = flag ,
+    GET_ACCOUNT_MODIFY: (state, flag) => state.mypage = flag,
   },
   actions: {
-    signUp(context, payload) {
+    signUp({ dispatch, commit }, credentials) {
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
-        data: {
-          username: payload.username,
-          password1: payload.password1,
-          password2: payload.password2,
-          email: payload.email,
-        }
+        data: credentials,
       })
-        .then((res) => {
-          context.commit('SAVE_TOKEN', res.data.key)
-          // console.log(res)
+        .then(res => {
+          const token = res.data.key
+          dispatch('saveToken', token)
+          dispatch('fetchCurrentUser')
+          router.push({ name: 'main' })
         })
         .then(() => {
-          console.log(payload.nickname)
-          context.dispatch('getNickname', payload.nickname)
-
+          console.log(credentials.nickname)
+          dispatch('setNickname', credentials.nickname)
         })
-        .catch(() => alert('이미 있다'))
+        .catch(err => {
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR', err.response.data)
+        })
     },
-    getNickname(context, nickname) {
+    setNickname(context, nickname) {
       console.log(nickname)
       console.log(drf.accounts.set_nickname)
       axios({
@@ -113,32 +109,48 @@ export default new Vuex.Store({
           console.log(res)
         })
     },
-    logIn(context, payload) {
+    logIn({ commit, dispatch }, credentials) {
+      /* 
+      POST: 사용자 입력정보를 login URL로 보내기
+        성공하면
+          응답 토큰 저장
+          현재 사용자 정보 받기
+          메인 페이지(ArticleListView)로 이동
+        실패하면
+          에러 메시지 표시
+      */
       axios({
+        url: drf.accounts.login(),
         method: 'post',
-        url: `${API_URL}/accounts/login/`,
-        data: {
-          username: payload.username,
-          password: payload.password,
-        }
+        data: credentials
       })
-        .then((res) => {
-          // console.log(res)
-          context.commit('SAVE_TOKEN', res.data.key)
-          console.log(res.data.key)
-          context.dispatch("fetchCurrentUser")
+        .then(res => {
+          const token = res.data.key
+          dispatch('saveToken', token)
+          dispatch('fetchCurrentUser')
+          router.push({ name: 'main' })
+        })
+        .catch(err => {
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR', err.response.data)
         })
     },
+    saveToken({ commit }, token) {
+      /* 
+      state.token 추가 
+      localStorage에 token 추가
+      */
+      commit('SET_TOKEN', token)
+      localStorage.setItem('token', token)
+    },
+
     removeToken({ commit }) {
       /* 
       state.token 삭제
       localStorage에 token 추가
       */
-
-      console.log("removeToken")
-      localStorage.setItem("token", "")
-      commit('SAVE_TOKEN', '')
-
+      commit('SET_TOKEN', '')
+      localStorage.setItem('token', '')
     },
     logout({ dispatch }) {
       /* 

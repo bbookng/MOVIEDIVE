@@ -1,15 +1,26 @@
 <template>
   <div>
+    <div id="profile-img-box">
+      <img
+        id="profile-img"
+        src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F83%2F1f%2Fda%2F831fdaa1b75381f6ff74de37de6e938d.jpg&type=sc960_832"
+        alt="프로필 이미지"
+      />
+    </div>
     <div>
-      <img src=profileImg alt="프로필 이미지">
-      <input @change='onInputImage' type="file" ref="profileImage" accept="image/*" id="file" />
+      <input
+        @change="onInputImage"
+        type="file"
+        ref="profileImage"
+        accept="image/*"
+        id="file"
+      />
       <button type="button" @click="onClickFormButton">upload!</button>
     </div>
     <div>
       <div>
         {{ currentUser.username }}
         {{ currentUser.email }}
-        
       </div>
       <div>
         <p>{{ currentUser.nickname }}</p>
@@ -19,102 +30,108 @@
       <div>
         <form @submit.prevent="updateProfile">
           <label for="usernickname">닉네임: </label>
-          <input type="text" id="usernickname" v-model="nickname" value="usernickname">
+          <input
+            type="text"
+            id="usernickname"
+            v-model="nickname"
+            value="usernickname"
+          />
           <label for="usermessage">상태메세지: </label>
-          <input type="text" id="usermessage" v-model="message" value="usermessage">
-          <input type="submit" value="수정">
-        </form> 
+          <input
+            type="text"
+            id="usermessage"
+            v-model="message"
+            value="usermessage"
+          />
+          <input type="submit" value="수정" />
+        </form>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import axios  from 'axios'
-
-const API_URL = 'http://127.0.0.1:8000/api'
+import axios from "axios";
+const API_URL = "http://127.0.0.1:8000/api";
 
 export default {
-  name: 'ProfileModify',
+  name: "ProfileModify",
   data() {
     return {
-      image: '',
+      image: "",
       nickname: null,
       message: null,
-    } 
+    };
   },
   computed: {
-    currentUser () {
-      return this.$store.getters.currentUser
+    currentUser() {
+      return this.$store.getters.currentUser;
     },
     profileImg() {
-      return this.currentUser.profile_img
+      return this.currentUser.profile_img;
     },
     usernickname() {
-      return this.currentUser.nickname
+      return this.currentUser.nickname;
     },
     usermessage() {
-      return this.currentUser.message
-    }
+      return this.currentUser.message;
+    },
   },
   methods: {
     onInputImage() {
-      this.image = this.$refs.profileImage.files
-      console.log(this.image)
+      this.image = this.$refs.profileImage.files;
+      console.log(this.image);
     },
     onClickFormButton() {
-      const formdata = new FormData()
-      formdata.append('profile_img', this.image[0])
+      const formdata = new FormData();
+      formdata.append("profile_img", this.image[0]);
+      console.log("formdata", formdata);
 
       axios({
-        method:'put',
-        url: `${API_URL}/api/accounts/profileimg/`,
+        method: "put",
+        url: "",
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Headers': '*',
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Token ${this.$store.state.token}`
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Headers": "*",
+          "Content-Type": "multipart/form-data",
+          Authorization: `Token ${this.$store.state.token}`,
         },
-        data: formdata
+        data: formdata,
       })
-      .then((res) => { 
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    setProfileForm() {
-
-    },
+    setProfileForm() {},
     updateProfile() {
-      const nickname = this.nickname
-      const message = this.message
+      const nickname = this.nickname;
+      const message = this.message;
 
       axios({
-        method: 'put',
+        method: "put",
         url: `${API_URL}/accounts/profile/update/`,
         headers: {
-          Authorization: `Token ${this.$store.state.token}`
+          Authorization: `Token ${this.$store.state.token}`,
         },
         data: {
           nickname,
-          message
-        }
+          message,
+        },
       })
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
-
 </style>
