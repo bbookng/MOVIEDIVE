@@ -1,12 +1,11 @@
 <template>
-  <div id="dive-canvas">
-  </div>
+  <div id="dive-canvas"></div>
 </template>
 
 <script>
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
+import { Particles } from '../modules/Particles';
 
 export default {
   name: 'DiveCanvas',
@@ -32,7 +31,6 @@ export default {
       // Renderer
       const canvas = document.querySelector('#dive-canvas');
       const renderer = new THREE.WebGLRenderer({
-        // canvas,
         antialias: true
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -66,38 +64,26 @@ export default {
       // Controls
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
-      
-      // AxesHelper
-      // const axesHelper = new THREE.AxesHelper();
-      // scene.add(axesHelper)
 
       // MOVIEDIVE hemisphere
       // 이미지 로드
-      // const loader = new THREE.TextureLoader();
-      // loader.setPath( '/images/' );
+      const loader = new THREE.TextureLoader();
+      loader.setPath( '/images/' );
       this.texture = new THREE.TextureLoader().load(
         require( "./images/noxm.png" )
       );
-      // const texture = loader.load('https://moviedive.s3.ap-northeast-2.amazonaws.com/noxm.png');
-      // texture.generateMipmaps = false;
-      // texture.minFilter = THREE.LinearFilter;
-      const geometry_md = new THREE.PlaneGeometry( 0.2, 0.2 )
-      // const geometry_md = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
+      this.texture.generateMipmaps = false;
+      const geometry_md = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_md = new THREE.MeshBasicMaterial( { map: this.texture } )
       
       const moviedive = new THREE.Mesh( geometry_md, material_md );
       moviedive.rotation.x = -0.4
+      moviedive.name = 'moviedive'
+      scene.add(moviedive);
 
-      scene.add( moviedive );
-
-      // hemisphere
-      // loader_h.setPath( '/images/' );
-      // const texture_h = new THREE.TextureLoader().load('./images/lb.png');
       this.texture_h = new THREE.TextureLoader().load(
         require( "./images/lb.png" )
       );
-      // texture.generateMipmaps = false;
-      // texture.minFilter = THREE.LinearFilter;
 
       const geometry_h = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_h = new THREE.MeshBasicMaterial( { map: this.texture_h } )
@@ -106,47 +92,19 @@ export default {
       hemisphere.rotation.x = -0.4
       hemisphere.rotation.y = 3.141592
       hemisphere.rotation.z = 0
-      scene.add( hemisphere );
+      hemisphere.name = 'hemisphere'
+      scene.add(hemisphere);
 
-      // Points
-      const geometry = new THREE.BufferGeometry();
-      const count = 800;
-      const positions = new Float32Array(count * 3);
-      for (let i = 0; i < positions.length; i++) {
-        positions[i] = (Math.random() - 0.5) * 10;
-      }
-      geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(positions, 3) // 1개의 Vertex(정점)를 위해 값 3개 필요
-      );
+      // 구체 전체 배열
+      const sphere = [moviedive, hemisphere]
 
-      // 이미지 로드
-      // const textureLoader = new THREE.TextureLoader();
-      // const particleTexture = textureLoader.load('./images/glow1.png');
-      this.particleTexture = new THREE.TextureLoader().load(
-        require( "./images/glow1.png" )
-      );
-
-      const material = new THREE.PointsMaterial({
-        size: 0.7,
-        map: this.particleTexture,
-        // 파티클 이미지를 투명하게 세팅
-        transparent: true,
-        alphaMap: this.particleTexture,
-        depthWrite: false
-      });
-
-      const particles = new THREE.Points(geometry, material);
-      scene.add( particles );
+      // Points by class - !! 이미지 문제만 해결하면 됨 !!
+      const p1 = new Particles('./images/p01.png', 20)
+      scene.add(p1)
 
       // 그리기
-      // const clock = new THREE.Clock();
-
       function draw() {
-        // const delta = clock.getDelta();
-
         controls.update();
-
         renderer.render(scene, camera);
         renderer.setAnimationLoop(draw);
       }
@@ -158,8 +116,32 @@ export default {
         renderer.render(scene, camera);
       }
 
+      // 레이캐스터로 클릭 감지
+      const mouse = new THREE.Vector2()
+      const raycaster = new THREE.Raycaster()
+
+      let flag = false
+      function checkClick() {  
+        raycaster.setFromCamera(mouse, camera)
+        const intersects = raycaster.intersectObjects(sphere)
+        for (const item of intersects) {
+          if (item.object.name === 'moviedive' || item.object.name === 'hemisphere') {
+            flag = true
+
+          }
+        }
+      }
+
       // 이벤트
       window.addEventListener('resize', setSize);
+      canvas.addEventListener('click', e => {
+        mouse.x = e.clientX / canvas.clientWidth * 2 - 1
+        mouse.y = -(e.clientY / canvas.clientHeight * 2 -  1)
+        checkClick()
+        if (flag) {
+          this.$emit('logo-clicked')
+        }
+      })
 
       draw();
 		}
