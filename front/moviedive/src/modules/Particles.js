@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export class Particles {
 
-	constructor(imgUrl, count) {
+	constructor(scene, imgUrl, count, size) {
 		this.geometry = new THREE.BufferGeometry();
 		this.positions = new Float32Array(count * 3);
 		for (let i = 0; i < this.positions.length; i++) {
@@ -16,21 +16,19 @@ export class Particles {
 		// 이미지 로드
 		this.textureLoader = new THREE.TextureLoader();
 		this.particleTexture = this.textureLoader.load(imgUrl);
-		// this.particleTexture = new THREE.TextureLoader().load(
-    //   require(imgUrl)
-		// );
 	
 		this.material = new THREE.PointsMaterial({
-			size: 0.7,
+			size: size,
 			map: this.particleTexture,
 			// 파티클 이미지를 투명하게 세팅
 			transparent: true,
 			alphaMap: this.particleTexture,
-			// depthWrite: false
+			depthWrite: false
 		});
 	
 		this.particles = new THREE.Points(this.geometry, this.material);
-    return this.particles;
+		scene.add(this.particles)
+    // return this.particles;
 	}
 	
 	

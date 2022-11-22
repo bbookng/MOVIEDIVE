@@ -67,11 +67,7 @@ export default {
 
       // MOVIEDIVE hemisphere
       // 이미지 로드
-      const loader = new THREE.TextureLoader();
-      loader.setPath( '/images/' );
-      this.texture = new THREE.TextureLoader().load(
-        require( "./images/noxm.png" )
-      );
+      this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/noxm.png");
       this.texture.generateMipmaps = false;
       const geometry_md = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_md = new THREE.MeshBasicMaterial( { map: this.texture } )
@@ -81,9 +77,7 @@ export default {
       moviedive.name = 'moviedive'
       scene.add(moviedive);
 
-      this.texture_h = new THREE.TextureLoader().load(
-        require( "./images/lb.png" )
-      );
+      this.texture_h = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/lb.png");
 
       const geometry_h = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_h = new THREE.MeshBasicMaterial( { map: this.texture_h } )
@@ -98,10 +92,29 @@ export default {
       // 구체 전체 배열
       const sphere = [moviedive, hemisphere]
 
-      // Points by class - !! 이미지 문제만 해결하면 됨 !!
-      const p1 = new Particles('./images/p01.png', 20)
-      scene.add(p1)
-
+      // Points by class
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/glow1.png', 100, 1)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p01.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p02.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p03.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p04.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p05.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p06.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p07.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p08.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p09.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p10.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p11.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p12.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p13.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p14.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p15.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p16.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p17.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p18.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p19.png', 10, 0.7)
+      new Particles(scene, 'https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/p20.png', 10, 0.7)
+ 
       // 그리기
       function draw() {
         controls.update();

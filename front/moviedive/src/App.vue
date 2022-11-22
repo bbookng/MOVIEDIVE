@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <div>
+    <!-- <div>
       <DiveView id="diveview" v-if="!diving" @logo-clicked="goToMain"/>
-    </div>
-    <div v-if="diving">
+    </div> -->
+    <!-- <div v-if="diving"> -->
       <NavVar/>
       <router-view/>
       <FooterInfo/>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -15,14 +15,14 @@
 <script>
 import NavVar from '@/components/NavVar'
 import FooterInfo from '@/components/FooterInfo'
-import DiveView from '@/views/DiveView'
+// import DiveView from '@/views/DiveView'
 
 export default {
   name: 'App',
   components: {
     NavVar,
     FooterInfo,
-    DiveView,
+    // DiveView,
   },
   data() {
     return {
