@@ -89,7 +89,7 @@ export default {
 
       axios({
         method: "put",
-        url: "",
+        url: "http://localhost:8000/api/accounts/profileimg",
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,

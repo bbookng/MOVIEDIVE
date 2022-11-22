@@ -37,8 +37,7 @@
         </li>
         
         <div class="btn-group">
-          <button type="button" class="button-add">
-          </button>
+          <img @click="goMyPage" class="profile-img" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg" alt="">
           <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
@@ -132,6 +131,9 @@ export default {
     accountModify() {
       this.$store.commit('GET_ACCOUNT_MODIFY', 3)
       this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
+    },
+    goMyPage() {
+      this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
     }
   }
 }
@@ -139,18 +141,8 @@ export default {
 
 <style scoped>
 
-#button-add {
-  width: 100%;
-  background-image: url(https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg); /* 16px x 16px */
-  background-color: transparent; /* make the button transparent */
-  background-repeat: no-repeat;  /* make the background image appear only once */
-  background-position: 0px 0px;  /* equivalent to 'top left' */
-  border: none;           /* assuming we don't want any borders */
-  cursor: pointer;        /* make the cursor like hovering over an <a> element */
-  height: 16px;           /* make this the size of your image */
-  padding-left: 16px;     /* make text start to the right of the image */
-  vertical-align: middle; /* align the text vertically centered */
-  border: none;
+.profile-img {
+  border-radius: 8px ;
 }
 
 #nav-bar {
