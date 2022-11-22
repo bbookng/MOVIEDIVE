@@ -1,6 +1,6 @@
 <template>
   <div>
-    <DiveCanvas/>
+    <DiveCanvas @logo-clicked="logoClicked"/>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default {
   name: 'DiveView',
   components: {
     DiveCanvas,
+  },
+  methods: {
+    logoClicked() {
+      this.$router.push({ name: 'main' })
+      this.$emit('logo-clicked')
+    }
   }
 }
 </script>

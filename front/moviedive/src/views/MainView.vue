@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       new_movies: null,
-
     }
   },
   computed:{

@@ -1,22 +1,39 @@
 <template>
   <div id="app">
-    <NavVar/>
-    <router-view/>
-    <FooterInfo/>
+    <!-- <div>
+      <DiveView id="diveview" v-if="!diving" @logo-clicked="goToMain"/>
+    </div> -->
+    <!-- <div v-if="diving"> -->
+      <NavVar/>
+      <router-view/>
+      <FooterInfo/>
+    <!-- </div> -->
   </div>
 </template>
 
 
 <script>
-import NavVar from '@/components/NavVar.vue'
-import FooterInfo from '@/components/FooterInfo.vue'
+import NavVar from '@/components/NavVar'
+import FooterInfo from '@/components/FooterInfo'
+// import DiveView from '@/views/DiveView'
 
 export default {
   name: 'App',
   components: {
     NavVar,
-    FooterInfo
-  }
+    FooterInfo,
+    // DiveView,
+  },
+  data() {
+    return {
+      diving: false,
+    }
+  },
+  methods: {
+    goToMain() {
+      this.diving = true
+    }
+  },
 }
 </script>
 
@@ -44,4 +61,5 @@ nav {
 nav a.router-link-exact-active {
   color: #767880;
 }
+
 </style>
