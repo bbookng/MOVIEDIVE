@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <h1>UserMovies</h1>
-    <div v-for="movie in movies" :key="movie">
-      <UserMovieListItem :movie="movie"/>
+  <div class="container">
+    <div class="row" v-for="movie in movies" :key="movie">
+      <UserMovieListItem class="col" :movie="movie"/>
     </div>
     <MovieDetail/>
 

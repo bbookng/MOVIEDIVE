@@ -1,11 +1,13 @@
 <template>
   <div>
     <h1>User Review</h1>
-    <div v-for="review in reviews" :key="review.id">
+    <div class="d-flex justify-content-center" v-for="review in reviews" :key="review.id">
       <router-link
+      class="review-list"
       :to="{ name: 'review_detail', params: { movieId: review.movie.id, reviewId: review.id }}"
-      >{{ review.content }} {{ review.movie.title }}
+      >{{ review.content }} 
       </router-link>
+      {{ review.movie.title }}
       
     </div>
 
@@ -46,5 +48,9 @@ export default {
 </script>
 
 <style>
+.review-list {
+  text-decoration: none;
+  color: black;
+}
 
 </style>

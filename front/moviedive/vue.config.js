@@ -3,18 +3,19 @@ const proxy = require('http-proxy-middleware')
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  devServer: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000/api',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      }
-      // /accounts/profileimg/
-      
-    }
-
-  }
 })
+
+// module.exports = ({
+//   devServer: {
+//     proxy: {
+//       '/api': {
+//         target: 'http://127.0.0.1:8000/api/',
+//         changeOrigin: true,
+//         pathRewrite: {
+//           '^/api': ''
+//         }
+        
+//       }
+//     }
+//   }
+// })

@@ -1,32 +1,29 @@
 <template>
   <nav id="nav-bar" class="d-flex justify-content-between align-items-center text-light">
-    <div style="width:27rem;" class="nav-left">
+    <div style="width:30rem;" class="nav-left">
       <ul class="d-flex justify-content-between align-items-center my-0 px-0" >
-        <li class="m-0">
+        <li>
           <router-link :to="{ name: 'main' }">
-          <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/MOVIEDIVE_navydd.png" alt="">
-        </router-link>         
+          <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/4dd.png" alt="">
+          </router-link>         
         </li>
         <li>
-          <router-link :to="{ name: 'collection' }">Collection</router-link>
+          <router-link id ="nav-item" :to="{ name: 'collection' }">Collection</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'community' }">Community</router-link>
+          <router-link id ="nav-item" :to="{ name: 'community' }">Community</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'play' }">Play</router-link>
+          <router-link id ="nav-item" :to="{ name: 'play' }">Play</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'deepdive' }">DEEP DIVE</router-link>
+          <router-link id ="nav-item" :to="{ name: 'deepdive' }">DEEP DIVE</router-link>
         </li>
       </ul>
     </div>
     <div class="nav-right" style="width:18rem;">
       <ul class="d-flex justify-content-end align-items-center my-0">
-        
-
-        
-
+  
         <li v-if="isLoggedIn" style="position:relative" >
           <form @submit="searchThings(searchKeyword)">
             <div class="search-box">
@@ -40,25 +37,24 @@
         </li>
         
         <div class="btn-group">
-          <button type="button" class="btn btn-danger"></button>
-          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="visually-hidden">프로필이미지</span>
+          <button type="button" class="button-add">
           </button>
+          <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
-              <router-link class="dropdown-item nav-item cd-signin" :to="{ name: 'login' }">Login</router-link>
+              <router-link class="dropdown-item nav-item" :to="{ name: 'login' }">Login</router-link>
             </li>
             <li v-if="!isLoggedIn">
-              <router-link class="dropdown-item nav-item cd-signup" :to="{ name: 'signup' }">Signup</router-link>
+              <router-link class="dropdown-item nav-item" :to="{ name: 'signup' }">Signup</router-link>
             </li>
             <li v-if="isLoggedIn">
-              <button @click="myPage">마이페이지</button>
+              <button class="dropdown-item nav-item" @click="myPage">마이페이지</button>
             </li>
             <li v-if="isLoggedIn">
-              <button @click="profileModify">프로필 관리</button>
+              <button class="dropdown-item nav-item" @click="profileModify">프로필 관리</button>
             </li>
             <li v-if="isLoggedIn">
-              <button @click="accountModify">계정 설정</button>
+              <button class="dropdown-item nav-item" @click="accountModify">계정 설정</button>
             </li>
             <li  v-if="isLoggedIn"><hr class="dropdown-divider"></li>
             <li v-if="isLoggedIn">
@@ -67,8 +63,6 @@
           </ul>
         </div>
 
-
-        <!-- 크기 수정 필요해요.. 할 줄 모르겠어 ㅠ ㅠ -->
         <li v-if="isLoggedIn">
           <div class="toggle-btn" id="_1st-toggle-btn" style="position:relative">
             <input type="checkbox">
@@ -144,28 +138,46 @@ export default {
 </script>
 
 <style scoped>
+
+#button-add {
+  width: 100%;
+  background-image: url(https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /* equivalent to 'top left' */
+  border: none;           /* assuming we don't want any borders */
+  cursor: pointer;        /* make the cursor like hovering over an <a> element */
+  height: 16px;           /* make this the size of your image */
+  padding-left: 16px;     /* make text start to the right of the image */
+  vertical-align: middle; /* align the text vertically centered */
+  border: none;
+}
+
 #nav-bar {
-  height: 80px; 
+  height: 60px; 
+  /* background-color: #000911; */
+  border-bottom: #bbb9b78f solid 3px;
 }
   a {
-    color: rgb(19, 18, 18);
+    color: rgb(250, 246, 246);
     text-decoration: none;
-    font-size:20px;
-    font-weight: 400;
+    font-size:18px;
+    font-weight: 100;
+    padding: 10px;
   }
   ul {
+    color: #fff;
     list-style:none;
   }
   .left-nav-item:hover {
-    color: #40444b;
-    font-weight: bolder;
+    color: #6a6d72b7;
+    /* font-weight: bolder; */
   }
   .right-nav-item:hover {
     color: #40444b;
     font-weight: bolder;
   }
   .router-link-exact-active{
-    font-weight: bold;
     text-decoration: none;
   }
   .dropdown-item {
@@ -183,6 +195,7 @@ export default {
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
+  padding-right: 10px;
   }
   .search-container input#search{
     width: 50px;
@@ -272,7 +285,7 @@ export default {
   .toggle-btn {
   position: relative;
   left: 1rem;
-  width: 58px;
+  width: 60px;
   height: 32px;
   margin: 0 auto;
   border-radius: 40px;
@@ -321,13 +334,13 @@ export default {
 
   #_1st-toggle-btn span:before {
     background-color: #fff;
-    transform: translate(-23.2px, 0px);
+    transform: translate(-46.2px, 0px);
     z-index: 1;
   }
 
   #_1st-toggle-btn span:after {
     background-color: #000;
-    transform: translate(3.2px, 0px);
+    transform: translate(-23.2px, 0px);
     z-index: 0;
   }
 
@@ -341,13 +354,20 @@ export default {
 
   #_1st-toggle-btn input[type="checkbox"]:checked + span:before {
     background-color: #000;
-    transform: translate(22.4px, -7.6px);
+    transform: translate(-8.4px, -7.6px);
   }
 
   #_1st-toggle-btn input[type="checkbox"]:checked + span:after {
     background-color: #fff;
-    transform: translate(31.6px, 0px);
+    transform: translate(0.6px, 0px);
   }
 
-  
+img {
+  width: 100%;
+  height: 100%;
+}
+
+#nav-list {
+  color: white;
+}
 </style>

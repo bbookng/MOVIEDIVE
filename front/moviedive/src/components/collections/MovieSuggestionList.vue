@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-        <div @click="select_suggestion(suggest)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
+        <div class="container" @click="select_suggestion(suggest)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
             <SuggestionMovieItem :suggest="suggest"/>
         </div>
     </div>
@@ -38,6 +38,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container {
+    display: grid;
+    grid-template-columns: 300px, 300px, 300px, 300px;
+}
+
 
 </style>

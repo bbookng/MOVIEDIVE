@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="container text-center">
     <h1>UserCollection</h1>
-    <div>
+    <div class="row">
       <CollectionListItem
+        class="col"
         v-for="collection in collections"
         :key="collection.pk"
         :collection="collection" />
@@ -49,6 +50,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: minmax(100px, auto);
+  column-gap: 20px;
+}
+ */
+
 
 </style>

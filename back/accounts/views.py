@@ -18,14 +18,16 @@ def get_current_user_profile(request):
     return Response(serializer.data)
     
     
-# @api_view(['PUT'])
-# def update_profile(request):
-#     user = request.user
-#     serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
-#     if serializer.is_valid(raise_exception=True):
-#         serializer.save()
-#         return Response(status=status.HTTP_200_OK)
-    
+@api_view(['PUT'])
+def update_profile(request):
+    print(1)
+    user = request.user
+    print(request.data)
+    serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
+    print(serializer.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 # # 특정 사용자의 프로필 정보를 가져옴
 # @api_view(['GET'])
@@ -42,10 +44,11 @@ def profile(request, username):
         return Response(serializer.data)
     elif request.method=="PUT":
         if request.user == user:
+            print(1)
             serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                serializer = ProfileResponseSerializer(user)
+                serializer = UpdateUserRequestSerializer(user)
                 return Response(serializer.data)
     
 

@@ -11,7 +11,15 @@ const API_URL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
   plugins: [
-    createPersistedState(),
+    createPersistedState({
+      key: 'vuex',
+      reducer (val) {
+        if(val.isLoggedIn === false) {
+          return {}
+        }
+        return val
+      }
+    }),
   ],
   state: {
     token: localStorage.getItem('token') || '',
@@ -214,7 +222,7 @@ export default new Vuex.Store({
       }
 
       axios({
-        url: drf.movies.movies() + query,
+        url: `http://127.0.0.1:8000/movies/search/` + query,
         method: 'get',
         headers: getters.authHeader,
       })

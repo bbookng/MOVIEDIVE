@@ -2,7 +2,7 @@
   <div class="movie-list">
     <h3>Movie List</h3>
     <span>
-      <vueper-slides
+      <!-- <vueper-slides
         class="no-shadow"
         :visible-slides="3"
         :slide-ratio="1 / 4"
@@ -13,25 +13,25 @@
             :movie="movie"
           />
         </vueper-slide>
-      </vueper-slides>
+      </vueper-slides> -->
 
       <MovieListItem
       v-for="movie in movies"
       :key="movie.id"
       :movie="movie"/>
 
-      <!-- <MovieListItem
+      <MovieListItem
       v-for="movie in new_movies"
       :key="movie.id"
-      :movie="movie"/> -->
+      :movie="movie"/>
     </span>
     
   </div>
 </template>
 
 <script>
-import { VueperSlides, VueperSlide } from 'vueperslides'
-import 'vueperslides/dist/vueperslides.css'
+// import { VueperSlides, VueperSlide } from 'vueperslides'
+// import 'vueperslides/dist/vueperslides.css'
 import MovieListItem from '@/components/movies/MovieListItem.vue'
 export default {
   props:{
@@ -40,8 +40,8 @@ export default {
   },
   name: 'MovieList',
   components: {
-    VueperSlides, 
-    VueperSlide,
+    // VueperSlides, 
+    // VueperSlide,
     MovieListItem,
   },
   computed: {

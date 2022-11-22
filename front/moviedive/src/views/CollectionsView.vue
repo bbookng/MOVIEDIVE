@@ -31,12 +31,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 #collection-view-container{
-width: 100vw;
-border-radius: 10px;
-border: black 1px solid;
-padding-left: 0;
-padding-right: 0;
+  width: 100vw;
+  border-radius: 10px;
+  border: black 1px solid;
+  padding-left: 0;
+  padding-right: 0;
 }
+
 </style>

@@ -3,6 +3,7 @@
     <h2 id="search-string">"{{ keyword }}"(으)로 검색한 결과</h2>
     <div class="row">
       <div class="col-12 result-label">
+        {{ movies }}
         영화
       </div>
       <div class="col-12">
@@ -18,8 +19,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import SearchedMovieList from '@/components/search/SearchedMovieList'
-import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: "SearchResultView",
   data() {
@@ -31,10 +34,12 @@ export default {
     SearchedMovieList
   },
   computed: {
-    ...mapGetters(['movies']),
+    movies() {
+    return this.$store.state.movies
+    },
   },
   methods: {
-    ...mapActions(['fetchMovies'])
+    ...mapActions(['fetchMovies']),
   },
   created() {
     this.fetchMovies(this.keyword)
@@ -44,7 +49,7 @@ export default {
 </script>
 
 <style scoped>
-#search-results {
+/* #search-results {
   color:white;
   padding: 50px;
 }
@@ -57,5 +62,5 @@ export default {
   margin-bottom:10px;
   padding-left:20px; 
   font-size: 25px;
-}
+} */
 </style>
