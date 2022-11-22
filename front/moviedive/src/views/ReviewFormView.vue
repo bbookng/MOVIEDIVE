@@ -3,7 +3,7 @@
     <h1 v-if="!review_id">리뷰 작성</h1>
     <h1 v-if="review_id">리뷰 수정</h1>
     <form @submit.prevent="saveReview">
-      <form v-if="!review_id" @submit="searchThings(searchKeyword)">
+      <form v-if="!review_id" @submit.prevent>
         <div class="search-box">
           <div class="search-container">
             <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 이름으로 검색" />
@@ -76,9 +76,6 @@ export default {
       }
     },
     ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
-    searchThings(keyword) {        
-      this.$router.push({ name: 'search_result', params: { keyword } })
-    },
     fillSearchKeyword(suggest){
       this.searchKeyword = suggest.title
       this.movie = suggest.id

@@ -228,13 +228,15 @@ export default new Vuex.Store({
         실패하면
           에러 메시지 표시
       */
-      let query = "?"
-      if (keyword) {
-        query += `keyword=${keyword}`
-      }
+
+      // let query = "?"
+      // if (keyword) {
+      //   query += `keyword=${keyword}`
+      // }
 
       axios({
-        url: `http://127.0.0.1:8000/movies/search/` + query,
+        // url: `http://127.0.0.1:8000/movies/search/` + query,
+        url: `http://127.0.0.1:8000/movies/search/` + keyword         ,
         method: 'get',
         headers: getters.authHeader,
       })

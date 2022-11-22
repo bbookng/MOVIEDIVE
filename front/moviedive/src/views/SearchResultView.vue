@@ -39,10 +39,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['fetchMovies']),
+    // ...mapActions(['fetchMovies']),
+    ...mapActions(['getMovies']),
   },
   created() {
-    this.fetchMovies(this.keyword)
+    this.getMovies(this.keyword)
   }
 
 }
