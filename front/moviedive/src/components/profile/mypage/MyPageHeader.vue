@@ -1,11 +1,11 @@
 <template>
-  <div id="my-page-header" class="container">
+  <div v-if="user" id="my-page-header" class="container">
     <div class="row">
       <div class="col-4 d-flex justify-content-end">
         <div id="profile-img-box">
           <img
             id="profile-img"
-            src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F83%2F1f%2Fda%2F831fdaa1b75381f6ff74de37de6e938d.jpg&type=sc960_832"
+            :src=profileImg
             alt="프로필 이미지"
           />
         </div>
@@ -17,13 +17,13 @@
         >
           <div class="d-flex align-items-center">
             <div>{{ user.nickname }}</div>
-            <button id="follow-button" class="mx-3">팔로우</button>
+            <button @click="follow" v-if="currentUser.username != user.username" id="follow-button" class="mx-3">팔로우</button>
           </div>
           <div class="my-2">
             리뷰 {{ user.reviews_cnt }} | 팔로워 {{ user.followers_cnt }} |
             팔로잉 {{ user.followings_cnt }}
           </div>
-          <div class="status">상태 메시지</div>
+          <div class="status">{{ user.message }}</div>
         </div>
       </div>
     </div>
@@ -32,11 +32,57 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "MyPageHeader",
+  data() {
+    return {
+      user: null,
+    }
+  },
   props: {
     profileImg: String,
-    user: Object,
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser
+    },
+  },
+  methods: {
+    fetchProfile(username) {
+      const API_URL = "http://127.0.0.1:8000/api";
+      axios({
+        method: "get",
+        url: `${API_URL}/accounts/profile/${username.username}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`,
+        },
+      })
+        .then((res) => {
+          this.user = res.data;
+        })
+    },
+    follow() {
+      const API_URL = "http://127.0.0.1:8000/api";
+      axios({
+        url: `${API_URL}/accounts/profile/${this.user.pk}/follow/`,
+        method: "post",
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`,
+        },
+      }).then(() => {
+        console.log('팔로우 성공!')
+        this.fetchProfile(this.user)
+      })
+      .catch(() => {
+        console.log('팔로우 실패!')
+      })
+    },
+  },
+  created() {
+    const payload = { username: this.$route.params.username };
+    this.fetchProfile(payload);
   },
 };
 </script>

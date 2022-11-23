@@ -105,7 +105,7 @@ class ProfileResponseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
-        fields = ('id', 'pk', 'username', 'nickname', 'profile_img', 'message', 'followings_cnt', 'reviews', 'reviews_cnt', 'followers_cnt')
+        fields = ('id', 'pk', 'username', 'nickname', 'profile_img', 'message', 'followings_cnt', 'reviews', 'reviews_cnt', 'followers_cnt', 'created_string',)
         
         
 # class CurrentUserResponseSerializer(serializers.ModelSerializer):

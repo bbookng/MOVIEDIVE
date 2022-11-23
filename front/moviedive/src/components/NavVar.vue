@@ -37,7 +37,7 @@
         </li>
         
         <div class="btn-group">
-          <img @click="goMyPage" class="profile-img" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg" alt="">
+          <img @click="goMyPage" class="profile-img" :src=imgURL alt="">
           <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
@@ -105,6 +105,9 @@ export default {
     },
     mypage() {
       return this.$store.state.myPage
+    },
+    imgURL() {
+      return this.currentUser.profile_img
     }
   },
   methods: {
