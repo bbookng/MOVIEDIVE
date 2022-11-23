@@ -14,7 +14,6 @@ from community.models import Review
 @api_view(['GET'])
 def movie_list(request):
     keyword = request.GET.get('keyword')
-
     if keyword:
         movies = Movie.objects.filter(title__contains=keyword).annotate(review_count=Count('reviews', distinct=True), 
         like_count=Count('like_users', distinct=True)).order_by('-popularity')
@@ -22,7 +21,7 @@ def movie_list(request):
         movies = Movie.objects.annotate(review_count=Count('reviews', distinct=True), 
         like_count=Count('like_users', distinct=True)).order_by('-popularity')
     
-    movies = get_list_or_404(Movie)
+    # movies = get_list_or_404(Movie)
     paginator = Paginator(movies, 20)
     page_number = request.GET.get('page')
     current_page = int(page_number) if page_number else 1

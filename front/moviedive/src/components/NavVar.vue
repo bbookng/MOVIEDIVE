@@ -8,13 +8,13 @@
           </router-link>         
         </li>
         <li>
-          <router-link id="nav-item" :to="{ name: 'collection' }">Collection</router-link>
+          <router-link id="nav-item" :to="{ name: 'collection' }">컬렉션</router-link>
         </li>
         <li>
-          <router-link id="nav-item" :to="{ name: 'community' }">Community</router-link>
+          <router-link id="nav-item" :to="{ name: 'community' }">커뮤니티</router-link>
         </li>
         <li>
-          <router-link id="nav-item" :to="{ name: 'play' }">Play</router-link>
+          <router-link id="nav-item" :to="{ name: 'play' }">플레이</router-link>
         </li>
 
         <li>
@@ -112,7 +112,7 @@ export default {
   },
   methods: {
     ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
-    searchThings(keyword) {        
+    searchThings(keyword) {
       this.$router.push({ name: 'search_result', params: { keyword } })
     },
     fillSearchKeyword(suggest){

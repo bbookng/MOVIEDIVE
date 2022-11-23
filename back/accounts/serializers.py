@@ -44,10 +44,13 @@ class UserMakesCollectionSerializer(serializers.ModelSerializer):
                 fields = ('pk', 'id', 'username', 'nickname')
         
         user = CollectionUserSerializer(read_only=True)
+        like_users_cnt = serializers.IntegerField(source='like_users.count', read_only=True)
+        comments_cnt = serializers.IntegerField(source='collection_comments.count', read_only=True)
+
         
         class Meta:
             model = Collection
-            fields = ('pk', 'title', 'movies', 'like_users', 'user')
+            fields = ('pk', 'title', 'movies', 'like_users', 'user', 'like_users_cnt', 'comments_cnt')
     
     collections = MadeCollectionSerializer(many=True)
     

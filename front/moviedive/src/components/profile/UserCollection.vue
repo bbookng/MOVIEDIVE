@@ -1,8 +1,8 @@
 <template>
-  <div class="container text-center">
+  <div class="container">
     <div class="row">
       <CollectionListItem
-        class="col"
+        class="col-4"
         v-for="collection in collections"
         :key="collection.pk"
         :collection="collection" />

@@ -1,24 +1,25 @@
 <template>
   <div v-if="collection"  id="collection-detail-info">
     <div id="collection-detail-info-top" class="d-flex justify-content-between align-items-start" >
-      <div>
+      <div style="padding: 5px;">
         <h3 id="collection-detail-title">{{ collection.title }}</h3>
-        <p id="collection-detail-description">{{ collection.description }}</p>
+        <p id="collection-detail-description" style="text-align:left; margin-left:5px;">{{ collection.description }}</p>
       </div>
       <div v-if="currentUser.pk == collection.user.pk">
-        <router-link :to="{ name: 'save_collection', params: { collectionPk: this.collection.pk } }">수정</router-link>
-        <span><button @click="deleteCollection">삭제</button></span>
+        <router-link style="text-decoration: none; color:black;" :to="{ name: 'save_collection', params: { collectionPk: this.collection.pk } }">수정</router-link>
+        <span><button class="delete-button" @click="deleteCollection">삭제</button></span>
       </div>
     </div>
     <div id="collection-detail-statistics">
-      <span>좋아요 {{ collection.like_users_cnt }}</span> | 
-      <span> 댓글 수 {{ collection.comments_cnt }}</span> |
-      <span> {{ collection.created_string }} 업데이트</span>
+      <span class="mx-2">좋아요 {{ collection.like_users_cnt }}</span> | 
+      <span class="mx-2"> 댓글 {{ collection.comments_cnt }}</span> |
+      <span > {{ collection.created_string }} 업데이트</span>
     </div>
     <div class="collection-detail-line"></div>
     <div id="button-container" class="d-flex justify-content-evenly align-items-center">
       <div class="collection-detail-button" @click="likeCollection">
-        <img class="button like" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/heart.png" alt="">
+        <img v-if="!userLike" class="button like" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/icon/heart+(3).png" alt="">
+        <img v-if="userLike" class="button like" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/icon/heart+(2).png" alt="">
         좋아요
       </div>
       <div class="collection-detail-button" @click="goCommentsList">
@@ -50,6 +51,14 @@ export default {
   props:{
     currentUser: Object,
     collection_pk: String,
+  },
+  computed: {
+    userLike() {
+      return this.collection.like_users.find((lu) => {
+        return lu.pk == this.currentUser.pk
+      }) ? true : false
+    }
+
   },
   methods: {
     getCollection() {
@@ -122,13 +131,16 @@ export default {
   padding-right:10px;
   padding-top:10px;
 }
+
 #collection-detail-title{
   font-size: 30px;
-  font-weight: 300;
+  font-weight: bold 500;
 }
+
 #collection-detail-statistics{
   padding-left:10px;
   padding-right:10px;
+  margin-bottom: 15px;
 }
 .collection-detail-line{
   border: 0.5px black solid;
@@ -147,9 +159,14 @@ export default {
   width: 30%;
 }
 
-.button {
-  width: 20px;
-  height: 20px;
+.collection-detail-button .button {
+  width: 40px;
+  height: 40px;
+} 
+
+.delete-button {
+  border: none;
+  background-color: transparent;
 }
 
 </style>
