@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!create_collection">
+    <div>
       <router-link id="new-collection" :to="{ name: 'save_collection' }">+ 컬렉션 만들기</router-link>
       <div class="container" id="user-like-collections">
         <h3>{{ currentUser.nickname }}님이 좋아요한 컬렉션</h3>

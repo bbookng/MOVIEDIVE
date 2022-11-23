@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Movie, Genre
+from .models import Movie
 from community.models import Review
 from collects.models import Collection
 
