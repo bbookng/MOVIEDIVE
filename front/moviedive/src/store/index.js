@@ -176,13 +176,16 @@ export default new Vuex.Store({
           console.error(err.response)
         })
     },
-    getMovies(context) {
+    getMovies(context, keyword) {
       axios({
         method: 'get',
-        url: `${API_URL}/movies/`,
+        url: `${API_URL}/movies/` ,
+        data: { keyword },
       })
-        .then(res =>
-          context.commit('GET_MOVIES', res.data))
+        .then(res => {
+          console.log(keyword)
+          context.commit('GET_MOVIES', res.data)
+        })
     },
     fetchCurrentUser({ commit, getters, dispatch }) {
       /*
@@ -228,15 +231,13 @@ export default new Vuex.Store({
         실패하면
           에러 메시지 표시
       */
-
       let query = "?"
       if (keyword) {
         query += `keyword=${keyword}`
       }
 
       axios({
-        url: `http://127.0.0.1:8000/movies/search/` + query,
-        // url: `http://127.0.0.1:8000/movies/search/${keyword}/`,
+        url: drf.movies.movies()+query,
         method: 'get',
         headers: getters.authHeader,
       })

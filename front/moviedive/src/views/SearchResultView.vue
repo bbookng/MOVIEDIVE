@@ -3,7 +3,6 @@
     <h2 id="search-string">"{{ keyword }}"(으)로 검색한 결과</h2>
     <div class="row">
       <div class="col-12 result-label">
-        {{ movies }}
         영화
       </div>
       <div class="col-12">
@@ -33,7 +32,9 @@ export default {
     SearchedMovieList
   },
   computed: {
-    ...mapGetters(['movies']),
+    movies() {
+      return this.$store.state.movies
+    },
   },
   methods: {
     ...mapActions(['fetchMovies']),

@@ -1,27 +1,26 @@
 <template>
   <div v-if="collection" id="collection-detail-comments">
     <div id="commentSet">
-      <div>
-        <p>댓글 <span>{{ collection.comments_cnt }}</span> </p>
+      <div class="comment-cnt" style="margin:0; padding-left:20px;padding-right:20px;">
+        <h5 style="border-bottom:solid 1px black; padding-left:10px; padding-bottom:20px;">댓글 <span style="font-size: 15px;">{{ collection.comments_cnt }}</span> </h5>
       </div >
-      <div class="d-flex flex-column">
-        <ul>
-          <div v-for="comment in collection.collection_comments" :key="comment.pk">
-              <div>
-                <router-link class="comment-user" :to="{ name: 'mypage', params: { username: comment.user.username} }">
-                  <img class="comment-user-profileimg" :src=comment.user.profile_img alt="...">
-                </router-link>
+      <div class="comment-list-top">
+        <div v-for="comment in collection.collection_comments" :key="comment.pk">
+          <div class="d-flex collection-comment">
+            <router-link class="comment-user" :to="{ name: 'mypage', params: { username: comment.user.username} }">
+              <img class="comment-user-profileimg" :src=comment.user.profile_img alt="...">
+            </router-link>
+            <div style="width:100%">
+              <div class="comment-top d-flex justify-content-between">
+                <router-link class="comment-user" :to="{ name: 'mypage', params: { username: comment.user.username} }">{{ comment.user.nickname }}</router-link> 
+                <p class="my-0">{{ comment.created_string }}</p>
               </div>
-              <div>
-                <div>
-                  <router-link class="comment-user" :to="{ name: 'mypage', params: { username: comment.user.username} }">{{ comment.user.nickname }}</router-link> <span>{{ comment.created_string }}</span>
-                </div>
+              <div class="collection-comment-content d-flex justify-content-start">
+                <p class="my-0">{{ comment.content }}</p>
               </div>
-              <div>
-                {{ comment.content }}
-              </div>
+            </div>
           </div>
-        </ul>
+        </div>
       </div>
           
         <hr />
@@ -96,14 +95,39 @@ export default {
 </script>
 
 <style scoped>
-#collection-detail-comments{
-    border: solid black 1px;
+
+.collection-comment {
+  width: 100%;
+  margin-top:10px;
+  border-bottom:1px black solid;
+}
+.comment-cnt {
+  text-align: left;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin-left: 20px;
+  margin-bottom: 0;
 }
 
+.comment-top{
+  width: 100%;
+}
+#collection-detail-comments{
+    border: solid black 1px;
+    margin-left:15%;
+    margin-right:15%
+}
+.comment-list-top{
+  margin-left:20px;
+  margin-right: 20px;
+}
 .comment-user-profileimg {
   width: 10%;
   height: 10%;
-
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  margin:0;
 }
 
 .comment-user {
@@ -120,6 +144,9 @@ export default {
   margin-right: 10px;
   margin-bottom: 10px;
   padding: 1rem;
+}
+.collection-comment-content{
+  
 }
 
 </style>

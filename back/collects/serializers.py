@@ -32,7 +32,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = get_user_model()
-            fields = ('pk', 'nickname', 'profile_img',)
+            fields = ('pk', 'username', 'nickname', 'profile_img',)
     
     class CommentSerializer(serializers.ModelSerializer):
 
@@ -72,7 +72,7 @@ class CollectionListSerializer(serializers.ModelSerializer):
         
         class Meta:
             model = get_user_model()
-            fields = ('pk', 'nickname', 'profile_img',)
+            fields = ('pk', 'nickname', 'profile_img', 'username')
             
     class MovieSerializer(serializers.ModelSerializer):
         
@@ -82,11 +82,14 @@ class CollectionListSerializer(serializers.ModelSerializer):
     
     user = UserSerializer(read_only=True)
     movies = MovieSerializer(many=True, read_only=True)
-    likes_count =serializers.IntegerField(source='like_users.count', read_only=True)
+    like_users_cnt = serializers.IntegerField(source='like_users.count', read_only=True)
+    comments_cnt = serializers.IntegerField(source='collection_comments.count', read_only=True)
+
+
 
     class Meta:
         model = Collection
-        fields = ('pk', 'title', 'user', 'movies', 'likes_count',)
+        fields = ('pk', 'title', 'user', 'movies', 'like_users_cnt', 'comments_cnt',)
 
 class CollectionCommentSerializer(serializers.ModelSerializer):
     

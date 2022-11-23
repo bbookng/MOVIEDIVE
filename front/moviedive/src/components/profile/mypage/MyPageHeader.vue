@@ -30,6 +30,7 @@
               팔로우 {{ user.followings_cnt }} 
             </div>
           </div>
+          <div class="status none" v-if="!user.message">상태메시지가 없습니다.</div>
           <div class="status">{{ user.message }}</div>
         </div>
       </div>
@@ -129,5 +130,9 @@ export default {
   border: 1px black solid;
   margin-top: 20px;
   padding-left: 60px;
+}
+
+.none {
+  color: grey;
 }
 </style>

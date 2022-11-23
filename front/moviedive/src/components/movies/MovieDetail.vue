@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-dialog-centered">
+  <div v-if="movie_detail" class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <img :src=mainPosterURL alt="">
@@ -33,6 +33,7 @@
           <router-link :to="{ name: 'community' }">리뷰 더 보기</router-link>
         </div>
       </div>
+      <router-link :to="{ name: 'community' }">리뷰 더 보기</router-link>
     </div>
   </div>
 </template>

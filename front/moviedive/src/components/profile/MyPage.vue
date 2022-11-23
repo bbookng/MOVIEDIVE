@@ -1,7 +1,7 @@
 <template>
-  <div v-if="user">
+  <div v-if="user" id="my-page">
     <MyPageHeader :profileImg="profileImg" :user="user" />
-    <div>
+    <div class="button-list">
       <button @click="getUserReviews">리뷰</button>
       <button @click="getUserCollections">컬렉션</button>
       <button @click="getUserLikes">좋아요</button>
@@ -42,7 +42,7 @@ export default {
       return this.$store.getters.currentUser;
     },
     profileImg() {
-      return this.currentUser.profile_img;
+      return this.user.profile_img;
     },
     mypage() {
       return this.$store.state.mypage;
@@ -90,12 +90,21 @@ export default {
 </script>
 
 <style scoped>
-button {
+#my-page{
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+.button-list {
+  margin-bottom: 30px;
+}
+
+.button-list button {
   border: none;
   border-top: black 1px solid;
   background-color: transparent;
   width: 100px;
-  font-size: large;
+  font-size: 17px;
   margin: 20px;
 }
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
-        <div class="container" @click="select_suggestion(suggest)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
-            <SuggestionMovieItem :suggest="suggest"/>
+    <div class="row">
+        <div class="col-3 suggest-movies" @click="select_suggestion(suggest)" v-for="suggest in suggests" :key="suggest.pk" :suggest="suggest">
+            <SuggestionMovieItem :selected_movies="selected_movies" :suggest="suggest"/>
         </div>
     </div>
   </div>
@@ -18,17 +18,17 @@ export default {
     },
     data() {
         return {
-            suggest: [],
+            suggestList: [],
         }
     },
     props: {
-        suggests: Array
+        suggests: Array,
+        selected_movies:Array,
     },
     computed: {
     },
     methods: {
         select_suggestion(suggest){
-            console.log(suggest)
             this.$emit('FromSuggestions', suggest)
         }
     },
@@ -39,10 +39,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    display: grid;
-    grid-template-columns: 300px, 300px, 300px, 300px;
-}
 
+.suggest-movies {
+    width: 200px;
+    height: 300px;
+}
 
 </style>
