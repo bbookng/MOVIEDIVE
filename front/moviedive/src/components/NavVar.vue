@@ -1,30 +1,31 @@
 <template>
   <nav id="nav-bar" class="d-flex justify-content-between align-items-center text-light">
-    <div style="width:30rem;" class="nav-left">
-      <ul class="d-flex justify-content-between align-items-center my-0 px-0" >
-        <li>
+    <div style="width:32rem;" class="nav-left">
+      <ul class="d-flex justify-content-between align-items-center mx-auto my-0 px-0" >
+        <li class="logo">
           <router-link :to="{ name: 'main' }">
           <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/4dd.png" alt="">
           </router-link>         
         </li>
         <li>
-          <router-link id ="nav-item" :to="{ name: 'collection' }">Collection</router-link>
+          <router-link id="nav-item" :to="{ name: 'collection' }">Collection</router-link>
         </li>
         <li>
-          <router-link id ="nav-item" :to="{ name: 'community' }">Community</router-link>
+          <router-link id="nav-item" :to="{ name: 'community' }">Community</router-link>
         </li>
         <li>
-          <router-link id ="nav-item" :to="{ name: 'play' }">Play</router-link>
+          <router-link id="nav-item" :to="{ name: 'play' }">Play</router-link>
         </li>
+
         <li>
-          <router-link id ="nav-item" :to="{ name: 'deepdive' }">DEEP DIVE</router-link>
+          <router-link id="nav-item" :to="{ name: 'deepdive' }">DEEP DIVE</router-link>
         </li>
       </ul>
     </div>
-    <div class="nav-right" style="width:18rem;">
+    <div class="nav-right" style="width:30rem;">
       <ul class="d-flex justify-content-end align-items-center my-0">
   
-        <li v-if="isLoggedIn" style="position:relative" >
+        <li class="nav-item" v-if="isLoggedIn" style="position:relative" >
           <form @submit="searchThings(searchKeyword)">
             <div class="search-box">
               <div class="search-container">
@@ -36,9 +37,9 @@
           </form>
         </li>
         
-        <div class="btn-group">
-          <img @click="goMyPage" class="profile-img" src="https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg" alt="">
-          <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <div class="nav-item btn-group">
+          <img @click="goMyPage" class="profile-img " src="https://moviedive.s3.ap-northeast-2.amazonaws.com/%EA%B9%80%EB%B3%B4%EA%B2%BD121.jpg" alt="">
+          <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
               <router-link class="dropdown-item nav-item" :to="{ name: 'login' }">Login</router-link>
@@ -62,7 +63,7 @@
           </ul>
         </div>
 
-        <li v-if="isLoggedIn">
+        <li class="nav-item" v-if="isLoggedIn">
           <div class="toggle-btn" id="_1st-toggle-btn" style="position:relative">
             <input type="checkbox">
             <span></span>
@@ -72,7 +73,6 @@
       </ul>
     </div>
   </nav>
-  
 </template>
 
 
@@ -140,27 +140,42 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  flex: none;
+  width: 10rem;
+}
 
 .profile-img {
+  margin: auto;
   border-radius: 8px ;
+  width: 2rem;
 }
 
 #nav-bar {
   height: 60px; 
-  /* background-color: #000911; */
   border-bottom: #bbb9b78f solid 3px;
 }
   a {
-    color: rgb(250, 246, 246);
+    color: black;
     text-decoration: none;
     font-size:18px;
     font-weight: 100;
-    padding: 10px;
+    margin: auto;
+    flex: none;
   }
   ul {
     color: #fff;
     list-style:none;
   }
+
+  .nav-item {
+    flex: 1;
+  }
+
+  .nav-right {
+    margin-top: 0;
+  }
+
   .left-nav-item:hover {
     color: #6a6d72b7;
     /* font-weight: bolder; */
@@ -183,6 +198,7 @@ export default {
     font-size:20px;
   }
   .search-container{
+  margin-right: auto;
   width: 300px;
   vertical-align: middle;
   white-space: nowrap;
@@ -291,7 +307,6 @@ export default {
     left: 0px;
     right: 0px;
     bottom: 0px;
-    margin: 0px;
     cursor: pointer;
     opacity: 0;
     z-index: 2;
