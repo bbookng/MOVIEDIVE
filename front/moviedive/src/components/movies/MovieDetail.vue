@@ -20,7 +20,7 @@
     </div>
   </div> -->
 
-    <div class="modal" tabindex="-1">
+    <div v-if="movie" class="modal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">

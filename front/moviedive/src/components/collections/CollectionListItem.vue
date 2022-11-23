@@ -14,7 +14,7 @@
       {{ collection.title }}
       {{ collection.description }}
       <div>
-        <img :src=profileImg alt="프로필이미지">
+        <img :src=profileImg alt="...">
         {{ collection.user.nickname }}
       </div>
     </div>
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     profileImg() {
-      return this.collection.profile_img
+      return this.collection.user.profile_img
     }
   },
   methods: {

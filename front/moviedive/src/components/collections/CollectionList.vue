@@ -87,7 +87,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #new-collection {
   text-decoration: none;
   position: absolute;

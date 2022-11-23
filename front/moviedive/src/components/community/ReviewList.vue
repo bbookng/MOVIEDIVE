@@ -1,10 +1,21 @@
 <template>
   <div class="review-list">
-    <ReviewListItem
-      v-for="review in reviews"
-      :key="review.id"
-      :review="review"
-    />
+    <div v-if="!movie">
+      <ReviewListItem
+        v-for="review in reviews"
+        :key="review.id"
+        :review="review"
+      />
+    </div>
+
+    <div v-if="movie">
+      <ReviewListItem
+        v-for="review in search_reviews"
+        :key="review.id"
+        :review="review"
+      />
+    </div>
+
   </div>
 </template>
 
@@ -16,9 +27,15 @@ export default {
   components: {
     ReviewListItem
   },
+  props: {
+    movie: Number
+  },
   computed: {
     reviews() {
       return this.$store.state.reviews
+    },
+    search_reviews() {
+      return this.reviews.filter(review => review.movie == this.movie)
     }
   }
 }

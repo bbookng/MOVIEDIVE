@@ -1,16 +1,6 @@
 <template>
-  <div>
+  <div v-if="user">
     <MyPageHeader :profileImg="profileImg" :user="user" />
-    <div id="profile-top">
-      <div id="profile-top-right">
-        <div>
-          {{ user.message }}
-        </div>
-      </div>
-      <div>
-        {{ collection_highlight }}
-      </div>
-    </div>
     <div>
       <button @click="getUserReviews">리뷰</button>
       <button @click="getUserCollections">컬렉션</button>
@@ -100,4 +90,5 @@ export default {
 </script>
 
 <style>
+
 </style>

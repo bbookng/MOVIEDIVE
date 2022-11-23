@@ -18,30 +18,24 @@
       <button type="button" @click="onClickFormButton">upload!</button>
     </div>
     <div>
-      <div>
-        {{ currentUser.username }}
-        {{ currentUser.email }}
+      <div v-if="!flag">
+        <p>{{ nickname }}</p>
+        <p>{{ message }}</p>
+        <button @click="editButton">프로필 수정</button>
       </div>
-      <div>
-        <p>{{ currentUser.nickname }}</p>
-        <p>{{ currentUser.message }}</p>
-        <button @click="setProfileForm">프로필 수정</button>
-      </div>
-      <div>
+      <div v-if="flag">
         <form @submit.prevent="updateProfile">
           <label for="usernickname">닉네임: </label>
           <input
             type="text"
             id="usernickname"
             v-model="nickname"
-            value="usernickname"
           />
           <label for="usermessage">상태메세지: </label>
           <input
             type="text"
             id="usermessage"
             v-model="message"
-            value="usermessage"
           />
           <input type="submit" value="수정" />
         </form>
@@ -61,6 +55,7 @@ export default {
       image: "",
       nickname: null,
       message: null,
+      flag: false,
     };
   },
   computed: {
@@ -69,12 +64,6 @@ export default {
     },
     profileImg() {
       return this.currentUser.profile_img;
-    },
-    usernickname() {
-      return this.currentUser.nickname;
-    },
-    usermessage() {
-      return this.currentUser.message;
     },
   },
   methods: {
@@ -106,14 +95,27 @@ export default {
           console.log(err);
         });
     },
-    setProfileForm() {},
+    setProfileForm() {
+      axios({
+        method: "get",
+        url: `${API_URL}/accounts/profile/${this.currentUser.username}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`,
+        },
+      })
+        .then((res) => {
+          this.nickname = res.data.nickname
+          this.message = res.data.message
+          console.log(res.data);
+        })
+    },
     updateProfile() {
       const nickname = this.nickname;
       const message = this.message;
 
       axios({
         method: "put",
-        url: `${API_URL}/accounts/profile/update/`,
+        url: `${API_URL}/accounts/profile/${this.currentUser.username}/`,
         headers: {
           Authorization: `Token ${this.$store.state.token}`,
         },
@@ -123,13 +125,22 @@ export default {
         },
       })
         .then((res) => {
+          this.setProfileForm()
+          this.flag = false,
+          this.$store.commit('GET_ACCOUNT_MODIFY', 1)
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    editButton() {
+      this.flag = true
+    }
   },
+  created() {
+    this.setProfileForm()
+  }
 };
 </script>
 

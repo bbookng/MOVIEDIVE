@@ -19,9 +19,16 @@
             <div>{{ user.nickname }}</div>
             <button @click="follow" v-if="currentUser.username != user.username" id="follow-button" class="mx-3">팔로우</button>
           </div>
-          <div class="my-2">
-            리뷰 {{ user.reviews_cnt }} | 팔로워 {{ user.followers_cnt }} |
-            팔로잉 {{ user.followings_cnt }}
+          <div class="my-2 row">
+            <div class="col">
+              리뷰 {{ user.reviews_cnt }}
+            </div>
+            <div class="col">
+              팔로워 {{ user.followers_cnt }}
+            </div>
+            <div class="col">
+              팔로우 {{ user.followings_cnt }}
+            </div>
           </div>
           <div class="status">{{ user.message }}</div>
         </div>
@@ -39,6 +46,7 @@ export default {
   data() {
     return {
       user: null,
+      highlight: []
     }
   },
   props: {
@@ -89,7 +97,7 @@ export default {
 
 <style>
 #my-page-header {
-  height: 470px;
+  height: 350px;
 }
 #profile-img {
   margin-top: 8vh;

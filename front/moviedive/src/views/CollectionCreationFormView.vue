@@ -24,13 +24,19 @@
             <br>
             <button @click="selectMovies">영화 선택하기</button>
             <input type="submit" value="컬렉션 만들기">
-            {{ selected_movies }}
+            <div class="container">
+
+                <div class="row">
+                    <SuggestionMovieItem class="col-4" v-for="suggest in selected_movies" :key="suggest" :suggest="suggest"/>
+                </div>
+            </div>
         </form>
     </div>
     </div>
 </template>
 
 <script>
+import SuggestionMovieItem from '@/components/collections/SuggestionMovieItem'
 import MovieSuggestionList from "@/components/collections/MovieSuggestionList.vue"
 import axios  from "axios"
 
@@ -40,6 +46,7 @@ export default {
     name: 'CollectionCreationForm',
     components:{
         MovieSuggestionList,
+        SuggestionMovieItem
     },
     data() {
         return {
@@ -59,7 +66,7 @@ export default {
             return this.selected_movies.map(movie => movie.pk)
           },
     },
-    mounted() {
+    created() {
         this.getCollection()
     },
     methods: {

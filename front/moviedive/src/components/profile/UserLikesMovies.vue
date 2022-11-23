@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="movies" class="container">
     <div class="row" v-for="movie in movies" :key="movie">
       <UserMovieListItem class="col" :movie="movie"/>
     </div>

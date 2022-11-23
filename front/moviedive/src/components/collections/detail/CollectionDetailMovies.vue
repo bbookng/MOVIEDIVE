@@ -1,8 +1,8 @@
 <template>
-    <div id="collection-detail-movies">
-      <div>
-        <h3>작품들</h3>        
-        <div v-for=" suggest in collection.movies" :key="suggest.pk" >
+    <div class="container" id="collection-detail-movies">
+      <h3>작품들</h3>  
+      <div class="row">
+        <div class="col-3" v-for=" suggest in collection.movies" :key="suggest.pk" >
           <SuggestionMovieItem :suggest="suggest"/>
           {{ suggest.title }}
         </div>

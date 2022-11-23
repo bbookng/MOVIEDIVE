@@ -1,9 +1,9 @@
 <template>
   <div id="collection-detail" class="container"  v-if="collection">
     <CollectionDetailHeader :url="mainPosterURL"/>
-    <CollectionDetailInfo :collection="collection" :currentUser="currentUser"/>
+    <CollectionDetailInfo :collection_pk="collection_pk" :currentUser="currentUser"/>
     <CollectionDetailMovies :collection="collection"/>
-    <CollectionDetailComments :collection="collection"/>
+    <CollectionDetailComments :collection_pk="collection_pk"/>
   </div>
 </template>
 

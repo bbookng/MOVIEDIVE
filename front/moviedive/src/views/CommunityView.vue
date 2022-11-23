@@ -12,7 +12,7 @@
       @click="goToReviewCreate"
     >리뷰 작성하기</button>
     <hr>
-    <ReviewList/>
+    <ReviewList :movie="movie"/>
   </div>
 </template>
 

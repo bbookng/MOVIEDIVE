@@ -48,7 +48,7 @@ def profile(request, username):
             serializer = UpdateUserRequestSerializer(instance=user, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                serializer = UpdateUserRequestSerializer(user)
+                # serializer = UpdateUserRequestSerializer(user)
                 return Response(serializer.data)
     
 
@@ -121,4 +121,8 @@ def update_profileimg(request):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
     print(serializers.errors)
     return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+def change_password(request,):
+    if request.method == 'PUT':
+        serializer = ChangePasswordSerializer(request.user)
+        return Response(serializer.data, safe=False)

@@ -35,6 +35,14 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
             fields = ('pk', 'nickname', 'profile_img',)
     
     class CommentSerializer(serializers.ModelSerializer):
+
+        class UserSerializer(serializers.ModelSerializer):
+
+            class Meta:
+                model = get_user_model()
+                fields = ('pk', 'nickname', 'profile_img', 'username')
+        
+        user = UserSerializer(read_only=True)
         
         class Meta:
             model = Comment
@@ -50,7 +58,7 @@ class CollectionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields= ('id', 'user', 'title', 'movies', 'description', 'like_users', 'like_users_cnt', 'collection_comments', 'comments_cnt', 'created_at', 'created_string',)
+        fields= ('id', 'pk', 'user', 'title', 'movies', 'description', 'like_users', 'like_users_cnt', 'collection_comments', 'comments_cnt', 'created_at', 'created_string',)
 
 class CollectionUpdateSerializer(serializers.ModelSerializer):
     
