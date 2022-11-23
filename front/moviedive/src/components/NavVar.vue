@@ -4,7 +4,8 @@
       <ul class="d-flex justify-content-between align-items-center mx-auto my-0 px-0" >
         <li class="logo">
           <router-link :to="{ name: 'main' }">
-          <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/4dd.png" alt="">
+          <!-- <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/4dd.png" alt=""> -->
+          <img src="https://moviedive.s3.ap-northeast-2.amazonaws.com/logo_bold.png" alt="">
           </router-link>         
         </li>
         <li>
@@ -24,12 +25,11 @@
     </div>
     <div class="nav-right" style="width:30rem;">
       <ul class="d-flex justify-content-end align-items-center my-0">
-  
         <li class="nav-item" v-if="isLoggedIn" style="position:relative" >
           <form @submit="searchThings(searchKeyword)">
             <div class="search-box">
               <div class="search-container">
-                  <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 검색하기" />
+                <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="🔍     영화 검색하기" />
                   <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
               </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="nav-item btn-group">
           <img v-if="isLoggedIn" @click="myPage" class="profile-img" :src=imgURL alt="">
           <button type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" style="border-radius: 0px;">
             <li v-if="!isLoggedIn">
               <router-link class="dropdown-item nav-item" :to="{ name: 'login' }">Login</router-link>
             </li>
@@ -47,17 +47,17 @@
               <router-link class="dropdown-item nav-item" :to="{ name: 'signup' }">Signup</router-link>
             </li>
             <li v-if="isLoggedIn">
-              <button class="dropdown-item nav-item" @click="myPage">마이페이지</button>
+              <button class="dropdown-item nav-item" @click="myPage">🏠 마이페이지</button>
             </li>
             <li v-if="isLoggedIn">
-              <button class="dropdown-item nav-item" @click="profileModify">프로필 관리</button>
+              <button class="dropdown-item nav-item" @click="profileModify">✏️ 프로필 관리</button>
             </li>
             <li v-if="isLoggedIn">
-              <button class="dropdown-item nav-item" @click="accountModify">계정 설정</button>
+              <button class="dropdown-item nav-item" @click="accountModify">⚙️ 계정 설정</button>
             </li>
-            <li  v-if="isLoggedIn"><hr class="dropdown-divider"></li>
+            <li v-if="isLoggedIn"><hr class="dropdown-divider"></li>
             <li v-if="isLoggedIn">
-              <router-link class="dropdown-item nav-item" :to="{ name: 'logout' }">로그아웃</router-link>
+              <router-link class="dropdown-item nav-item" :to="{ name: 'logout' }" style="text-align:center; font-size:17px;">로그아웃</router-link>
             </li>
           </ul>
         </div>
@@ -199,50 +199,49 @@ export default {
     font-size:10px;
   }
   .search-container{
-  margin-right: auto;
-  width: 300px;
-  vertical-align: middle;
-  white-space: nowrap;
-  position: relative;
-  padding-right: 10px;
+    margin-right: auto;
+    width: 300px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+    padding-right: 10px;
   }
   .search-container input#search{
-    width: 50px;
+    width: 57px;
     height: 40px;
-    background: black;
     opacity: 75%;
     border: none;
     font-size: 12pt;
     float: right;
-    color: #ff0000;
     padding-left: 20px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     color: #0c0c0c;
     transition: width .55s ease;
+    border-radius: 0px;
   }
   .search-container input#search:-ms-input-placeholder {  
-    color: #40444b;  
+    color: white; 
   }  
   .search-container input#search:focus, .search-container input#search:active{
     outline:none;
-    width: 300px;
+    width: 100%;
   }  
   .search-container:hover input#search{
     width: 300px;
     background: #40444b;
+    border: 1px solid black; 
   }  
+
+  .search-container .icon {
+    width: 2rem;
+  }
   .search-container:hover .icon{
     color: #ff1717;
     background: #40444b;
     opacity: 1;
-  }
-  #suggestion-box {
-    position:absolute;
-    /* visibility: hidden; */
-    left:20px;
-    z-index: 5;
+    width: 2rem;
   }
   .search-container .search-icon{
     padding-right:10px;
@@ -262,7 +261,7 @@ export default {
   }
   .search-container:hover input#search{
     width: 300px;
-    background: #40444b;
+    background: white;
   }
   .search-container:hover .search-icon{
     color: #e90a0a;
@@ -282,7 +281,7 @@ export default {
     width: 300px;
     background: #40444b;
   }
-  .search-container:focus-within #suggestion-box {
+  .search-container:focus-within {
       opacity: 1;
   }
   .search-container:focus-within .search-icon{
@@ -370,11 +369,6 @@ export default {
     background-color: #fff;
     transform: translate(0.6px, 0px);
   }
-
-img {
-  width: 100%;
-  height: 100%;
-}
 
 #nav-list {
   color: white;

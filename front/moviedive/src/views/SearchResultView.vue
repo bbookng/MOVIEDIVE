@@ -7,7 +7,7 @@
         영화
       </div>
       <div class="col-12">
-        <searched-movie-list ></searched-movie-list>
+        <searched-movie-list></searched-movie-list>
       </div>
       <div class="col-12 result-label">
         컬렉션
@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
+import { mapActions, mapGetters } from 'vuex'
 import SearchedMovieList from '@/components/search/SearchedMovieList'
 
 export default {
@@ -34,16 +33,13 @@ export default {
     SearchedMovieList
   },
   computed: {
-    movies() {
-    return this.$store.state.movies
-    },
+    ...mapGetters(['movies']),
   },
   methods: {
     ...mapActions(['fetchMovies']),
-    ...mapActions(['getMovies']),
   },
   created() {
-    this.getMovies(this.keyword)
+    this.fetchMovies(this.keyword)
   }
 
 }

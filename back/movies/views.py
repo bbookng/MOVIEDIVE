@@ -63,7 +63,9 @@ def movie_collections(request, movie_pk):
 
 @api_view(['GET'])
 def auto_complete(request, keyword):
+    print(keyword)
     movies = Movie.objects.filter(title__contains=keyword).order_by('-vote_average')[:10]
+    print(movies)
     serializer = AutoCompleteSerializer(movies, many=True)
     return Response(serializer.data)
 

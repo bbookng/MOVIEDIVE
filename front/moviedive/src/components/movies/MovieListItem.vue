@@ -16,7 +16,6 @@
 <script>
 import MovieDetail from '@/components/movies/MovieDetail.vue'
 
-
 export default {
   name: 'MovieListItem',
   props: {
@@ -34,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+  #movieDetail {
+    z-index: 100;
+  }
   .movie-item {
     max-width: 300px;
   }

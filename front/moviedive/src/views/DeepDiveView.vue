@@ -103,7 +103,7 @@ export default {
             {
               duration: 1,
               x: posters[newSection].poster.position.x,
-              z: posters[newSection].poster.position.y,
+              z: posters[newSection].poster.position.z + 5,
             }
           );
           currentSection = newSection;

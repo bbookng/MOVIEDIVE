@@ -32,12 +32,12 @@ export default {
 
 <style scoped>
 #MainTrailer {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    right: 0;
-    top: 0;
-    z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 
 .trailer-box {
@@ -54,7 +54,6 @@ export default {
     bottom: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: end;
     left: 4%;
     position: absolute;
     top: 10;

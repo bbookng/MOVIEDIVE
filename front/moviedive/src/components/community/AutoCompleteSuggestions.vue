@@ -33,10 +33,11 @@ export default {
 #suggestions {
   border-top: 0.5px solid;
   background:black;
+  width:38rem;
 }
 .suggestion-item {
   padding: 5px;
-  width:250px;
+  width:38rem;
   color:black;
   background: white;
   border-top: 1px solid #888;
@@ -46,5 +47,6 @@ export default {
 .suggestion-item:hover {
   color:black;
   background: #eee;
+  width:38rem;
 }
 </style>

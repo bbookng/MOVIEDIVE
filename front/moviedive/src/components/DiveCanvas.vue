@@ -65,9 +65,23 @@ export default {
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
+      // 입체 로고
+      const texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/logo_3d.png");
+      // const texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/logo_3d_arched.png");
+      texture.generateMipmaps = false;
+      const geometry = new THREE.PlaneGeometry( 0.28, 0.056 );
+      const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true, alphaMap: this.particleTexture, depthWrite: false } );
+      const logo = new THREE.Mesh( geometry, material );
+      scene.add(logo);
+      logo.position.set(0, 0.03, 0.1)
+      logo.rotateX(-0.4)
+
+
       // MOVIEDIVE hemisphere
       // 이미지 로드
-      this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/noxm.png");
+      // this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/noxm.png");
+      // this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/map_front.png");
+      this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/lb.png");
       this.texture.generateMipmaps = false;
       const geometry_md = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_md = new THREE.MeshBasicMaterial( { map: this.texture } )

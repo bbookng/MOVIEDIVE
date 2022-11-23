@@ -25,7 +25,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || '',
     movies: [],
     movie: {},
-    suggests: {},
+    suggests: [],
     reviews: [],
     currentUser: {},
     collections: [],
@@ -229,14 +229,14 @@ export default new Vuex.Store({
           에러 메시지 표시
       */
 
-      // let query = "?"
-      // if (keyword) {
-      //   query += `keyword=${keyword}`
-      // }
+      let query = "?"
+      if (keyword) {
+        query += `keyword=${keyword}`
+      }
 
       axios({
-        // url: `http://127.0.0.1:8000/movies/search/` + query,
-        url: `http://127.0.0.1:8000/movies/search/` + keyword         ,
+        url: `http://127.0.0.1:8000/movies/search/` + query,
+        // url: `http://127.0.0.1:8000/movies/search/${keyword}/`,
         method: 'get',
         headers: getters.authHeader,
       })
@@ -246,7 +246,7 @@ export default new Vuex.Store({
         })
         .catch(err => console.error(err.response))
     },
-    fetchMovie({ commit, getters }, moviePk) {
+    fetchMovie({ commit, getters }, movieId) {
       /* 영화 정보 1개 받아오기
       GET: article URL (token)
         성공하면
@@ -258,7 +258,7 @@ export default new Vuex.Store({
             NotFound404 로 이동
       */
       axios({
-        url: drf.movies.movie(moviePk),
+        url: drf.movies.movie(movieId),
         method: 'get',
         headers: getters.authHeader,
       })

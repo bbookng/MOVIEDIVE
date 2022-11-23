@@ -1,10 +1,10 @@
 <template>
   <div class="row">
-     <carousel id="mlc" :perPage=6 :scrollPerPage="false" :navigationEnabled="true" :paginationEnabled="false">
-      <slide id="movie-list-slide" class="label mx-0" v-for="movie in movies" :key="movie.id">   
-        <searched-movie-item data-bs-toggle="modal" data-bs-target="#movieDetail" :movie="movie"></searched-movie-item>  
-      </slide>
-    </carousel>
+      <carousel id="mlc" :perPage=6 :scrollPerPage="false" :navigationEnabled="true" :paginationEnabled="false">
+        <slide id="movie-list-slide" class="label mx-0" v-for="movie in movies" :key="movie.id">   
+          <searched-movie-item data-bs-toggle="modal" data-bs-target="#movieDetail" :movie="movie"></searched-movie-item>  
+        </slide>
+      </carousel>
     <!-- <div v-for="movie in movies" :key="movie.pk" class="col-4">
       <searched-movie-item data-bs-toggle="modal" data-bs-target="#movieDetail" :movie="movie"></searched-movie-item>  
     </div> -->
