@@ -56,7 +56,7 @@ export default {
     },
     computed: {
         selected_movies_pk() {
-            return this.selected_movies.map(movie => movie.id)
+            return this.selected_movies.map(movie => movie.pk)
           },
     },
     mounted() {
@@ -82,7 +82,11 @@ export default {
             })
         },
         createCollection() {
-            this.isSelected = true
+            if (this.selected_movies.length == 0) {
+                alert('영화를 선택해주세요.')
+            } else {
+                this.isSelected = true
+            }
         },
         getCollection() {
             if (this.collection_pk !== undefined) {

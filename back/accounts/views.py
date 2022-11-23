@@ -104,20 +104,15 @@ def set_message(request):
 
 @api_view(['PUT'])
 def update_profileimg(request):
-    print(1)
-    print(request.FILES)
     profile_img = request.FILES['profile_img']
-    print(2)
     data = {
         'profile_img': profile_img
     }
-    print(3)
     serializers = PhotoSerializer(data = data)
     if serializers.is_valid():
         serializers.save()
-        print(serializers.data)
         new_data = { "profile_img": serializers.data['profile_img'] }
-        print(new_data)
+        print("new_data", new_data)
         user_serializer = UserProfileImageUpdateSerializer(instance=request.user, data=new_data)
         print(user_serializer)
         if user_serializer.is_valid():

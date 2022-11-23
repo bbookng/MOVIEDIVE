@@ -37,7 +37,7 @@
         </li>
         
         <div class="nav-item btn-group">
-          <img v-if="isLoggedIn" @click="goMyPage" class="profile-img" :src=imgURL alt="">
+          <img v-if="isLoggedIn" @click="myPage" class="profile-img" :src=imgURL alt="">
           <button type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
@@ -107,7 +107,8 @@ export default {
     },
     imgURL() {
       return this.currentUser.profile_img
-    }
+    },
+    
   },
   methods: {
     ...mapActions(['fetchMovies', 'searchCollections', 'autoComplete']),
@@ -134,9 +135,6 @@ export default {
       this.$store.commit('GET_ACCOUNT_MODIFY', 3)
       this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
     },
-    goMyPage() {
-      this.$router.push({ name: 'mypage', params: { username: this.currentUser.username} })
-    }
   }
 }
 </script>

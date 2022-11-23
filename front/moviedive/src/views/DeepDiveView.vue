@@ -1,6 +1,5 @@
 <template>
     <div>
-      <h1>Hello, DeepDive !</h1>
       <div id="three-canvas"></div>
       <div class="sections">
         <section class="section">
