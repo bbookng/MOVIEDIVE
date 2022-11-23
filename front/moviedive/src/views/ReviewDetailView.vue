@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div v-if="review">
     <div>
       <p>{{ review?.movie_title }}</p>
     <p>{{ review?.title }}</p>
-    <div>
-      <img src="" alt="...">
+    <div >
+      <img :src=writerProfileImg alt="...">
       {{ user.nickname }}
-      {{ $moment(updated_at).format('YYYY.MM.DD HH:mm') }}
+      {{ $moment(review.created_at).format('YYYY.MM.DD HH:mm') }}
     </div>
     <hr>
 
@@ -24,7 +24,7 @@
       <div>
         <div id="comments-list" v-for="comment in comments" :key="comment.id">
           <div>
-            <img src="" alt=" user 프로필 이미지">
+            <img :src=currentUserProfileImg alt=" user 프로필 이미지">
           </div>
           <div>
             {{ comment.user.nickname }}
@@ -68,6 +68,12 @@ export default {
     comments() {
       return this.review.community_comments
     },
+    writerProfileImg() {
+      return this.review.user.profile_img
+    },
+    currentUserProfileImg() {
+      return this.currentUser.profile_img
+    }
 
 
   },
@@ -163,3 +169,10 @@ export default {
   }
 }
 </script>
+
+<style>
+img {
+  height: 10%;
+  width: 10%;
+}
+</style>

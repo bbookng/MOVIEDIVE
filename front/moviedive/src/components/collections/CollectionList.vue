@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="collections">
     <div>
       <router-link id="new-collection" :to="{ name: 'save_collection' }">+ 컬렉션 만들기</router-link>
       <div class="container" id="user-like-collections">
@@ -94,7 +94,8 @@ export default {
   left: 150px;
   margin-top: 1rem;
   font-size: large;
-  color: white;
+  color: rgb(19, 1, 1);
+  font-weight: bold;
 }
 
 .h3 {
