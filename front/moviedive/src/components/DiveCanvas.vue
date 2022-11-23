@@ -80,8 +80,8 @@ export default {
       // MOVIEDIVE hemisphere
       // 이미지 로드
       // this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/noxm.png");
-      // this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/map_front.png");
-      this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/lb.png");
+      this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/map_front.png");
+      // this.texture = new THREE.TextureLoader().load("https://moviedive.s3.ap-northeast-2.amazonaws.com/threejs/lb.png");
       this.texture.generateMipmaps = false;
       const geometry_md = new THREE.SphereGeometry( 0.1, 32, 16, 0, Math.PI, 0, Math.PI  );
       const material_md = new THREE.MeshBasicMaterial( { map: this.texture } )
