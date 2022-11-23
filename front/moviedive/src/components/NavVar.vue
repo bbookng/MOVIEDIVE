@@ -38,7 +38,7 @@
         </li>
         
         <div class="nav-item btn-group">
-          <img @click="goMyPage" class="profile-img" :src=imgURL alt="">
+          <img v-if="isLoggedIn" @click="goMyPage" class="profile-img" :src=imgURL alt="">
           <button type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
