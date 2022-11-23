@@ -39,7 +39,7 @@
         
         <div class="nav-item btn-group">
           <img @click="goMyPage" class="profile-img" :src=imgURL alt="">
-          <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <button type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu">
             <li v-if="!isLoggedIn">
               <router-link class="dropdown-item nav-item" :to="{ name: 'login' }">Login</router-link>
@@ -190,6 +190,7 @@ export default {
   .router-link-exact-active{
     text-decoration: none;
   }
+
   .dropdown-item {
     color:black;
   }

@@ -39,7 +39,7 @@ export default {
     },
   },
   methods: {
-    // ...mapActions(['fetchMovies']),
+    ...mapActions(['fetchMovies']),
     ...mapActions(['getMovies']),
   },
   created() {
