@@ -16,18 +16,18 @@
           class="d-flex flex-column justify-content-end align-items-start"
         >
           <div class="d-flex align-items-center">
-            <div>{{ user.nickname }}</div>
+            <div id="user-nickname">{{ user.nickname }}</div>
             <button @click="follow" v-if="currentUser.username != user.username" id="follow-button" class="mx-3">팔로우</button>
           </div>
-          <div class="my-2 row">
-            <div class="col">
-              리뷰 {{ user.reviews_cnt }}
+          <div class="my-2 d-flex justify-content-between">
+            <div>
+              리뷰 {{ user.reviews_cnt }} 
             </div>
-            <div class="col">
-              팔로워 {{ user.followers_cnt }}
+            <div class="mx-2">
+              팔로워 {{ user.followers_cnt }} 
             </div>
-            <div class="col">
-              팔로우 {{ user.followings_cnt }}
+            <div>
+              팔로우 {{ user.followings_cnt }} 
             </div>
           </div>
           <div class="status">{{ user.message }}</div>
@@ -99,6 +99,13 @@ export default {
 #my-page-header {
   height: 350px;
 }
+
+#user-nickname {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
 #profile-img {
   margin-top: 8vh;
   border-radius: 50%;
@@ -106,15 +113,18 @@ export default {
   height: 170px;
   width: 170px;
 }
+
 #follow-button {
   background-color: white;
   border: black 1px solid;
   border-radius: 4px;
 }
+
 #profile-informations {
   padding-bottom: 40px;
   padding-left: 15px;
 }
+
 #highlights {
   border: 1px black solid;
   margin-top: 20px;

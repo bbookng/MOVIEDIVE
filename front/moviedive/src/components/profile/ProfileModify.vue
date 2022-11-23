@@ -7,7 +7,8 @@
         alt="프로필 이미지"
       />
     </div>
-    <div>
+    <button v-if="!changeProfileImgButton"  @click="changeProfileImg">프로필 사진 변경</button>
+    <div v-if="changeProfileImgButton">
       <input
         @change="onInputImage"
         type="file"
@@ -56,6 +57,7 @@ export default {
       nickname: null,
       message: null,
       flag: false,
+      changeProfileImgButton: false,
     };
   },
   computed: {
@@ -69,6 +71,7 @@ export default {
   methods: {
     onInputImage() {
       this.image = this.$refs.profileImage.files;
+      this.$store.dispatch('fetchCurrentUser')
       console.log(this.image);
     },
     onClickFormButton() {
@@ -89,6 +92,8 @@ export default {
         data: formdata,
       })
         .then((res) => {
+          this.changeProfileImgButton = false
+          this.$store.dispatch('fetchCurrentUser')
           console.log(res.data);
         })
         .catch((err) => {
@@ -127,7 +132,7 @@ export default {
         .then((res) => {
           this.setProfileForm()
           this.flag = false,
-          this.$store.commit('GET_ACCOUNT_MODIFY', 1)
+          // this.$store.commit('GET_ACCOUNT_MODIFY', 2)
           console.log(res.data);
         })
         .catch((err) => {
@@ -136,6 +141,9 @@ export default {
     },
     editButton() {
       this.flag = true
+    },
+    changeProfileImg() {
+      this.changeProfileImgButton = true
     }
   },
   created() {

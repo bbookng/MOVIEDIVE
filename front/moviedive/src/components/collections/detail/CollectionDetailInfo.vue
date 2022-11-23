@@ -1,11 +1,11 @@
 <template>
-  <div v-if="collection" class="container" id="collection-detail-info">
-    <div class="row ">
-      <div class="col">
+  <div v-if="collection"  id="collection-detail-info">
+    <div id="collection-detail-info-top" class="d-flex justify-content-between align-items-start" >
+      <div>
         <h3 id="collection-detail-title">{{ collection.title }}</h3>
         <p id="collection-detail-description">{{ collection.description }}</p>
       </div>
-      <div class="col" v-if="currentUser.pk == collection.user.pk">
+      <div v-if="currentUser.pk == collection.user.pk">
         <router-link :to="{ name: 'save_collection', params: { collectionPk: this.collection.pk } }">수정</router-link>
         <span><button @click="deleteCollection">삭제</button></span>
       </div>
@@ -116,15 +116,15 @@ export default {
   margin-left: 15%;
   margin-right: 15%;
 }
-#collection-detail-title{
+#collection-detail-info-top{
+  width:100%;
   padding-left:10px;
   padding-right:10px;
+  padding-top:10px;
+}
+#collection-detail-title{
   font-size: 30px;
   font-weight: 300;
-}
-#collection-detail-description{
-  padding-left:10px;
-  padding-right:10px;
 }
 #collection-detail-statistics{
   padding-left:10px;

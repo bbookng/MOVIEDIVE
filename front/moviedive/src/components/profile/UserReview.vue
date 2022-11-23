@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1>User Review</h1>
     <div class="d-flex justify-content-center" v-for="review in reviews" :key="review.id">
-      <router-link
-      class="review-list"
-      :to="{ name: 'review_detail', params: { movieId: review.movie.id, reviewId: review.id }}"
-      >{{ review.content }} 
-      </router-link>
-      {{ review.movie.title }}
-      
+      <div id="review" class="d-flex justify-content-between align-items-center">
+          <router-link
+          class="review-list"
+          :to="{ name: 'review_detail', params: { movieId: review.movie.id, reviewId: review.id }}"
+          >{{ review.content }} 
+        </router-link>
+        {{ review.movie.title }}  
+      </div>
     </div>
 
   </div>
@@ -51,6 +51,13 @@ export default {
 .review-list {
   text-decoration: none;
   color: black;
+}
+
+#review {
+  border: 1px black solid;
+  border-radius: 20px;
+  width: 40rem;
+  height: 40px;
 }
 
 </style>

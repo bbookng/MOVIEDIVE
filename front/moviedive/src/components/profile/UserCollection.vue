@@ -1,6 +1,5 @@
 <template>
   <div class="container text-center">
-    <h1>UserCollection</h1>
     <div class="row">
       <CollectionListItem
         class="col"

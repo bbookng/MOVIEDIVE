@@ -1,10 +1,12 @@
 <template>
-    <div class="container" id="collection-detail-movies">
+    <div id="collection-detail-movies">
       <h3>작품들</h3>  
-      <div class="row">
-        <div class="col-3" v-for=" suggest in collection.movies" :key="suggest.pk" >
-          <SuggestionMovieItem :suggest="suggest"/>
-          {{ suggest.title }}
+      <div class="container">
+        
+        <div class="row" v-for=" suggest in collection.movies" :key="suggest.pk" >
+        <SuggestionMovieItem class="col-3" :suggest="suggest"/>
+        {{ suggest.title }}
+
         </div>
       </div>
     </div>

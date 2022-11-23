@@ -1,5 +1,5 @@
 <template>
-  <div id="collection-detail-header">
+  <div id="collection-detail-header" class="row">
       <img id="collection-bg-img" :src=url alt="">
   </div>
 </template>

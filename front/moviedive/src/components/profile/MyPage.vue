@@ -89,6 +89,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button {
+  border: none;
+  border-top: black 1px solid;
+  background-color: transparent;
+  width: 100px;
+  font-size: large;
+  margin: 20px;
+}
 
 </style>

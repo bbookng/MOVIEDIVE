@@ -66,6 +66,7 @@ export default {
 
 <style>
 #collection-detail {
+  display: block;
   margin-top: 100px;
   width: 80vw;
   border: 1px solid black;
