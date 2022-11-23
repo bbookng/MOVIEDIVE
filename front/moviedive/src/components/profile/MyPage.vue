@@ -3,7 +3,6 @@
     <MyPageHeader :profileImg="profileImg" :user="user" />
     <div id="profile-top">
       <div id="profile-top-right">
-
         <div>
           {{ user.message }}
         </div>
@@ -84,19 +83,6 @@ export default {
     },
     getUserLikes() {
       this.select_component = 3;
-    },
-    follow() {
-      const API_URL = "http://127.0.0.1:8000/api";
-      console.log(this.user);
-      axios({
-        url: `${API_URL}/accounts/profile/${this.user.pk}/follow/`,
-        method: "post",
-        headers: {
-          Authorization: `Token ${this.$store.state.token}`,
-        },
-      }).then(() => {
-        this.fetchProfile(this.user);
-      });
     },
     checkUser() {
       if (this.currentUser.username == this.user.username) {

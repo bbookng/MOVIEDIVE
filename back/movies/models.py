@@ -26,6 +26,11 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre, related_name='genre_movies')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     related_movies = models.ManyToManyField("self", blank=True)
+    wavve = models.CharField(max_length=100)
+    watcha = models.CharField(max_length=100)
+    netfilx = models.CharField(max_length=100)
+    disney_plus = models.CharField(max_length=100)
+    amazon_prime_video = models.CharField(max_length=100)
     
     def __str__(self):
         return self.title

@@ -87,7 +87,7 @@ export default new Vuex.Store({
         })
         .then(() => {
           console.log(credentials.nickname)
-          dispatch('setNickname', credentials.nickname)
+          dispatch('setProfileInfo', credentials.nickname)
         })
         .catch(err => {
           console.error(err.response.data)

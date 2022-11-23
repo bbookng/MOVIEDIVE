@@ -3,7 +3,7 @@
     <div id="profile-img-box">
       <img
         id="profile-img"
-        src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F83%2F1f%2Fda%2F831fdaa1b75381f6ff74de37de6e938d.jpg&type=sc960_832"
+        :src=profileImg
         alt="프로필 이미지"
       />
     </div>
@@ -95,7 +95,7 @@ export default {
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Headers": "*",
           "Content-Type": "multipart/form-data",
-          Authorization: `Token ${this.$store.state.token}`,
+          // Authorization: `Token ${this.$store.state.token}`,
         },
         data: formdata,
       })

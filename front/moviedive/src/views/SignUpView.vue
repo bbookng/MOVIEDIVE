@@ -48,12 +48,9 @@ export default {
         password1,
         password2,
         email,
-        nickname
+        nickname,
       }
-
       this.$store.dispatch('signUp', payload)
-      
-
     }
   }
 }
