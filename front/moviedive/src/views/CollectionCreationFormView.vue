@@ -6,11 +6,13 @@
             <h5>영화들을 골라주세요</h5>
             <input autocomplete="off" @input="getSuggestions" :search_keyword="search_keyword" type="text" id="nc-search-keyword" placeholder="영화제목을 입력해주세요" />
         </div>
+        <div>
+            <SuggestionMovieItem class="col-4" v-for="suggest in selected_movies" :key="suggest" :suggest="suggest"/>
+        </div>
         <button @click="createCollection">선택완료</button>
         <div class="container">
             <MovieSuggestionList :selected_movies="selected_movies" @FromSuggestions="selectMovie" :suggests="suggests"/>
         </div>
-        {{ selected_movies }}
     </div>
     <div v-if="isSelected">
         <form @submit.prevent="saveCollection">
@@ -25,7 +27,6 @@
             <button @click="selectMovies">영화 선택하기</button>
             <input type="submit" value="컬렉션 만들기">
             <div class="container">
-
                 <div class="row">
                     <SuggestionMovieItem class="col-4" v-for="suggest in selected_movies" :key="suggest" :suggest="suggest"/>
                 </div>
@@ -72,7 +73,18 @@ export default {
     methods: {
         selectMovie(suggest) {
             // 포함되어 있으면 제거하고 없으면 들어가게 로직 다시 짜기
-            this.selected_movies = [...this.selected_movies, suggest]
+            console.log(suggest)
+            if (this.selected_movies.includes(suggest)) {
+                console.log("a")
+                let why = this.selected_movies.filter((sm) => {
+                    console.log(parseInt(sm.pk) != parseInt(suggest.pk))
+                    return parseInt(sm.pk) != parseInt(suggest.pk)})
+                
+                this.selected_movies = why
+            } else {
+                this.selected_movies = [...this.selected_movies, suggest]
+            }
+            
         },
         getSuggestions(event){
             const API_URL = 'http://127.0.0.1:8000/api/'

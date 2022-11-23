@@ -1,26 +1,28 @@
 <template>
     <div id="collection-detail-movies">
-      <h3>작품들</h3>  
-      <div class="container">
-        
-        <div class="row" v-for=" suggest in collection.movies" :key="suggest.pk" >
-        <SuggestionMovieItem class="col-3" :suggest="suggest"/>
-        {{ suggest.title }}
-
+      <h3 id="collection-movies">작품들</h3>
+      <div div="container">
+        <div class="row">
+          <div class="col-3" v-for=" movie in collection.movies" :key="movie.pk" >
+            <div>
+              <CollectionMovieItem :movie="movie"/>
+              <p style="padding-left: 15px;">{{ movie.title }}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </div>  
     </div>
   </template>
   
   <script>
-  import SuggestionMovieItem from '@/components/collections/SuggestionMovieItem'
+  import CollectionMovieItem from '@/components/collections/CollectionMovieItem'
   export default {
       name: "CollectionDetailMovies",
       props: {
         collection: Object,
       },
       components: {
-        SuggestionMovieItem,
+        CollectionMovieItem,
     }
   }
   </script>
@@ -30,5 +32,11 @@
     border: solid black 1px;
     margin-left: 15%;
     margin-right: 15%;
+    text-align: left;
   }
+
+  #collection-movies {
+    padding: 1.5rem;
+  }
+
   </style>
