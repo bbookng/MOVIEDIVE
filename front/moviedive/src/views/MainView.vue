@@ -1,7 +1,12 @@
 <template>
   <div>
     <MainTrailer/>
-    <MovieList :new_movies="new_movies"/>
+    <div style="margin:0 3rem 0 3rem; color:white;">
+      <MovieList class="overlay" :new_movies="new_movies"/>
+      <MovieList :new_movies="new_movies"/>
+      <MovieList :new_movies="new_movies"/>
+      <MovieList :new_movies="new_movies"/>
+    </div>
   </div>
 </template>
 
@@ -55,6 +60,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.overlay{
+  z-index: 10;
+  position:absolute;
+  top:80%;
+}
 </style>

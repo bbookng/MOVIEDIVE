@@ -64,7 +64,6 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res)
           this.movie = res.data.movie
           this.title = res.data.title
           this.content = res.data.content
@@ -85,10 +84,12 @@ export default {
       this.autoComplete(this.searchKeyword)
     },
     saveReview() {
+      const id = this.review_id
       const movie = this.movie
       const title = this.title
       const content = this.content
       const rate = this.rate
+
       if (!movie) {
         alert('영화를 선택해주세요')
         return
@@ -102,48 +103,53 @@ export default {
         alert('평점을 입력해주세요')
         return
       }
-      this.data = {
-          id: this.review_id,
-          movie: this.movie,
-          title: this.title,
-          content: this.content,
-          rate: this.rate,
-      }
 
       if (this.review_id === undefined) {
         axios({
         method: 'post',
         url: `${API_URL}/api/community/`,
-        data: this.data,
         headers: {
           Authorization: `Token ${this.$store.state.token}`
+        },
+        data: { 
+          id: id,
+          movie: movie,
+          title: title,
+          content: content,
+          rate: rate
         }
         })
-          .then((res) => {
-            console.log(res)
+          .then(() => {
             alert('생성 완료!')
             this.$router.push({ name: 'community' })
           })
           .catch((err) => {
+            console.log('에러가 생성 axios 요청에서')
             console.log(err)
           })
       } else {
         axios({
         method: 'put',
         url: `${API_URL}/api/community/${ this.movie_id }/${ this.review_id }/`,
-        data: this.data,
         headers: {
           Authorization: `Token ${this.$store.state.token}`
+        },
+        data: {
+          id: id,
+          movie: movie,
+          title: title,
+          content: content,
+          rate: rate
         }
+      })
+        .then(() => {
+          alert('수정 완료!')
+          this.$router.push({ name: 'community' })
         })
-          .then((res) => {
-            console.log(res)
-            alert('수정 완료!')
-            this.$router.push({ name: 'community' })
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        .catch((err) => {
+          console.log('에러가 수정 axios 요청에서')
+          console.log(err)
+        })
       }
 
     }

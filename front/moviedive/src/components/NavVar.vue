@@ -29,8 +29,7 @@
           <form @submit="searchThings(searchKeyword)">
             <div class="search-box">
               <div class="search-container">
-                  <button class="search-icon"><i class="bi bi-search"></i></button>
-                  <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="Search..." />
+                  <input autocomplete="off" @input="changeKeyword" :value="searchKeyword" type="search" id="search" placeholder="영화 검색하기" />
                   <auto-complete-suggestions id="suggestion-box" @titleFromSuggestions="fillSearchKeyword"></auto-complete-suggestions>
               </div>
             </div>
@@ -197,7 +196,7 @@ export default {
   .search-box{
     width: 300px;
     height: 40px;
-    font-size:20px;
+    font-size:10px;
   }
   .search-container{
   margin-right: auto;
@@ -211,8 +210,9 @@ export default {
     width: 50px;
     height: 40px;
     background: black;
+    opacity: 75%;
     border: none;
-    font-size: 15pt;
+    font-size: 12pt;
     float: right;
     color: #ff0000;
     padding-left: 20px;

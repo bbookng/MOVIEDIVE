@@ -1,37 +1,18 @@
 <template>
-  <div class="movie-list">
-    <h3>Movie List</h3>
-    <span>
-      <!-- <vueper-slides
-        class="no-shadow"
-        :visible-slides="3"
-        :slide-ratio="1 / 4"
-        :dragging-distance="70">
-        <vueper-slide v-for="movie in movies" :key="movie.id">
-          {{ movie }}
-          <MovieListItem
-            :movie="movie"
-          />
-        </vueper-slide>
-      </vueper-slides> -->
-
-      <MovieListItem
-      v-for="movie in movies"
-      :key="movie.id"
-      :movie="movie"/>
-
-      <MovieListItem
-      v-for="movie in new_movies"
-      :key="movie.id"
-      :movie="movie"/>
-    </span>
-    
+  <div>
+    <div class="overlay meta-layer">
+      <div><h3 class="collection-name">이 달의 신작 영화</h3></div>
+      <div class="movie-container"> 
+        <MovieListItem
+        v-for="movie in new_movies"
+        :key="movie.id"
+        :movie="movie"/>
+      </div>
+    </div>   
   </div>
 </template>
 
 <script>
-// import { VueperSlides, VueperSlide } from 'vueperslides'
-// import 'vueperslides/dist/vueperslides.css'
 import MovieListItem from '@/components/movies/MovieListItem.vue'
 export default {
   props:{
@@ -40,8 +21,6 @@ export default {
   },
   name: 'MovieList',
   components: {
-    // VueperSlides, 
-    // VueperSlide,
     MovieListItem,
   },
   computed: {
@@ -52,9 +31,17 @@ export default {
 }
 </script>
 
-<style>
-.movie-list {
+<style scoped>
+.movie-container {
   text-align: start;
+  display: flex;
+  flex-direction: row;
 }
-
+.collection-name {
+  text-align: left;
+}
+.overlay {
+  transition: transform 1.5s cubic-bezier(.165,.84,.44,1);
+  width: 100%;
+}
 </style>
