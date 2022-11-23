@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import SearchedMovieList from '@/components/search/SearchedMovieList'
 
 export default {
