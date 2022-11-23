@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="movie-item">
     <p>{{ movie.title }}</p>
     <div>
       <img type="button" data-bs-toggle="modal" data-bs-target="#movieDetail" class="movie-list-poster" :src=imgURL alt="">
@@ -9,13 +9,13 @@
       :movie="movie"
     />
     <hr>
-
-    
   </div>
 </template>
 
+
 <script>
 import MovieDetail from '@/components/movies/MovieDetail.vue'
+
 
 export default {
   name: 'MovieListItem',
@@ -34,10 +34,13 @@ export default {
 </script>
 
 <style scoped>
+  .movie-item {
+    max-width: 300px;
+  }
   .movie-list-poster{
     border-radius: 10px;
     padding: 5px;
-    width: 100%;
+    width: 18rem;
     display: block;
   }
   .movie-list-poster:hover { 

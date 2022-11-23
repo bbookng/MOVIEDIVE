@@ -1,25 +1,4 @@
 <template>
-  <!-- <div class="modal fade" id="movieDetail" tabindex="-1" aria-labelledby="movieDetail" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content">
-        <div id="modal-header">
-          <button type="button" class="close-btn m-1" data-bs-dismiss="modal" aria-label="Close">
-            <i class="bi bi-x-lg mx-1"></i>
-          </button>
-        </div>
-        <div id="modal-body" v-if="movie" class="row">          
-          <div id="poster-box" class="mx-4 col-5">
-            <img id="poster" :src="poster" alt="">
-          </div>
-          <div class="col-6">
-            <movie-info id="movie-info" :movie="movie"></movie-info>
-            <movie-nav id="movie-nav" :movie="movie"></movie-nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
     <div class="modal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

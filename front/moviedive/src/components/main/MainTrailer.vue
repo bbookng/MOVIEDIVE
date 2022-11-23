@@ -6,14 +6,14 @@
       autoplay="true" 
     >
     </video>
-    <div class="info meta-layer">
-      <div class="logo-and-text meta-layer">
+    <div class="info meta-layer" style="width:30rem;">
+      <div class="logo-and-text meta-layer" style="text-align:left;">
         <h1>라이프 오브 파이</h1>
+        <p>
+          인도에서 동물원을 운영하던 ‘파이’의 가족은 동물들을 싣고 이민을 떠나는 도중 거센 폭풍우를 만나고 배는 침몰한다. 혼자 살아남은 파이는 가까스로 구명보트에 올라 타지만 다친 얼룩말과 굶주린 하이에나, 그리고 오랑우탄과 함께 표류하게 된다.
+        </p>
+        <button type="button" class="btn btn-outline-light" style="width:6rem">상세 정보</button>
       </div>
-      <div>
-        인도에서 동물원을 운영하던 ‘파이’의 가족은 동물들을 싣고 이민을 떠나는 도중 거센 폭풍우를 만나고 배는 침몰한다. 혼자 살아남은 파이는 가까스로 구명보트에 올라 타지만 다친 얼룩말과 굶주린 하이에나, 그리고 오랑우탄과 함께 표류하게 된다.
-      </div>
-      <button>상세 정보</button>
     </div>
     <NewMovieList/>
   </div>
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #MainTrailer {
     bottom: 0;
     left: 0;
@@ -73,5 +73,4 @@ export default {
     transition: transform 1.5s cubic-bezier(.165,.84,.44,1);
     width: 100%;
 }
-
 </style>
