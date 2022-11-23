@@ -89,13 +89,13 @@ export default {
 
       axios({
         method: "put",
-        url: "http://localhost:8000/api/accounts/profileimg",
+        url: "/api/accounts/profileimg/",
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
           "Access-Control-Allow-Headers": "*",
           "Content-Type": "multipart/form-data",
-          // Authorization: `Token ${this.$store.state.token}`,
+          Authorization: `Token ${this.$store.state.token}`,
         },
         data: formdata,
       })
