@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         isSelected() {
-            return this.selected_movies.includes(this.suggest)
+            return this.selected_movies?.includes(this.suggest)
         }
     }
 

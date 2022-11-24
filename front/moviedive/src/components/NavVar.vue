@@ -24,7 +24,7 @@
       </ul>
     </div>
     <div class="nav-right" style="width:30rem;">
-      <ul class="d-flex justify-content-end align-items-center my-0">
+      <ul class="d-flex justify-content-evenly align-items-center my-0">
         <li class="nav-item" v-if="isLoggedIn" style="position:relative" >
           <form @submit="searchThings(searchKeyword)">
             <div class="search-box">
@@ -35,17 +35,16 @@
             </div>
           </form>
         </li>
-        
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link :to="{ name: 'login' }">Login</router-link>
+        </li>
+        <li class="nav-item" v-if="!isLoggedIn">
+          <router-link :to="{ name: 'signup' }">Signup</router-link>
+        </li>
         <div class="nav-item btn-group">
           <img v-if="isLoggedIn" @click="myPage" class="profile-img" :src=imgURL alt="">
-          <button type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <button v-if="isLoggedIn" type="button" class="dropdown-button btn btn-#fff dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu" style="border-radius: 0px;">
-            <li v-if="!isLoggedIn">
-              <router-link class="dropdown-item nav-item" :to="{ name: 'login' }">Login</router-link>
-            </li>
-            <li v-if="!isLoggedIn">
-              <router-link class="dropdown-item nav-item" :to="{ name: 'signup' }">Signup</router-link>
-            </li>
             <li v-if="isLoggedIn">
               <button class="dropdown-item nav-item" @click="myPage">🏠 마이페이지</button>
             </li>
@@ -147,8 +146,8 @@ export default {
 
 .profile-img {
   margin: auto;
-  border-radius: 8px ;
-  width: 2rem;
+  border-radius: 20px ;
+  width: 3.5rem;
 }
 
 #nav-bar {

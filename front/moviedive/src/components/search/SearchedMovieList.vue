@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row ">
       <carousel id="mlc" :perPage=6 :scrollPerPage="false" :navigationEnabled="true" :paginationEnabled="false">
         <slide id="movie-list-slide" class="label mx-0" v-for="movie in movies" :key="movie.id">   
           <searched-movie-item data-bs-toggle="modal" data-bs-target="#movieDetail" :movie="movie"></searched-movie-item>  
