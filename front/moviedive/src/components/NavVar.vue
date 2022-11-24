@@ -159,7 +159,7 @@ export default {
     color: black;
     text-decoration: none;
     font-size:18px;
-    font-weight: 100;
+    font-weight: 400;
     margin: auto;
     flex: none;
   }

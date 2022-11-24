@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div>
-      <DiveView id="diveview" v-if="!diving" @logo-clicked="goToMain"/>
-    </div> -->
-    <!-- <div v-if="diving"> -->
       <NavVar/>
-      <router-view/>
+      <router-view style="height:2160px;"/>
       <FooterInfo/>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -15,14 +10,12 @@
 <script>
 import NavVar from '@/components/NavVar'
 import FooterInfo from '@/components/FooterInfo'
-// import DiveView from '@/views/DiveView'
 
 export default {
   name: 'App',
   components: {
     NavVar,
     FooterInfo,
-    // DiveView,
   },
   data() {
     return {
@@ -38,18 +31,13 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 100 900;
-}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable.css");
 
 #app {
-  font-family: 'Pretendard-Regular';
+  font-family: 'Pretendard Variable';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* background-color: #000911; */
 }
 
 nav {
