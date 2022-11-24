@@ -1,17 +1,9 @@
 <template>
-  <div id="search-results">
+  <div id="search-results mx-0">
     <h2 id="search-string">"{{ keyword }}"(으)로 검색한 결과</h2>
-    <div class="row">
-      <div class="col-12 result-label">
-        영화
-      </div>
-      <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <div class="col-8">
         <searched-movie-list></searched-movie-list>
-      </div>
-      <div class="col-12 result-label">
-        컬렉션
-      </div>
-      <div class="col-12">
       </div>
     </div>
   </div>
@@ -47,18 +39,22 @@ export default {
 </script>
 
 <style scoped>
-/* #search-results {
-  color:white;
+#search-results {
+  color:rgb(0, 0, 0);
   padding: 50px;
+  width: 100rem;
+
 }
 #search-string {
   font-size: 30px;
   font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 .result-label{
   margin-top:30px; 
   margin-bottom:10px;
   padding-left:20px; 
   font-size: 25px;
-} */
+}
 </style>

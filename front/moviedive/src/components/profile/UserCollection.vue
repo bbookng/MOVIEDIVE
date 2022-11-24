@@ -50,13 +50,6 @@ export default {
 </script>
 
 <style scoped>
-/* .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-auto-rows: minmax(100px, auto);
-  column-gap: 20px;
-}
- */
 
 
 </style>

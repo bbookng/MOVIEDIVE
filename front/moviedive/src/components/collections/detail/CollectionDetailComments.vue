@@ -26,7 +26,7 @@
         <hr />
         <form @submit.prevent="createComment">
           <input id="comment-input" v-model="comment_content" type="text" placeholder="컬렉션에 댓글 남기기" />
-          <input id="comment-button" class="btn btn-outline-dark rounded-circle" type="submit" value="등록">
+          <input id="comment-button" class="btn btn-outline-dark-sm" type="submit" value="등록">
         </form>
       </div>
     
@@ -144,9 +144,6 @@ export default {
   margin-right: 10px;
   margin-bottom: 10px;
   padding: 1rem;
-}
-.collection-comment-content{
-  
 }
 
 </style>

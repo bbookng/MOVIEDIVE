@@ -1,7 +1,8 @@
 <template>
   <div id="searched-movie-poster"  @click="[fetchMovie(movie.id), fetchTrailerURI(movie.title)]">
-    <img :src="poster" alt="" >
+    <img :src=poster alt="" >
     <p class="text-center my-2">{{ movie.title }}</p>
+    
   </div>
 </template>
 
